@@ -1,0 +1,607 @@
+--- !ruby/object:Comment 
+author_email: andre@earthcode.com
+author_name: Andre Lewis
+author_url: http://earthcode.com
+content: "Jordan, it's great to hear that you were able to get GeoKit up and running so quickly. Let us know the GeoLoc class works with Australian addresses.  "
+created_at: 2007-02-10 12:17:00 +09:00
+post_id: "262"
+post_title: Maps, Geocoding and Great Timing
+
+--- !ruby/object:Comment 
+author_email: jordan@spintech.com.au
+author_name: Jordan Brock
+author_url: http://www.tamarabuchi.com
+content: |-
+  Andre, it works a treat with Australian addresses. I've noticed that you need to use the full state name, or else Google can get a little confused.
+  
+  eg: "10 Bland St, Ashfield, New South Wales"
+  
+  It does the post code look up as well. Extra cool. Thanks a lot.
+created_at: 2007-02-10 12:17:00 +09:00
+post_id: "262"
+post_title: Maps, Geocoding and Great Timing
+
+--- !ruby/object:Comment 
+author_email: richard.giles@gmail.com
+author_name: Richard Giles
+author_url: http://www.scouta.com/
+content: |-
+  Thanks Jordan.
+  
+  Great that you like Scouta.
+  
+  It also takes into account things you add, so not just based on voting :). Soon it'll be even more clever, and take into account descriptions and tags.
+  
+  Know any good local designers? I'm seriously in need of someone who could contract in to design, do some UI work, and icons. Flick me an email if you have ideas of people (or ideas for Scouta). Prefer someone with UI and design...but immediately need a designer for some page work and an OS X icon for the iTunes agent.
+created_at: 2007-03-24 08:21:00 +09:00
+post_id: "278"
+post_title: Scouta
+
+--- !ruby/object:Comment 
+author_email: richard@scouta.com
+author_name: Richard Giles
+author_url: http://richardgiles.net
+content: It doesn't work for me. I click to download the app, and it seems to crash Safari, sending me back to the main menu. :(
+created_at: 2007-10-30 16:15:00 +09:00
+post_id: "296"
+post_title: Jailbreak
+
+--- !ruby/object:Comment 
+author_email: bronwenc@perthnorg.com.au
+author_name: Bronwen Clune
+author_url: http://www.bronwenclune.com
+content: "That makes me sad :( "
+created_at: 2007-11-01 16:50:00 +09:00
+post_id: "298"
+post_title: iCal Day is No More
+
+--- !ruby/object:Comment 
+author_email: svanhattem@gmail.com
+author_name: Simone
+author_url: http://enjoyperth.net
+content: Awww, that's so cool! Congrats on the 16 yrs, 2 weeks and 3 days together :D
+created_at: 2007-11-18 12:18:00 +09:00
+post_id: "303"
+post_title: 16 years, 2 weeks and 1 day
+
+--- !ruby/object:Comment 
+author_email: rosemary@millstream.com.au
+author_name: Rosemary
+author_url: http://rosemary.id.au
+content: That's the kind of wonderful story that Neil Finn could weave into a beautiful and poignant song.
+created_at: 2007-11-18 12:18:00 +09:00
+post_id: "303"
+post_title: 16 years, 2 weeks and 1 day
+
+--- !ruby/object:Comment 
+author_email: rosemary@millstream.com.au
+author_name: rosemary
+author_url: http://rosemary.id.au
+content: Very funny :-)
+created_at: 2008-01-08 12:57:00 +09:00
+post_id: "307"
+post_title: Can anyone say "X-Box 360"?
+
+--- !ruby/object:Comment 
+author_email: alstoiche@gmail.com
+author_name: Al
+author_url: http://www.mynameisal.com
+content: In all the controversy I didn't even notice the rancor
+created_at: 2008-01-10 12:02:00 +09:00
+post_id: "308"
+post_title: A positive memory from the Sydney Test
+
+--- !ruby/object:Comment 
+author_email: web@radharc.com.au
+author_name: Gary Barber
+author_url: http://manwithnoblog.com
+content: |
+  Its a shame they had a 10:30 noise curfew.  As I got the impression that the set could have been longer.   Agree it was sheer magic. 
+
+created_at: 2008-02-02 00:24:00 +09:00
+post_id: "313"
+post_title: The Police - February 1, 2008
+
+--- !ruby/object:Comment 
+author_email: alstoiche@gmail.com
+author_name: Al
+author_url: http://www.mynameisal.com
+content: lulz
+created_at: 2008-02-07 22:19:00 +09:00
+post_id: "316"
+post_title: 8 Things You Didn't Know About Me
+
+--- !ruby/object:Comment 
+author_email: svanhattem@gmail.com
+author_name: Simone
+author_url: http://enjoyperth.net
+content: Fascinating... I haven't even eaten half of that list... but I have had turtle...oh, and ostrich! heh.
+created_at: 2008-02-10 21:24:00 +09:00
+post_id: "318"
+post_title: Meats I have eaten
+
+--- !ruby/object:Comment 
+author_email: alstoiche@gmail.com
+author_name: Al
+author_url: http://www.mynameisal.com
+content: bah thats 9 then. not quite sure i want anything exploding in my mouth though...
+created_at: 2008-02-10 21:24:00 +09:00
+post_id: "318"
+post_title: Meats I have eaten
+
+--- !ruby/object:Comment 
+author_email: jordanbrock@gmail.com
+author_name: Jordan Brock
+author_url: http://jordanbrock.com
+content: |-
+  As I wrote that I knew it was the wrong thing to say. But it's totally what it tasted like.
+  
+  The eel, however, made me want to throw up.
+created_at: 2008-02-10 21:24:00 +09:00
+post_id: "318"
+post_title: Meats I have eaten
+
+--- !ruby/object:Comment 
+author_email: rosemary@millstream.com.au
+author_name: rosemary
+author_url: http://rosemary.id.au
+content: |-
+  Interesting list. You have been more adventurous than me. 
+  
+  Pigeon listed twice?
+  
+  Have you ever tried frog or snails?
+  
+  The eel wasn't good for me either.
+created_at: 2008-02-10 21:24:00 +09:00
+post_id: "318"
+post_title: Meats I have eaten
+
+--- !ruby/object:Comment 
+author_email: bronwenc@perthnorg.com.au
+author_name: Bron
+author_url: http://bronwenclune.com
+content: I am man, hear me roar.
+created_at: 2008-02-10 21:24:00 +09:00
+post_id: "318"
+post_title: Meats I have eaten
+
+--- !ruby/object:Comment 
+author_email: andrew@twosittingducks.com
+author_name: Andrew
+author_url: http://www.twosittingducks.com
+content: He's got a bit of his old man about him, that's for sure.
+created_at: 2008-03-05 22:31:00 +09:00
+post_id: "326"
+post_title: Second Chance
+
+--- !ruby/object:Comment 
+author_email: rosemary@millstream.com.au
+author_name: rosemary
+author_url: http://rosemary.id.au
+content: Scary scary scary...
+created_at: 2008-03-06 14:56:00 +09:00
+post_id: "328"
+post_title: No Country For Old Men
+
+--- !ruby/object:Comment 
+author_email: dave@peaksite.com
+author_name: Dave
+author_url: http://peaksite.com/
+content: 14Mbps! That sure ain't no Raleigh Rd...
+created_at: 2008-04-10 09:41:00 +08:00
+post_id: "332"
+post_title: How to access US iTunes content on your Apple TV in Australia
+
+--- !ruby/object:Comment 
+author_email: pabloh7272@yahoo.com
+author_name: PabloH
+author_url: ""
+content: Unfortunately, eBay has become overrun with scammers selling gift cards that they bought with stolen credit cards - they&#39;re even selling the cards for like half of the face value (which they can do because it didn&#39;t cost them anything). The problem is that when Apple discovers a card you used was stolen, they can cancel your account, and you could lose access to much of what you paid for. As an alternative, check out <a href="http://www.tunezip.com" rel="nofollow">www.tunezip.com</a>, they sell legitimate cards at a reasonable price. I&#39;ve used them for awhile now with no problems.
+created_at: 2010-07-15 05:11:28 +08:00
+post_id: "332"
+post_title: How to access US iTunes content on your Apple TV in Australia
+
+--- !ruby/object:Comment 
+author_email: kent@ewakened.com
+author_name: Kent Fenwick
+author_url: http://blog.ewakened.com/
+content: Thanks so much!  Exactly what I was looking for.<br><br>Great post. <br><br>Kent
+created_at: 2009-05-23 06:06:20 +08:00
+post_id: "340"
+post_title: Freezing Rails with Git
+
+--- !ruby/object:Comment 
+author_email: jordanbrock@gmail.com
+author_name: jordanbrock
+author_url: http://jordanbrock.com
+content: "rima, go into the Settings application on your iPhone, choose \xE2\x80\x9CMail, Contacts, Calendars\xE2\x80\x9D, choose MobileMe and then you should have the option to choose which SMTP server you want to use. For reference, look at the screenshots above. If you can&#39;t find it, please let me know."
+created_at: 2009-05-04 18:48:50 +08:00
+post_id: "343"
+post_title: Gmail and MobileMe - Living Together in Perfect Harmony
+
+--- !ruby/object:Comment 
+author_email: rima.batal@gmail.com
+author_name: "rima "
+author_url: ""
+content: You mention go back into your MobileMe account and set the outgoing SMTP server to <a href="http://smtp.google.com" rel="nofollow">smtp.google.com</a>. I cannot find where to do this in Mobile me? can you please direct me?
+created_at: 2009-04-30 05:01:37 +08:00
+post_id: "343"
+post_title: Gmail and MobileMe - Living Together in Perfect Harmony
+
+--- !ruby/object:Comment 
+author_email: raffaele@ngi.it
+author_name: raf
+author_url: ""
+content: "in this way, i&#39;ll have double copy of my email (inbox and sent mail) either in mobileme and in gmail (i mean, webmail)...<br>instead, in my mac, having disabled gmail account, i&#39;ll only have the mobileme copy...<br><br>just one thing: all this work just with email i&#39;ll receive from the moment i apply all this changes, right?<br>for the past email how can i do to have them in mobileme webmail, and in my mail.app?<br>could i just drag & drop from mail.app to inbox folder of @me.com account? but in this way, would i lose any information, as sender, date etc?<br><br>thanks for your beautiful post! :)"
+created_at: 2009-05-06 01:11:27 +08:00
+post_id: "343"
+post_title: Gmail and MobileMe - Living Together in Perfect Harmony
+
+--- !ruby/object:Comment 
+author_email: raffaele@ngi.it
+author_name: raf
+author_url: ""
+content: "p.s.: infact, if i uncheck the gmail imap account in mail.app, all the emails are not more shown in mail.app :("
+created_at: 2009-05-06 01:19:27 +08:00
+post_id: "343"
+post_title: Gmail and MobileMe - Living Together in Perfect Harmony
+
+--- !ruby/object:Comment 
+author_email: joel@jharrisondesign.com
+author_name: joel Harrison
+author_url: http://www.jharrisondesign.com
+content: Yes, but what about searching for archived email through the mail.app interface?<br>Does gmail push those as well?
+created_at: 2009-05-08 10:01:27 +08:00
+post_id: "343"
+post_title: Gmail and MobileMe - Living Together in Perfect Harmony
+
+--- !ruby/object:Comment 
+author_email: octopus@me.com
+author_name: octopus
+author_url: ""
+content: When I unckeck &#39;enable this account&#39; I cant view any of the GMail mail in my Mac Mail. Why wouldnt you want to be able to view your gmail mail on your mac mail?
+created_at: 2009-05-23 17:26:27 +08:00
+post_id: "343"
+post_title: Gmail and MobileMe - Living Together in Perfect Harmony
+
+--- !ruby/object:Comment 
+author_email: octopus@me.com
+author_name: octopus
+author_url: ""
+content: Also, this process doesnt allow the ability to store an email to the @me address on the Gmail account, only a reply to an @me email. So you still dont get the full picture on the Gmail archive unless you respond to all @me emails through your google server.<br><br>Or is there a way?
+created_at: 2009-05-23 21:51:04 +08:00
+post_id: "343"
+post_title: Gmail and MobileMe - Living Together in Perfect Harmony
+
+--- !ruby/object:Comment 
+author_email: jordanbrock@gmail.com
+author_name: jordanbrock
+author_url: http://jordanbrock.com
+content: Joel, Unless you enable gmail in mail.app, you won&#39;t see those emails. One way around this is to enable gmail in Mail.app, and then copy all your gmail archived mails over to your MobileMe account, and then disable gmail. Of course, you&#39;ll then have 2 copies of everything (even though you&#39;ll only see one), but that&#39;s a good thing.
+created_at: 2009-05-26 16:43:31 +08:00
+post_id: "343"
+post_title: Gmail and MobileMe - Living Together in Perfect Harmony
+
+--- !ruby/object:Comment 
+author_email: jordanbrock@gmail.com
+author_name: jordanbrock
+author_url: http://jordanbrock.com
+content: octopus, you&#39;re right. Any mail sent directly to your MobileMe account will bypass the gmail accounts. Of course, you could setup a rule in Mail.app to forward any messages sent to an @me.com account to your gmail account, and then archive them. I prefer to only have the one gmail address that I give out, so this isn&#39;t the biggest problem.
+created_at: 2009-05-26 16:45:33 +08:00
+post_id: "343"
+post_title: Gmail and MobileMe - Living Together in Perfect Harmony
+
+--- !ruby/object:Comment 
+author_email: jordanbrock@gmail.com
+author_name: jordanbrock
+author_url: http://jordanbrock.com
+content: You should be able to copy your emails from your gmail IMAP folders over to your MobileMe account, and then have access to your archive.
+created_at: 2009-05-26 16:46:37 +08:00
+post_id: "343"
+post_title: Gmail and MobileMe - Living Together in Perfect Harmony
+
+--- !ruby/object:Comment 
+author_email: penaw001@me.com
+author_name: will
+author_url: ""
+content: You sir are a gangster!!! lol Thanks
+created_at: 2009-05-31 11:36:40 +08:00
+post_id: "343"
+post_title: Gmail and MobileMe - Living Together in Perfect Harmony
+
+--- !ruby/object:Comment 
+author_email: sherrattj@gmail.com
+author_name: James Sherratt
+author_url: ""
+content: cant I just have my gmail go into mobile me just like I can have outlook?
+created_at: 2009-06-08 12:48:14 +08:00
+post_id: "343"
+post_title: Gmail and MobileMe - Living Together in Perfect Harmony
+
+--- !ruby/object:Comment 
+author_email: seanbetts@gmail.com
+author_name: Kranos
+author_url: ""
+content: Hi,<br><br>I&#39;ve followed all of this and it works perfectly apart from one thing - all email that I send is from my .me account i.e. <a href="mailto:xxx@me.com" rel="nofollow">xxx@me.com</a> as opposed to <a href="mailto:xxx@gmail.com" rel="nofollow">xxx@gmail.com</a>.<br><br>Any ideas how to fix this?<br><br>Kranos
+created_at: 2009-06-10 10:07:03 +08:00
+post_id: "343"
+post_title: Gmail and MobileMe - Living Together in Perfect Harmony
+
+--- !ruby/object:Comment 
+author_email: charles.r.hunt@gmail.com
+author_name: Charlie
+author_url: ""
+content: Yeah, I&#39;m having the same problem as Kranos. I set the outgoing server as <a href="http://smtp.gmail.com" rel="nofollow">smtp.gmail.com</a> with all my login info, ssl, and correct port and everything. But for some reason my phone is still sending everything from <a href="mailto:xxxx@me.com" rel="nofollow">xxxx@me.com</a> rather than <a href="http://gmail.com" rel="nofollow">gmail.com</a>. Not a huge deal, since I don&#39;t really care which address people reply to as long as it gets to me, but it&#39;d be nice to have something standard without having to change my address entirely. <br><br>But otherwise, great post. Really very helpful.
+created_at: 2009-06-11 07:54:57 +08:00
+post_id: "343"
+post_title: Gmail and MobileMe - Living Together in Perfect Harmony
+
+--- !ruby/object:Comment 
+author_email: charles.r.hunt@gmail.com
+author_name: Charlie
+author_url: ""
+content: "Oops. Kranos/others having this issue - <br><br>I don&#39;t know if this was the intended way to do this, but: if you&#39;re sending email from your iPhone, like a reply, just tap where it says \"Cc/Bcc, From\" under \"To\" and it will expand to three lines. Tap \"from\" again, and it will give you the choice of sending from your Gmail address or your MobileMe address. Tap your Gmail address, and you&#39;re all set! Same thing for Mac Mail: when you&#39;re sending an email, just click on the \"from\" dropdown box and select which address you want.<br><br>Though, you also have to also have your Gmail account activated on your phone. Which actually doesn&#39;t matter as long as you followed this posts instructions by doing the filter and marking all emails as read, so you don&#39;t get repeat notifications. Then just work from your MobileMe account in the Mail app on your iPhone, and you should be good to go.<br><br>Hope this helped."
+created_at: 2009-06-11 08:34:02 +08:00
+post_id: "343"
+post_title: Gmail and MobileMe - Living Together in Perfect Harmony
+
+--- !ruby/object:Comment 
+author_email: jordanbrock@gmail.com
+author_name: Jordan
+author_url: http://jordanbrock.com
+content: |-
+  Hey Charlie,
+  
+  That's a great find. Thanks for that. It's cleared up the one last remaining bugbear with the whole system. Excellent work.
+  
+  Cheers,
+  
+  Jordan
+created_at: 2009-06-14 11:48:47 +08:00
+post_id: "343"
+post_title: Gmail and MobileMe - Living Together in Perfect Harmony
+
+--- !ruby/object:Comment 
+author_email: sjhsjdkh@hjhj.com
+author_name: macdaddy
+author_url: ""
+content: thank you...worked so far..!
+created_at: 2009-06-22 09:57:36 +08:00
+post_id: "343"
+post_title: Gmail and MobileMe - Living Together in Perfect Harmony
+
+--- !ruby/object:Comment 
+author_email: temirov@gmail.com
+author_name: Vadym
+author_url: ""
+content: HM, so at the end of the day you have two active accounts, one of which is absolutely redundant, and that is <a href="http://me.com" rel="nofollow">me.com</a><br><br>Data plan is unlimited so pulling gmail every 10 or so minutes should do the trick. All push solutions I&#39;ve seen so far are ugly to say at least. Btw, one can get the same crooked setup with mail2web, which is at least free.<br><br>But great attempts and it&#39;s a pity Apple and Google still can&#39;t put their shit together
+created_at: 2009-06-26 20:07:27 +08:00
+post_id: "343"
+post_title: Gmail and MobileMe - Living Together in Perfect Harmony
+
+--- !ruby/object:Comment 
+author_email: apeterc@yahoo.com
+author_name: alloallo
+author_url: ""
+content: MobileMe is not redundant, it just doing the push for you to your iphone/touch; and the instructions worked well for me overall. Great stuff, thanks.
+created_at: 2009-07-02 08:02:45 +08:00
+post_id: "343"
+post_title: Gmail and MobileMe - Living Together in Perfect Harmony
+
+--- !ruby/object:Comment 
+author_email: temirov@gmail.com
+author_name: Vadym
+author_url: ""
+content: "Let me try to clarify what I mean by my non-superlative comment:<br>1. Push functionality on iPhone is available through two content providers: MobileMe and Exchange. There is a free alternative to MobileMe, which is mail2web. It support Exchange push protocol. <br>2. Having two email repositories, gmail and MobileMe, being setup on the phone IS redundant in terms of:<br>a. Data storage<br>b. Data management, since one needs manually synchronize deleted mails, etc<br>3. Lack of gmail push functionality is unfortunate and should be engineered by Apple/Google in order to avoid poor design people ought to use in order to get real-time notification"
+created_at: 2009-07-02 08:26:00 +08:00
+post_id: "343"
+post_title: Gmail and MobileMe - Living Together in Perfect Harmony
+
+--- !ruby/object:Comment 
+author_email: nrvishal@gmail.com
+author_name: Raghu
+author_url: ""
+content: Check out this great article on merging your gmail & mobileme accounts.<br><br><a href="http://www.davesouth.org/stories/gmailme-a-mashup-of-gmail-and-mobileme" rel="nofollow">http://www.davesouth.org/stories/gmailme-a-mash...</a>
+created_at: 2009-07-07 16:24:05 +08:00
+post_id: "343"
+post_title: Gmail and MobileMe - Living Together in Perfect Harmony
+
+--- !ruby/object:Comment 
+author_email: mbreser@gmail.com
+author_name: Mario
+author_url: ""
+content: Hello, thank you for this tutorial, I think it&#39;s working for me so far.<br><br>To all of you:<br>Does it work, if you send a mail from your Gmail to your Gmail? If I do this, the mail is visible just at the Gmail-Webinterface and not in Mail.app. When I send a mail to my Gmail from the <a href="mailto:me.com-webinterface/@me.com-adress" rel="nofollow">me.com-webinterface/@me.com-adress</a>, it seems to work.<br><br>In short, forwarding does not work for me if the mail is sent from the same email adress.<br>Sure, this is not a big deal, but I just wanted to know if it is normal.<br><br>Thank you<br><br>Regards from Austria
+created_at: 2009-07-14 09:47:48 +08:00
+post_id: "343"
+post_title: Gmail and MobileMe - Living Together in Perfect Harmony
+
+--- !ruby/object:Comment 
+author_email: temirov@gmail.com
+author_name: Vadym
+author_url: ""
+content: I would assume there is a risk of an infinite loop otherwise
+created_at: 2009-07-14 17:40:33 +08:00
+post_id: "343"
+post_title: Gmail and MobileMe - Living Together in Perfect Harmony
+
+--- !ruby/object:Comment 
+author_email: jkwan.nd@gmail.com
+author_name: Name
+author_url: ""
+content: The drawback is you can&#39;t use the web interface of mobileme to send mail with a from address not being the mobileme one.
+created_at: 2009-09-12 17:14:30 +08:00
+post_id: "343"
+post_title: Gmail and MobileMe - Living Together in Perfect Harmony
+
+--- !ruby/object:Comment 
+author_email: bhood541@gmail.com
+author_name: hoody
+author_url: ""
+content: ok, I must be stupid as I can&#39;t follow half the instructions above. I&#39;ve set my gmail to forward to my mobileme account, easy. I&#39;ve then set my gmail account up in Mail as an IMAP account. <br><br>Then I&#39;m stuck. Where do you set the outgoing smtp account? In mobileme? If so via the <a href="http://me.com" rel="nofollow">me.com</a> site or in the preferences in the Mac (I cant see any option in either?)<br><br>I&#39;m just trying to sync my iMac, Macbook and iPhone so they are all in showing the same gmail no matter what device I&#39;ve viewed/deleted mails on.... I know have no mail coming into my Mail account on my macbook
+created_at: 2009-09-16 09:30:19 +08:00
+post_id: "343"
+post_title: Gmail and MobileMe - Living Together in Perfect Harmony
+
+--- !ruby/object:Comment 
+author_email: mattster812@mac.com
+author_name: matt
+author_url: ""
+content: Hey Jordan!  This is great!  I got so frustrated with the mobile me web interface, when I had to type longer emails than I wanted to on my phone.  I got all this working.  <br><br>2 questions for you, if you have time...<br>1.  if all I want to do is use gmail / mobileme for checking e-mail thru the web, but leave my iphone / Mac the same, do I need to set up the push and other accounts?<br><br>2.  Can you sync the calendars thru mobile me / gmail?<br><br>Thanks a lot!
+created_at: 2009-10-23 06:39:12 +08:00
+post_id: "343"
+post_title: Gmail and MobileMe - Living Together in Perfect Harmony
+
+--- !ruby/object:Comment 
+author_email: blaikied@gmail.com
+author_name: blake7
+author_url: ""
+content: Good article and one I have followed and set-up. Just to confirm one point - if I received a message to <a href="mailto:joe@example.com" rel="nofollow">joe@example.com</a> and I want to reply from the iPhone do I have to include the <a href="http://example.com" rel="nofollow">example.com</a> email account. Mac Mail makes it easy to reply by adding multiple domains to the set-up, however, this does not seem to be an option on the iphone. That being the case this is not really a good iphone solution - more an issue with the iphone.<br><br>Thanks for getting this far with trying to get to a single mail account, while trying to keep multiple domain addresses!!!!
+created_at: 2009-12-22 10:35:02 +08:00
+post_id: "343"
+post_title: Gmail and MobileMe - Living Together in Perfect Harmony
+
+--- !ruby/object:Comment 
+author_email: chanellealvarez@gmail.com
+author_name: chanelle alvarez
+author_url: ""
+content: i found your article very useful but the issue i having is when i login to <a href="http://me.com" rel="nofollow">me.com</a> i want to see my gmail not only on my computer but in my mobileme cloud... it gives me the option but im not sure what it is i need to plug in apple told me to contact gmail but i have not received a response
+created_at: 2010-02-05 05:36:48 +08:00
+post_id: "343"
+post_title: Gmail and MobileMe - Living Together in Perfect Harmony
+
+--- !ruby/object:Comment 
+author_email: jordan@mighty55.com
+author_name: mighty55
+author_url: ""
+content: "Also Google Sync resolves a lot of this:  <a href=\"http://www.google.com/support/mobile/bin/answer.py?answer=138740&topic=14252\" rel=\"nofollow\">http://www.google.com/support/mobile/bin/answer...</a> <br><br>cheers"
+created_at: 2010-02-13 10:07:05 +08:00
+post_id: "343"
+post_title: Gmail and MobileMe - Living Together in Perfect Harmony
+
+--- !ruby/object:Comment 
+author_email: None
+author_name: Declan
+author_url: http://twitter.com/madnuts123
+content: Thats cool nice one, but do you know how to solve this one, I have smart folders in my apple mail, but when I log into <a href="http://me.com" rel="nofollow">me.com</a> there not there, there is an option in mobile sync to sync smart folders, but apparently thats only the behaviors and not the content.
+created_at: 2010-09-26 06:07:11 +08:00
+post_id: "343"
+post_title: Gmail and MobileMe - Living Together in Perfect Harmony
+
+--- !ruby/object:Comment 
+author_email: jonathan@planetmiller.com
+author_name: Jonathan
+author_url: ""
+content: Now I see messages from the accounts I added to MobileMe showing up on other computers, but they are not showing up on my computer.<br>
+created_at: 2010-11-29 20:14:03 +08:00
+post_id: "343"
+post_title: Gmail and MobileMe - Living Together in Perfect Harmony
+
+--- !ruby/object:Comment 
+author_email: jonathan@planetmiller.com
+author_name: Jonathan
+author_url: ""
+content: OK - I sent everything up on my iMac as below:<br><br>1) when I removed the gmail account I no longer see past emails from that account.<br><br>2) When I tried to send email using my gmail account it did not like the selected server and asked me to choose another.<br><br>Please help.<br><br>Jonathan
+created_at: 2010-11-29 20:03:12 +08:00
+post_id: "343"
+post_title: Gmail and MobileMe - Living Together in Perfect Harmony
+
+--- !ruby/object:Comment 
+author_email: urkle@outoforder.cc
+author_name: Edward Rudd
+author_url: ""
+content: Beuller!!!
+created_at: 2009-07-06 12:21:00 +08:00
+post_id: "359"
+post_title: Using git to sync configurations between two computers
+
+--- !ruby/object:Comment 
+author_email: jordanbrock@gmail.com
+author_name: jordanbrock
+author_url: http://jordanbrock.com
+content: "Congratulations Edward. You win the prize!<br><br>*Please note: There is no prize.*<br><br>:)"
+created_at: 2009-07-09 08:14:22 +08:00
+post_id: "359"
+post_title: Using git to sync configurations between two computers
+
+--- !ruby/object:Comment 
+author_email: memo@m3design.net
+author_name: philipmcvey
+author_url: ""
+content: Lady<br>The quote is from Ferris Bueller&#39;s Day off whilst in the toilets of Chez Luis. Officially one of the finest films of all time. Citizen Kane? Pah...<br>Hope all is well in Brockland... <br>I will contact you through archaic social networking site Facebook. Have been using it to contact relatives in the Mother Country, so need to get some more friends.<br>Max respec<br>Phil
+created_at: 2010-01-15 18:56:40 +08:00
+post_id: "359"
+post_title: Using git to sync configurations between two computers
+
+--- !ruby/object:Comment 
+author_email: comments@200ok.com.au
+author_name: Ben Buchanan
+author_url: http://weblog.200ok.com.au/
+content: A few years ago I started posting my photos in a livejournal group; and found one guy in particular often gave me really really useful critiques. He was so generous with his time; and clearly a professional who probably had a lot of work to do... i was really grateful. I ended up adding him to my friends list - <a href="http://kylecassidy.livejournal.com/" rel="nofollow">http://kylecassidy.livejournal.com/</a><br><br>Over time a certain girl started appearing far more often in his photos - in between all the photos of politicians, cats, vegan food and fetish models (not making that up). We knew something was up, and recently we finally got the "yay we got married in secret!" post. i really was pleased, like glowing happy-for-friends pleased, and the closest i&#39;ve come to meeting kyle was trading an email or two.<br><br>i think it&#39;s entirely possible to feel joy and sadness as we watch the lives of strangers online. there are humans on the other ends of all these wires...
+created_at: 2009-06-05 01:28:02 +08:00
+post_id: "459"
+post_title: Relationships with Random Strangers
+
+--- !ruby/object:Comment 
+author_email: jordanbrock@gmail.com
+author_name: jordanbrock
+author_url: http://jordanbrock.com
+content: Yeah, it&#39;s funny that what was inherently viewed as an anti-social behaviour (spending long hours on the computer) is in fact opening up new ways of experiencing emotions. <br><br>The other thing that weirds me out is when you try to refer to these people in another conversation. You say "these people I know" or "some friends on the internet", but you&#39;re not friends, but you feel as though you are. One day someone will come up with a term for those (non) relationships.
+created_at: 2009-06-05 03:13:37 +08:00
+post_id: "459"
+post_title: Relationships with Random Strangers
+
+--- !ruby/object:Comment 
+author_email: ""
+author_name: Derek Powazek - links for 2009-10-09
+author_url: http://powazek.com/posts/2088
+content: "[...] Edge of the Web interview: Derek Powazek My interview with Jordan Brock in preparation for my keynote at Edge of the Web in Perth next month. (tags: derekpowazek community conference) [...] "
+created_at: 2009-10-09 18:01:41 +08:00
+post_id: "472"
+post_title: Edge of the Web - Derek Powazek
+
+--- !ruby/object:Comment 
+author_email: dave@peaksite.com
+author_name: Dave
+author_url: ""
+content: Regardless of whether their new stuff is more or less popular, the reality is that traditional album sales are declining fast across the board. The sad thing is that so many great artists seem to lack any insight into how they can generate a great income from other sources such as live shows and merchandising.<br><br>The thing that really surprises me is when you see this sort of attitude from up and coming artists. I really can&#39;t understand why a mostly unknown artist wouldn&#39;t want as many people as possible to hear their music and potentially become a fan.
+created_at: 2011-05-20 16:38:18 +08:00
+post_id: "502"
+post_title: Or is it just because people don't like your new stuff?
+
+--- !ruby/object:Comment 
+author_email: jordan@brock.id.au
+author_name: jordanbrock
+author_url: http://jordanbrock.com
+content: There&#39;s no denying that "Traditional" album sales have declined. I just take umbrage at the blanket "PIRACY DID IT!" argument.<br><br>No matter what they try and do, there is no way that the industry is returning to the "glory days" of the late 1970&#39;s to early 1990&#39;s where they made astonishing amounts of money from CD sales.
+created_at: 2011-05-20 17:38:20 +08:00
+post_id: "502"
+post_title: Or is it just because people don't like your new stuff?
+
+--- !ruby/object:Comment 
+author_email: grant@speakinteractive.com
+author_name: Grant Bissett
+author_url: ""
+content: Dreadlocks and capitalism just don&#39;t mix.
+created_at: 2011-06-15 16:00:55 +08:00
+post_id: "502"
+post_title: Or is it just because people don't like your new stuff?
+
+--- !ruby/object:Comment 
+author_email: david@crowdint.com
+author_name: David
+author_url: ""
+content: <a href="http://blog.crowdint.com/2011/04/13/turn-jquery-effects-off-for-testing.html" rel="nofollow">http://blog.crowdint.com/2011/...</a>
+created_at: 2011-07-08 10:27:14 +08:00
+post_id: "505"
+post_title: Selenium "ElementNotDisplayedError"
+
+--- !ruby/object:Comment 
+author_email: itzernel@gmail.com
+author_name: zernel
+author_url: ""
+content: "I just solve this error by add \xC2\xA0\" Capybara.ignore_elements = true \" to\xC2\xA0features/support/env.rb"
+created_at: 2011-12-01 20:28:48 +08:00
+post_id: "505"
+post_title: Selenium "ElementNotDisplayedError"
+

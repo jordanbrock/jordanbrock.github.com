@@ -1,0 +1,36 @@
+---
+layout: post
+title: SVN Tips
+permalink: /2006/02/01/svn-tips/index.html
+post_id: 227
+categories: []
+
+---
+
+p. Another post as a reference item for me.
+
+
+
+
+	h3. Setting up a subversion project
+
+
+
+
+Create the trunk, tags and branches subdirectories.
+bq. 
+<pre>
+svn import /path/to/project http://server.com/svn/path -m "Initial Upload" 
+svn checkout http://server.com/svn/path/trunk project name
+</pre>
+
+
+Then some general housekeeping for Rails apps and subversion:
+bq. 
+<pre>
+svn remove log/*
+svn commit -m "Removing Logs" 
+svn update
+svn propset svn:ignore "*.log" log/
+svn commit -m "Ignoring Logfiles" 
+</pre>

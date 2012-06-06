@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>jordanbrock.com &mdash; Selenium "ElementNotDisplayedError"</title>
+    <link href="/css/reset.css" rel="stylesheet" type="text/css" />
+    <link href="/css/screen.css" media="screen" rel="stylesheet" type="text/css" />
+    <link href="/css/syntax.css" media="screen" rel="stylesheet" type="text/css" />
+    <link rel="openid.server" href="http://openid.claimid.com/server">
+    <link rel="openid.delegate" href="http://openid.claimid.com/jordanbrock">
+    <script type="text/javascript" src="http://use.typekit.com/wmw7icf.js"></script>
+<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+
+    <script type="text/javascript">
+  var _gauges = _gauges || [];
+  (function() {
+    var t   = document.createElement('script');
+    t.type  = 'text/javascript';
+    t.async = true;
+    t.id    = 'gauges-tracker';
+    t.setAttribute('data-site-id', '4f8d0d2df5a1f54576000010');
+    t.src = '//secure.gaug.es/track.js';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(t, s);
+  })();
+</script>
+
+  </head>
+  <body>
+    <div id="container">
+      <header>
+      <h1><a href="/">Jordan Brock</a></h1>
+      </header>
+      <div id="content">
+        <h2>Selenium "ElementNotDisplayedError"</h2>
+<time class="meta" datetime="2011-06-23">
+  Jun 23, 2011
+</time>
+<article class="post">
+  <p>If you do integration/request testing of an AJAXified web application using Rspec, Capybara and Selenium there is a pretty good chance that you might have run into this error:</p>
+<div class="highlight"><pre><code class="ruby"><span class="no">Selenium</span><span class="o">::</span><span class="no">WebDriver</span><span class="o">::</span><span class="no">Error</span><span class="o">::</span><span class="no">ElementNotDisplayedError</span><span class="p">:</span>
+<span class="no">Element</span> <span class="n">is</span> <span class="ow">not</span> <span class="n">currently</span> <span class="n">visible</span> <span class="ow">and</span> <span class="n">so</span> <span class="n">may</span> <span class="ow">not</span> <span class="n">be</span> <span class="n">interacted</span> <span class="n">with</span>
+</code></pre>
+</div>
+<p>After spending way too long to try and solve this problem (&#8220;<span class="caps">THE</span> <span class="caps">ELEMENT</span> <strong>IS</strong> <span class="caps">VISIBLE</span> <span class="caps">DAMN</span> <span class="caps">YOU</span>!!!!&#8221;) I found a few little tweaks to my setup that help remove and/or mitigate the error.</p>
+<p>The key to this error is that Capybara is trying to find and/or interact with an element and it&#8217;s not quite ready on the page yet because some JavaScript hasn&#8217;t executed yet, or there&#8217;s a delay with the test web server.</p>
+<h3>jQuery Effects</h3>
+<p>If you&#8217;re running tests, there&#8217;s a pretty good chance you don&#8217;t care about any jQuery effects. You&#8217;re just interested in the result. If that&#8217;s the case, then add this line to your page layout:</p>
+<div class="highlight"><pre><code class="ruby"><span class="o">=</span> <span class="n">javascript_tag</span> <span class="s1">&#39;$.fx.off = true;&#39;</span> <span class="k">if</span> <span class="no">Rails</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">test?</span>
+</code></pre>
+</div>
+<p>That will turn jQuery effects off in the Rails test environment.</p>
+<h3>Capybara &#8220;wait_for&#8221;</h3>
+<p>This is a particularly helpful method that, like its name implies, causes Capybara to take a chill pill, and wait for a particular condition to be met. Call it like this:</p>
+<div class="highlight"><pre><code class="ruby"><span class="n">wait_for</span><span class="p">(</span><span class="mi">15</span><span class="p">)</span> <span class="p">{</span><span class="n">page</span><span class="o">.</span><span class="n">should</span> <span class="n">have_content</span> <span class="s2">&quot;Some text.&quot;</span><span class="p">}</span>
+<span class="n">wait_for</span><span class="p">(</span><span class="mi">30</span><span class="p">)</span> <span class="p">{</span><span class="n">page</span><span class="o">.</span><span class="n">should</span> <span class="n">have_button</span> <span class="s2">&quot;Button Text&quot;</span><span class="p">}</span>
+</code></pre>
+</div>
+<p>This just gives the page a little time to catch up before Capybara blows up on you.</p>
+<h3>capybara-webkit</h3>
+<p>A new Selenium driver from the fine folks at <a href="http://robots.thoughtbot.com/post/4583605733/capybara-webkit">Thoughtbot</a>, this is a headless (this just means it doesn&#8217;t open a visible window) browser that Capybara can interact with. Ideally it should be faster than opening up a browser window for each test. I managed to get it working, mostly. It&#8217;s still kind of new, so there are a few things missing, but it might be a good idea to watch the <a href="https://github.com/thoughtbot/capybara-webkit">github project</a>.</p>
+</article>
+
+      </div>
+      <div id="sidebar">
+        <h2>Stuff</h2>
+        <ul>
+          <li><a href="/archive.html">Archive</a></li>
+          <li><a href="http://photos.jordanbrock.com">OpenPhoto</a></li>
+          <li><a href="http://twitter.com/jordanbrock">twitter</a></li>
+          <li><a href="http://strava.com/athletes/jordanbrock">Strava</a></li>
+        </ul>
+      </div>
+      <footer>
+        By me.
+      </footer>
+    </div>
+  </body>
+</html>

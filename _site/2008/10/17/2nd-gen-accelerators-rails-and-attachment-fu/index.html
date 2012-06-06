@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>jordanbrock.com &mdash; 2nd Gen Accelerators, Rails and attachment_fu</title>
+    <link href="/css/reset.css" rel="stylesheet" type="text/css" />
+    <link href="/css/screen.css" media="screen" rel="stylesheet" type="text/css" />
+    <link href="/css/syntax.css" media="screen" rel="stylesheet" type="text/css" />
+    <link rel="openid.server" href="http://openid.claimid.com/server">
+    <link rel="openid.delegate" href="http://openid.claimid.com/jordanbrock">
+    <script type="text/javascript" src="http://use.typekit.com/wmw7icf.js"></script>
+<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+
+    <script type="text/javascript">
+  var _gauges = _gauges || [];
+  (function() {
+    var t   = document.createElement('script');
+    t.type  = 'text/javascript';
+    t.async = true;
+    t.id    = 'gauges-tracker';
+    t.setAttribute('data-site-id', '4f8d0d2df5a1f54576000010');
+    t.src = '//secure.gaug.es/track.js';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(t, s);
+  })();
+</script>
+
+  </head>
+  <body>
+    <div id="container">
+      <header>
+      <h1><a href="/">Jordan Brock</a></h1>
+      </header>
+      <div id="content">
+        <h2>2nd Gen Accelerators, Rails and attachment_fu</h2>
+<time class="meta" datetime="2008-10-17">
+  Oct 17, 2008
+</time>
+<article class="post">
+  <p>File this one under <span class="caps"><span class="caps">WTF</span></span>.</p>
+<p>I&#8217;ve been working on an updated version of the <a href="http://www.soilquality.org.au">Soil Quality</a> website for a little while now, and recently needed to deploy the site to a staging server for testing. I ordered up a <a href="http://www.joyent.com/accelerator/">1/4Gb Accelerator</a> from <a href="http://www.joyent.com">Joyent</a>, configured it, and <a href="http://wiki.joyent.com/accelerators:deploying_rails_apps">deployed</a> the app, just like I&#8217;ve done with 20+ other sites, and <span class="caps"><span class="caps">BOOM</span></span>, straight into a brick wall.</p>
+<p>I opened up the log files and saw this error:</p>
+<div class="highlight"><pre><code class="bash">** Daemonized, any open files are closed.  Look at /tmp/soilquality-mongrel.8200.pid and log/mongrel.8200.log <span class="k">for </span>info.
+** Starting Mongrel listening at 127.0.0.1:8200
+** Define INLINEDIR or HOME in your environment and try again
+</code></pre>
+</div>
+<p>Wonderfully descriptive I know, but something I&#8217;d never run into before. So, fire the the google and it turns out it&#8217;s a common error, with a common fix: just put</p>
+<div class="highlight"><pre><code class="ruby"><span class="no">ENV</span><span class="o">[</span><span class="s1">&#39;INLINEDIR&#39;</span><span class="o">]</span> <span class="o">=</span> <span class="no">RAILS_ROOT</span> <span class="o">+</span> <span class="s2">&quot;/tmp&quot;</span>
+</code></pre>
+</div>
+<p>into your config/environment.rb file, make sure the directory exists and that it&#8217;s writeable by the mongrel, restart, and away you go.</p>
+<p>But of course, that didn&#8217;t fix it, did it.</p>
+<p>Much hair pulling ensued. I finally enlisted the help of <a href="http://blog.ninjahideout.com/">Darcy Laycock</a> and together we managed to track the problem down to the <a href="http://github.com/technoweenie/attachment_fu/tree/master">attachment_fu plugin</a>, which was causing the problem as the mongrel process booted. OK, so now we knew where the problem lay, but what was causing it.</p>
+<p>It turned out to be the ImageScience image processor, or more specifically the way the attachment_fu plugin and ImageScience work together <strong><span class="caps">ON A 2ND <span class="caps">GENERATION</span> <span class="caps">JOYENT</span> <span class="caps">ACCELERATOR</span></span></strong> &#8211; eg the ones that use pkgsrc. Didn&#8217;t seem to cause the problem on an ubuntu machine, nor on one of the older BlastWave based Accelerators. I&#8217;m not sure why as of yet, as I was more worried about getting some sleep last night when we managed to fix the problem.</p>
+<p>And the fix? Basically, strip ImageScience out of attachment_fu. Remove</p>
+<div class="highlight"><pre><code class="ruby"><span class="n">vendor</span><span class="o">/</span><span class="n">plugins</span><span class="o">/</span><span class="n">attachment_fu</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">technoweenie</span><span class="o">/</span><span class="n">attachment_fu</span><span class="o">/</span><span class="n">processors</span><span class="o">/</span><span class="n">image_science_processor</span><span class="o">.</span><span class="n">rb</span>
+</code></pre>
+</div>
+<p>and remove &#8220;ImageScience&#8221; from this line</p>
+<div class="highlight"><pre><code class="ruby"><span class="n">default_processors</span> <span class="o">=</span> <span class="sx">%w(ImageScience Rmagick MiniMagick Gd2 CoreImage)</span>
+</code></pre>
+</div>
+<p>in this file<br />
+<pre>vendor/plugins/attachment_fu/lib/technoweenie/attachment_fu/attachment_fu.rb</pre></p>
+<p>Like I said, I have no real idea why this is happening at the moment, but I&#8217;ll try and work it out and update this post if I get anywhere.</p>
+<p>Once again, thanks to Darcy for A) being a sounding board, B) helping fix the problem and C) being up and available when I needed him :)</p>
+</article>
+
+      </div>
+      <div id="sidebar">
+        <h2>Stuff</h2>
+        <ul>
+          <li><a href="/archive.html">Archive</a></li>
+          <li><a href="http://photos.jordanbrock.com">OpenPhoto</a></li>
+          <li><a href="http://twitter.com/jordanbrock">twitter</a></li>
+          <li><a href="http://strava.com/athletes/jordanbrock">Strava</a></li>
+        </ul>
+      </div>
+      <footer>
+        By me.
+      </footer>
+    </div>
+  </body>
+</html>

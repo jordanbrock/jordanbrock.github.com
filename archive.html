@@ -1,0 +1,12 @@
+---
+layout: default
+title: Archive
+---
+
+<h2>Archive</h2>
+
+<ul>
+  {% for post in site.posts %}
+  <li><a href="{{ post.url }}"><span class="date">{{ post.date | date: "%b %d, %Y" }}</span> &mdash; {{ post.title }}</a></li>
+  {% endfor %}
+</ul>

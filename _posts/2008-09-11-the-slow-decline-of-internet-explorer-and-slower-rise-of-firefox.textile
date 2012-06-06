@@ -1,0 +1,259 @@
+---
+layout: post
+title: The Slow Decline of Internet Explorer and Slower Rise of Firefox
+permalink: /2008/09/11/the-slow-decline-of-internet-explorer-and-slower-rise-of-firefox/index.html
+post_id: 346
+categories: 
+- Development
+- Tech
+- Web
+---
+
+p. For the past 8 years or so, <a href="http://www.fivesensescoffee.com.au/">5 Senses Coffee</a> has been both a client of <a href="http://spintech.com.au">mine</a>, and for the last 15 months, my employer. The public face of that work is the main website, which sells coffee, teas and other <a href="http://www.fivesensescoffee.com.au/shop/equipment/isomac-la-mondiale">wonderful items</a>. I'd like to think that the visitors to the website are a pretty good spread of the general population of the internet, not necessarily too technical/web based, and not too "Hey, what's this internet thing all about?"
+
+
+
+
+	p. Every now and then a story will appear in my feed reader about the use of one browser being higher than another, and more often than not, that site has a skewed audience, which means that it's users are more likely to have the latest and greatest than other, less browser obsessed users.
+
+
+
+
+	p. So, bearing in mind that this probably has no relationship to the wider world than any other site, here is the browser share of visitors to the 5 Senses Website over the past 21 months.
+
+
+
+
+	p. <img src="http://jordanbrock.com/assets/2008/9/11/browser_share.jpg" alt="" />
+
+
+
+
+<table width="545" cellpadding="5" cellspacing="0" border="0" class="data"> 
+    <tr class="header">
+      |_. 
+        |_.<span class="caps">Q1 2007</span> 
+        |_.<span class="caps">Q2 2007</span> 
+        |_.<span class="caps">Q3 2007</span> 
+        |_.<span class="caps">Q4 2007</span> 
+        |_.<span class="caps">Q1 2008</span> 
+        |_.<span class="caps">Q2 2008</span> 
+        |_.<span class="caps">Q3 2008</span> 
+    |
+ 
+     
+        <td class="header"> Internet Explorer  
+        | 77.16  
+        | 67.15  
+        | 64.63  
+        | 64.76  
+        | 65.26  
+        | 60.81  
+        | 59.72  
+    |
+ 
+    <tr class="alternate"> 
+        <td class="header"> Firefox  
+        | 16.93  
+        | 25.33  
+        | 28.25  
+        | 25.98  
+        | 25.62  
+        | 29.29  
+        | 29.79  
+    |
+ 
+     
+        <td class="header"> Safari  
+        | 4.36  
+        | 5.63  
+        | 5.87  
+        | 7.9  
+        | 7.46  
+        | 8.35  
+        | 9.05  
+    |
+ 
+    <tr class="alternate"> 
+        <td class="header"> Opera  
+        | 0.74  
+        | 0.82  
+        | 0.58  
+        | 0.74  
+        | 0.98  
+        | 0.89  
+        | 0.94  
+    |
+ 
+     
+        <td class="header"> Other  
+        | 0.81  
+        | 1.07  
+        | 0.67  
+        | 0.61  
+        | 0.67  
+        | 0.66  
+        | 0.50  
+    |
+ 
+
+
+<div class="table_caption">
+Browser share as a per centage for visitors to www.fivesensescoffee.com.au
+</div>
+
+	p. And the breakdowns for the various versions of Internet Explorer, where "IE x" is all versions other than <span class="caps">IE 6</span> and <span class="caps">IE 7</span>.
+
+
+
+
+	p. <img src="http://jordanbrock.com/assets/2008/9/11/IE_stats.jpg" alt="" />
+
+
+
+
+<table width="545" cellpadding="2" cellspacing="0" border="0" class="data"> 
+    <tr class="header"> 
+      |_. 
+        |_. Q1 2007  
+        |_. Q2 2007  
+        |_. Q3 2007  
+        |_. Q4 2007  
+        |_. Q1 2008  
+        |_. Q2 2008  
+        |_. Q3 2008  
+    |
+ 
+     
+        <td class="header"> IE 6.x  
+        | 72.85  
+        | 56.87  
+        | 53.43  
+        | 50.93  
+        | 40.88  
+        | 32.79  
+        | 31.08  
+    |
+ 
+    <tr class="alternate"> 
+        <td class="header"> IE 7.x  
+        | 26.4  
+        | 42.5  
+        | 46.2  
+        | 48.83  
+        | 58.93  
+        | 67.02  
+        | 68.82  
+    |
+ 
+     
+        <td class="header"> IE x  
+        | 0.75  
+        | 0.62  
+        | 0.37 
+        | 0.24  
+        | 0.18  
+        | 0.18  
+        | 0.10  
+    |
+ 
+
+
+<div class="table_caption">
+Versions of Internet Explorer as a per centage for visitors to www.fivesensescoffee.com.au
+</div>
+
+	p. and FireFox.
+
+
+
+
+	p. <img src="http://jordanbrock.com/assets/2008/9/11/FF_stats.jpg" alt="" />
+
+
+
+
+<table width="545" cellpadding="2" cellspacing="0" border="0" class="data"> 
+    <tr class="header"> 
+      |_. 
+        |_. Q1 2007  
+        |_. Q2 2007  
+        |_. Q3 2007  
+        |_. Q4 2007  
+        |_. Q1 2008  
+        |_. Q2 2008  
+        |_. Q3 2008  
+    |
+ 
+     
+        <td class="header"> FF 1.x  
+        | 6.38  
+        | 3.96  
+        | 3.49  
+        | 2.33  
+        | 1.61  
+        | 1.19  
+        | 1.18  
+    |
+ 
+    <tr class="alternate"> 
+        <td class="header"> FF 1.5.x  
+        | 34.37  
+        | 4.95  
+        | 4.95  
+        | 3.04  
+        | 2.49  
+        | 1.21  
+        | 0.79  
+    |
+ 
+     
+        <td class="header"> FF 2.x  
+        | 59.25  
+        | 91.56  
+        | 91.56  
+        | 94.52  
+        | 94.73  
+        | 89.47  
+        | 51.28  
+    |
+ 
+    <tr class="alternate"> 
+        <td class="header"> FF 3.x  
+        | 0  
+        | 0  
+        | 0  
+        | 0.11  
+        | 1.17  
+        | 8.13  
+        | 46.75  
+    |
+ 
+
+
+<div class="table_caption">
+Versions of Firefox as a per centage for visitors to www.fivesensescoffee.com.au
+</div>
+
+	p. What is evident from these numbers is that while IE is still the dominant browser, with almost 2/3rds of market share, Firefox has been slowly and steadily increasing. But not necessarily at the same rate that IE is losing share. Firefox seems to be losing a bit of ground to other browsers, namely Safari.
+
+
+
+
+	p. The interesting number is that Safari has doubled over the sample period. True, it's still third by more than a few lengths, but it seems to be taking some of those gains from IE.  I'm guessing this is mainly due to the increased market share of Apple in general, and not some massive use of Safari on MS Windows.
+
+
+
+
+	p. Other, possibly unrelated points that can be extracted is that FireFox users are more likely to upgrade their browser than IE users. This can be seen by the almost complete drop off in <span class="caps">FF 1</span>.5x users at the beginning of the timeframe, and the rapid rise of <span class="caps">FF 3</span>.x in the last 3 months, to the point that it almost equals <span class="caps">FF 2</span>.x. That said, there certainly appears to be some die-hard holdouts for <span class="caps">FF 1</span>.x, who are disappearing at a slower rate than those still using <span class="caps">FF 1</span>.5.x
+
+
+
+
+	p. So, not a scientific sample and/or analysis by any stretch, but still interesting. The surprising item here is the doubling in share of Safari (which, in the authors less than humble opinion is the best browser there is.) True, it didn't have far to go to double that share, but it still had to be done.
+
+
+
+
+	p. The upshot of all of this is that, unfortunately, there is still a large portion of the internet population still using <span class="caps">IE 6</span> (approximately 20% of all visitors it seems), so it still needs to be supported, or those people need to be encouraged to migrate upwards. How do we do that? Well, your guess is as good as mine.
+

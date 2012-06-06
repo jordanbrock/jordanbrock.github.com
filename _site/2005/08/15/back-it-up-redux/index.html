@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>jordanbrock.com &mdash; Back it up (redux)</title>
+    <link href="/css/reset.css" rel="stylesheet" type="text/css" />
+    <link href="/css/screen.css" media="screen" rel="stylesheet" type="text/css" />
+    <link href="/css/syntax.css" media="screen" rel="stylesheet" type="text/css" />
+    <link rel="openid.server" href="http://openid.claimid.com/server">
+    <link rel="openid.delegate" href="http://openid.claimid.com/jordanbrock">
+    <script type="text/javascript" src="http://use.typekit.com/wmw7icf.js"></script>
+<script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+
+    <script type="text/javascript">
+  var _gauges = _gauges || [];
+  (function() {
+    var t   = document.createElement('script');
+    t.type  = 'text/javascript';
+    t.async = true;
+    t.id    = 'gauges-tracker';
+    t.setAttribute('data-site-id', '4f8d0d2df5a1f54576000010');
+    t.src = '//secure.gaug.es/track.js';
+    var s = document.getElementsByTagName('script')[0];
+    s.parentNode.insertBefore(t, s);
+  })();
+</script>
+
+  </head>
+  <body>
+    <div id="container">
+      <header>
+      <h1><a href="/">Jordan Brock</a></h1>
+      </header>
+      <div id="content">
+        <h2>Back it up (redux)</h2>
+<time class="meta" datetime="2005-08-15">
+  Aug 15, 2005
+</time>
+<article class="post">
+  <p>Further to my post the other day about <a href="http://www.strongspace.com" title="Strongspace" target="_blank">Strongspace</a>, backups and <a href="http://rsync.samba.org" title="rsync - data sync utility" target="_blank">rsync</a>, I thought I would just write a little bit about how I have everything setup, more for my own records than anything else. If the two other people who venture onto this page would like to read along then open your books to page one, and remember to turn the page when you hear the bell.</p>
+<p>p. First of all, you need to get yourself a Mac. I&#8217;m serious about that. I&#8217;ve been a PC person all along but things just work better on MacOSX. It&#8217;s true. I know it sounds a little like a reformed smoker, however, you should really give a Mac a go. Get a <a href="http://www.apple.com/macmini/" title="Apple MacMini - Oooh, so sexy!" target="_blank">MacMini</a>. They look sweet.</p>
+<p>p. In order to connect to Strongspace, you need to have ssh on your computer. This comes standard with MacOSX, but you will have to download it for Windows. The best client that I have found is <a href="http://www.chiark.greenend.org.uk/~sgtatham/putty/" title="PuTTY: A free telnet/ssh client" target="_blank">PuTTY</a>. Download it (it&#8217;s free), put it in your windows folder.</p>
+<p>p. The next application you need is an <span class="caps"><span class="caps">FTP</span></span> client that supports <span class="caps"><span class="caps">SFTP</span></span>. The best (<span class="caps">IMHO</span>) windows free client is <a href="http://filezilla.sourceforge.net/" title="FileZilla - Fast, Reliable and Free" target="_blank">FileZillla,</a> and for MacOSX it&#8217;s <a href="http://cyberduck.ch/" target="_blank">Cyberduck</a>.</p>
+<p>p. Then (and this is the bit that I don&#8217;t know how to replicate on Windows) you have to create some <span class="caps"><span class="caps">SSH</span></span> public keys. We need to do this so that we can make connections to Strongspace without having to type in a password everytime we want to back some files up. There are instructions on how to do this on the <a href="http://www.strongspace.com/weblog/tips-and-tricks/using-ssh-keys-for-a-quick-sftp-login" title="Using SSH Keys for a Quick SFTP Login" target="_blank">Strongspace blog</a>. Essentially you need to create a public key and copy it up to a file called &#8220;authorized_keys&#8221; in a .ssh directory in your user directory on strongspace and then away you go. All very handy.</p>
+<p>p. The next step is to write and test your rsync script. There are more options for rsync than I could ever learn, and also more functionality than I could write about, so I will just post the script I use. Basically it copies all data within my user directory, excluding directories that are listed in the &#8220;backup_excludes.txt&#8221; file and delete any files from the remote server that have been deleted from the local computer. Simple really:</p>
+<pre>#!/bin/sh
+rsync -e ssh -azvC --delete --exclude-from backup_excludes.txt \
+/Users/userdir/ username@username.strongspace.com:/home/username/
+
+</pre>
+<p>p. The next step is to add a cron job to your computer. This is where the Mac part becomes pretty essential, because Windows doesn&#8217;t have cron. It does have Task Scheduler, but I haven&#8217;t been able to get that to run particularly reliably. In any case, an entry like the following will run your backup script every hour between the hours of 9AM and 10PM during the day.</p>
+<pre>01 9-22 * * * /Users/userdir/backup_documents
+</pre>
+<p>p. Now this might seem like a lot to copy up, but that&#8217;s the beauty of rsync. It only does incremental copying, so it will only copy files that have changed since the last time the script ran. Of course, if you work with video files, this might be overkill, because of the time it takes to upload the files, so you can adjust to your own needs.</p>
+<p>p. rsync can also do standard weekly incremental backups, which is something I have yet to experiment with.</p>
+<p>p. Like I said, this was mainly for my own records, but hopefully it will come in handy for someone.</p>
+<p>p. <strong><span class="caps"><span class="caps">UPDATE</span></span></strong>:<br />
+While trying to help <a href="http://dave.typepad.com/dave/2005/08/attn_applescrip.html#comments">Dave Caolo</a> it became apparent that I left one step out of the article &#8230; installing <a href="http://www.sshkeychain.org/">SSHKeychain</a>. This freeware program waits on your computer for an <span class="caps"><span class="caps">SSH</span></span> key request, intercepts that request and sends the required information, eliminating the need for you to have to type in your passphrase every time you try to backup your data, or <span class="caps"><span class="caps">SFTP</span></span> into somewhere. It&#8217;s very handy.</p>
+</article>
+
+      </div>
+      <div id="sidebar">
+        <h2>Stuff</h2>
+        <ul>
+          <li><a href="/archive.html">Archive</a></li>
+          <li><a href="http://photos.jordanbrock.com">OpenPhoto</a></li>
+          <li><a href="http://twitter.com/jordanbrock">twitter</a></li>
+          <li><a href="http://strava.com/athletes/jordanbrock">Strava</a></li>
+        </ul>
+      </div>
+      <footer>
+        By me.
+      </footer>
+    </div>
+  </body>
+</html>

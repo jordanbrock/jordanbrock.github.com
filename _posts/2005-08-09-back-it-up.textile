@@ -1,0 +1,31 @@
+---
+layout: post
+title: Back it up
+permalink: /2005/08/09/back-it-up/index.html
+post_id: 217
+categories: []
+
+---
+
+p. I recently signed up to <a href="http://www.strongspace.com">Strongspace</a>, the latest service from <a href="http://www.textdrive.com">TextDrive</a>, the wonderful people who host all of my RubyOnRails sites.
+
+
+
+
+	p. Strongspace is essentially an online storage service, with all sorts of added features. You can upload using <span class="caps">SFTP</span>, browse your files using your browser, and unlike other services, you can actually login to your account via ssh. This last part is particularly cool when combined with <a href="http://rsync.samba.org/">rsync</a>.
+
+
+
+
+	p. rsync is a fantastic utility that performs incremental backups either on your own computer, over your network, or in the case of Strongspace, over the internet. Once you do your initial upload, you just run the script as often as you want, and it will only upload what has changed.
+
+
+
+
+	p. All in all, some very cool stuff, and when used in concert, it's an amazingly powerful system that can ensure that you never lose anything ever again.
+
+
+
+
+	p. Now if only I can convince myself that I can afford the 30Gib plan, I can back up all of my photos as well!
+

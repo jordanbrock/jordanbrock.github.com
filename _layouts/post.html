@@ -1,0 +1,10 @@
+---
+layout: default
+---
+<h2>{{ page.title }}</h2>
+<time class="meta" datetime="{{ page.date | date: "%Y-%m-%d" }}">
+  {{ page.date | date: "%b %d, %Y" }}
+</time>
+<article class="post">
+  {{ content }}
+</article>
