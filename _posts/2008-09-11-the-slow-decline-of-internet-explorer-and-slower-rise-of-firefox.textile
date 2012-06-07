@@ -9,7 +9,7 @@ categories:
 - Web
 ---
 
-For the past 8 years or so, span>a href="http://www.fivesensescoffee.com.au/">5 Senses Coffee</a> has been both a client of <a href="http://spintech.com.au">mine</a>, and for the last 15 months, my employer. The public face of that work is the main website, which sells coffee, teas and other <a href="http://www.fivesensescoffee.com.au/shop/equipment/isomac-la-mondiale">wonderful items</a>. I'd like to think that the visitors to the website are a pretty good spread of the general population of the internet, not necessarily too technical/web based, and not too "Hey, what's this internet thing all about?"
+For the past 8 years or so, <a href="http://www.fivesensescoffee.com.au/">5 Senses Coffee</a> has been both a client of <a href="http://spintech.com.au">mine</a>, and for the last 15 months, my employer. The public face of that work is the main website, which sells coffee, teas and other <a href="http://www.fivesensescoffee.com.au/shop/equipment/isomac-la-mondiale">wonderful items</a>. I'd like to think that the visitors to the website are a pretty good spread of the general population of the internet, not necessarily too technical/web based, and not too "Hey, what's this internet thing all about?"
 
 Every now and then a story will appear in my feed reader about the use of one browser being higher than another, and more often than not, that site has a skewed audience, which means that it's users are more likely to have the latest and greatest than other, less browser obsessed users.
 
@@ -26,7 +26,7 @@ So, bearing in mind that this probably has no relationship to the wider world th
 
 _Browser share as a per centage for visitors to www.fivesensescoffee.com.au_
 
-And the breakdowns for the various versions of Internet Explorer, where "IE x" is all versions other than IE 6span>/span> and <span class="caps">IE 7</span>.
+And the breakdowns for the various versions of Internet Explorer, where "IE x" is all versions other than IE 6 and IE 7.
 
 <img src="/assets/2008/9/11/IE_stats.jpg" alt="" />
 
