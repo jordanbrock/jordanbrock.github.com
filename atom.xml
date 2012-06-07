@@ -15,12 +15,13 @@ layout: nil
   {% for post in site.posts limit:10 %}
   <entry>
     <title>{{ post.title }}</title>
+    <link href="http://jordanbrock.com{{ post.url }}"/>
     <updated>{{ post.date | date_to_xmlschema }}</updated>
     <id>http://jordanbrock.com{{ post.id }}</id>
     <content type="html">{{ post.content | xml_escape }}</content>
     <author>
       <name>Jordan Brock</name>
-      <uri>http://jordanbrock.com</uri>
+      <uri>http://jordanbrock.com/</uri>
     </author>
   </entry>
   {% endfor %}
