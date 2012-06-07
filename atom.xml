@@ -1,0 +1,27 @@
+---
+layout: nil
+---
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Jordan Brock</title>
+  <link href="http://jordanbrock.com/atom.xml" rel="self"/>
+  <link href="http://jordanbrock.com" />
+  <updated>{{ site.time | date_to_xmlschema }}</updated>
+  <id>http://jordanbrock.com</id>
+  <author>
+    <name>Jordan Brock</name>
+    <email>jordan@brock.id.au</email>
+  </author>
+  {% for post in site.posts limit:10 %}
+  <entry>
+    <title>{{ post.title }}</title>
+    <updated>{{ post.date | date_to_xmlschema }}</updated>
+    <id>http://jordanbrock.com{{ post.id }}</id>
+    <content type="html">{{ post.content | xml_escape }}</content>
+    <author>
+      <name>Jordan Brock</name>
+      <uri>http://jordanbrock.com</uri>
+    </author>
+  </entry>
+  {% endfor %}
+</feed>
