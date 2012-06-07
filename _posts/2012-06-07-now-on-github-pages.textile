@@ -1,6 +1,6 @@
 ---
-layout: default
-title: Now on github Pages
+layout: post
+title: Now on GitHub Pages
 ---
 
 A quick post to mark the fact that I've moved this site from a hosted wordpress install to "GitHub Pages":http://pages.github.com, using "Jekyll":https://github.com/mojombo/jekyll to generate the static files for the blog.
