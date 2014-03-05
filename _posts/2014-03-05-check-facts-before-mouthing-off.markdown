@@ -32,8 +32,8 @@ report](http://www.abs.gov.au/ausstats/abs@.nsf/latestProducts/3302.0Media%20Rel
 which has the life expectancy of Australia as a whole, and the individual
 states and territories.
 
-| Region | 2002 || 2012 || Average Annual Change |
-| :----- | ---: | ---: | ---: | ---: | ----------------------: |
+| Region | 2002 | | 2012 | | Average Annual Change |
+| :----- | ---: | ---: | ---: | ---: | ---------: |
 |        | Males | Females | Males | Females | |
 | Australia | 77.4  | 82.6 | 79.9 | 84.3 | 0.9% |
 | Tasmania | 76.5 | 81.3 | 78.7 | 82.6 | 1.0% |
