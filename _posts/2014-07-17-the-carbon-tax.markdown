@@ -3,7 +3,6 @@ layout: post
 title: "The Carbon Tax"
 published: true
 ---
-#The Carbon Tax
 
 There's was [a story on the SBS news](http://www.sbs.com.au/news/article/2014/07/17/how-will-carbon-tax-repeal-impact-you) tonight about the repeal of the 
 carbon tax, and how the supposed $550 savings will be passed on to people in Australia. To illustrate 
