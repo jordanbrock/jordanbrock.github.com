@@ -7,10 +7,10 @@ categories: []
 
 ---
 
-p. <a href="http://www.space.com/scienceastronomy/hubble_reaction_050121.html">Astronomers Surprised by White House Plan to Scuttle Hubble.</a>
+ <a href="http://www.space.com/scienceastronomy/hubble_reaction_050121.html">Astronomers Surprised by White House Plan to Scuttle Hubble.</a>
 
 
 
 
-	p. The White House that is, not the astronomers.
+The White House that is, not the astronomers.
 

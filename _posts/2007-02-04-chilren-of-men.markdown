@@ -8,10 +8,10 @@ categories:
 - review
 ---
 
-p. 9/10
+ 9/10
 
 
 
 
-	p. Not sure what to say about this. A great film, but it's still being processed in my head. Fantastic.
+Not sure what to say about this. A great film, but it's still being processed in my head. Fantastic.
 

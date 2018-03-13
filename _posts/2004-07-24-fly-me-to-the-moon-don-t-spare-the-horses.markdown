@@ -7,10 +7,10 @@ categories: []
 
 ---
 
-p. Some absolutely stunning, newly released photography from the Apollo 11 Mission. Particularly the first ever photo of <a href="http://www.hq.nasa.gov/office/pao/History/alsj/a11/AS11-44-6547.jpg">Earthrise</a>
+ Some absolutely stunning, newly released photography from the Apollo 11 Mission. Particularly the first ever photo of <a href="http://www.hq.nasa.gov/office/pao/History/alsj/a11/AS11-44-6547.jpg">Earthrise</a>
 
 
 
 
-	p. <a href="http://www.apolloarchive.com/apollo_gallery.html">The Project Apollo Image Gallery</a>
+<a href="http://www.apolloarchive.com/apollo_gallery.html">The Project Apollo Image Gallery</a>
 

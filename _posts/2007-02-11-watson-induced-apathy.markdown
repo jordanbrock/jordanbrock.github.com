@@ -9,10 +9,10 @@ categories:
 - Sport
 ---
 
-p. Is it wrong for me to want England to actually win the CB One Day Series if for no other reason than because Shane Watson is playing, and if we lose the series there is a chance (however remote) that he will never play for Australia again?
+ Is it wrong for me to want England to actually win the CB One Day Series if for no other reason than because Shane Watson is playing, and if we lose the series there is a chance (however remote) that he will never play for Australia again?
 
 
 
 
-	p. I don't think so.
+I don't think so.
 

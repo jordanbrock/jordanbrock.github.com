@@ -7,5 +7,5 @@ categories:
 - Funny
 ---
 
-p. <img src="http://jordanbrock.com/assets/2008/10/16/Braaaaaaiiiins_McCaaaaiiiiiiin.jpg" alt="" />
+ <img src="http://jordanbrock.com/assets/2008/10/16/Braaaaaaiiiins_McCaaaaiiiiiiin.jpg" alt="" />
 

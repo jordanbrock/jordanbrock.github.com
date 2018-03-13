@@ -9,7 +9,7 @@ categories:
 - users
 ---
 
-p. <a href="http://www.veen.com/jeff/archives/000901.html">Intellectual Bargain Shopping, by Jeffrey Veen</a>
+ <a href="http://www.veen.com/jeff/archives/000901.html">Intellectual Bargain Shopping, by Jeffrey Veen</a>
 
 
 

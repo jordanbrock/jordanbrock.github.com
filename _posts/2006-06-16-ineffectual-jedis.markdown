@@ -7,12 +7,12 @@ categories: []
 
 ---
 
-p. <a href="http://www.defectiveyeti.com/archives/001702.html">defective yeti: Break A Leg!</a>
+ <a href="http://www.defectiveyeti.com/archives/001702.html">defective yeti: Break A Leg!</a>
 
 
 
 
-	p. On the World Cup:
+On the World Cup:
 
 
 

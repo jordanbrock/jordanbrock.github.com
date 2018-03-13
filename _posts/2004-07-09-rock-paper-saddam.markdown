@@ -7,10 +7,10 @@ categories: []
 
 ---
 
-p. <a href="http://www.rockpapersaddam.com/index.html">Rock Paper Saddam</a>
+ <a href="http://www.rockpapersaddam.com/index.html">Rock Paper Saddam</a>
 
 
 
 
-	p. The funniest damn thing I've seen for a while.
+The funniest damn thing I've seen for a while.
 

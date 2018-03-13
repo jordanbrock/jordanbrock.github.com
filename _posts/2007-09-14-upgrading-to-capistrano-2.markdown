@@ -13,17 +13,17 @@ categories:
 - Web
 ---
 
-p. For no other reason than this is something I need to remember on other projects, here is a list of the changes I made when I uninstalled deprec and upgraded to <a href="http://capify.org">capistrano 2</a> for deployment.
+ For no other reason than this is something I need to remember on other projects, here is a list of the changes I made when I uninstalled deprec and upgraded to <a href="http://capify.org">capistrano 2</a> for deployment.
 
 
 
 
-	h3. Things to do
+	###Things to do
 
 
 
 
-	p. Do this once
+Do this once
 
 
 
@@ -32,7 +32,7 @@ p. For no other reason than this is something I need to remember on other projec
 gem install mongrel_cluster
 @
 
-	p. then in the application directory
+then in the application directory
 
 
 
@@ -41,12 +41,12 @@ gem install mongrel_cluster
 capify .
 @
 
-	p. then remove "require &#8216;deprec/recipes' from the deploy.rb file
+then remove "require &#8216;deprec/recipes' from the deploy.rb file
 
 
 
 
-	p. then put the following in to the deploy.rb file
+then put the following in to the deploy.rb file
 
 
 

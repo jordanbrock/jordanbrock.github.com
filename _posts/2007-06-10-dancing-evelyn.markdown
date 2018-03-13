@@ -10,7 +10,7 @@ categories:
 - n95
 ---
 
-p. More <span class="caps">N95</span> action. I was testing out the video, and Evelyn insisted on being the subject. Cute dancing.
+ More <span class="caps">N95</span> action. I was testing out the video, and Evelyn insisted on being the subject. Cute dancing.
 
 
 

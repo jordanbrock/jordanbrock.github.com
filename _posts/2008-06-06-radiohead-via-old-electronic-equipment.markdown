@@ -10,12 +10,12 @@ categories:
 - Tech
 ---
 
-p. A couple of months ago, Radiohead held a contest to remix "Nude", a track from their "In Rainbows" album. It was a particularly difficult song to remix, due to the fact that it is in 6/8 time. James Houston decided to take a _completely_ different approach from everyone else, and rigged up an old ZX Spectrum, a scanner, a dot matrix printer and an array of hard drives to play the song. The result is just mind blowing.
+ A couple of months ago, Radiohead held a contest to remix "Nude", a track from their "In Rainbows" album. It was a particularly difficult song to remix, due to the fact that it is in 6/8 time. James Houston decided to take a _completely_ different approach from everyone else, and rigged up an old ZX Spectrum, a scanner, a dot matrix printer and an array of hard drives to play the song. The result is just mind blowing.
 
 
 
 
-	p. Bear with the first minute or so of the video. It's the sound of it loading on the Sinclair ... which is a sound a lot of the _cough_ older _cough_ programmers amongst us will be very familiar with.
+Bear with the first minute or so of the video. It's the sound of it loading on the Sinclair ... which is a sound a lot of the _cough_ older _cough_ programmers amongst us will be very familiar with.
 
 
 

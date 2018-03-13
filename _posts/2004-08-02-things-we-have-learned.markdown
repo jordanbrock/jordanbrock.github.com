@@ -7,7 +7,7 @@ categories: []
 
 ---
 
-p. In the last 24 hours, Caren and I have learned:
+ In the last 24 hours, Caren and I have learned:
 
 
 

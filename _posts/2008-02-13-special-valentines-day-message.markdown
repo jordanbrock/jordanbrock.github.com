@@ -9,10 +9,10 @@ categories:
 - w00t
 ---
 
-p. <img src="http://jordanbrock.com/assets/2008/2/14/bitter-space.gif" alt="" />
+ <img src="http://jordanbrock.com/assets/2008/2/14/bitter-space.gif" alt="" />
 
 
 
 
-	p. From <a href="http://www.woot.com/Blog/BlogEntry.aspx?BlogEntryId=3933">w00t</a>
+From <a href="http://www.woot.com/Blog/BlogEntry.aspx?BlogEntryId=3933">w00t</a>
 

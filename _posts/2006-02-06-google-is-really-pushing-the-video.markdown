@@ -7,5 +7,5 @@ categories: []
 
 ---
 
-p. In the ever competitive world of trying to forge new markets, google is doing some handy stuff with video: <a href="http://video.google.com/superbowl.html">The SuperBowl Ads</a>
+ In the ever competitive world of trying to forge new markets, google is doing some handy stuff with video: <a href="http://video.google.com/superbowl.html">The SuperBowl Ads</a>
 

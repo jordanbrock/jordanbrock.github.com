@@ -7,5 +7,5 @@ categories: []
 
 ---
 
-p. <a href="http://www.textism.com/article/788/duck">Duck</a>
+ <a href="http://www.textism.com/article/788/duck">Duck</a>
 

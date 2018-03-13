@@ -7,7 +7,7 @@ categories: []
 
 ---
 
-p. <a href="http://share.skype.com/sites/mac/2006/06/skype_for_mac_with_video_comin.html">Skype for Mac with video coming up - but don't use the buggy version - Skype for Mac</a>
+ <a href="http://share.skype.com/sites/mac/2006/06/skype_for_mac_with_video_comin.html">Skype for Mac with video coming up - but don't use the buggy version - Skype for Mac</a>
 
 
 

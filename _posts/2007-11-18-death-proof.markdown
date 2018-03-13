@@ -7,10 +7,10 @@ categories:
 - Movies
 ---
 
-p. 8/10
+ 8/10
 
 
 
 
-	p. Man, that's a serious foot and leg fetish you got going on there Quentin.
+Man, that's a serious foot and leg fetish you got going on there Quentin.
 

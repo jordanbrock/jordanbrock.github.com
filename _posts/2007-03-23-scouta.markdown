@@ -10,10 +10,10 @@ categories:
 - websites
 ---
 
-p. Even though I've had an account for a few months, I've only just really started looking into <a href="http://www.scouta.com">Scouta</a>, an audio and video recommendation service that was developed in Perth, and founded (in part) by Richard Giles. The basic idea is that you can watch videos/listen to music, and tag it, as well as rate it. Then based upon your voting, you get recommendations. You can also subscribe to your recommendations list via iTunes (something that I presume will work better when they release a plugin shortly!)
+ Even though I've had an account for a few months, I've only just really started looking into <a href="http://www.scouta.com">Scouta</a>, an audio and video recommendation service that was developed in Perth, and founded (in part) by Richard Giles. The basic idea is that you can watch videos/listen to music, and tag it, as well as rate it. Then based upon your voting, you get recommendations. You can also subscribe to your recommendations list via iTunes (something that I presume will work better when they release a plugin shortly!)
 
 
 
 
-	p. While I'm not exactly a fan of the design, I think the service is pretty cool, and it's great to see them getting <a href="http://www.techcrunch.com/2007/03/23/scouta-media-recommendations-soon-in-itunes/">some recognition</a> from the big news sites. It's also great to see that it's privately funded. Congrats to Richard.
+While I'm not exactly a fan of the design, I think the service is pretty cool, and it's great to see them getting <a href="http://www.techcrunch.com/2007/03/23/scouta-media-recommendations-soon-in-itunes/">some recognition</a> from the big news sites. It's also great to see that it's privately funded. Congrats to Richard.
 

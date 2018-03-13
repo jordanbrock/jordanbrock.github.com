@@ -7,15 +7,15 @@ categories: []
 
 ---
 
-p. Such a cool use of technology, combining <a href="http://www.apple.com/macosx/features/applescript/">AppleScript</a>, <a href="http://www.apple.com/macosx/features/automator/">Automator</a> and <a href="http://www.skype.com">Skype</a>
+ Such a cool use of technology, combining <a href="http://www.apple.com/macosx/features/applescript/">AppleScript</a>, <a href="http://www.apple.com/macosx/features/automator/">Automator</a> and <a href="http://www.skype.com">Skype</a>
 
 
 
 
-	p. http://www.engadget.com/entry/1234000420047100/
+http://www.engadget.com/entry/1234000420047100/
 
 
 
 
-	p. Basically, you can email yourself the name of a song, and your computer will mail it back to you! So damn cool.
+Basically, you can email yourself the name of a song, and your computer will mail it back to you! So damn cool.
 

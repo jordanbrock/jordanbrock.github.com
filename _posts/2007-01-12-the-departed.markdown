@@ -8,10 +8,10 @@ categories:
 - review
 ---
 
-p. 9/10
+ 9/10
 
 
 
 
-	p. The joke about the rat felt simultaneously brilliant and tacky beyond belief.
+The joke about the rat felt simultaneously brilliant and tacky beyond belief.
 

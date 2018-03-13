@@ -7,5 +7,5 @@ categories: []
 
 ---
 
-p. <img src="http://photos1.flickr.com/187949_f6f8acf1fd_t.jpg" alt="" /> She's watching!
+ <img src="http://photos1.flickr.com/187949_f6f8acf1fd_t.jpg" alt="" /> She's watching!
 

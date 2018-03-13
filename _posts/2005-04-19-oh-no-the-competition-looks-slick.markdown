@@ -7,10 +7,10 @@ categories: []
 
 ---
 
-p. How will I ever compete?
+ How will I ever compete?
 
 
 
 
-	p. <img src="http://www.tamarabuchi.com/images/competition.jpg" title="Oh man, these guys look slick!" alt="Oh man, these guys look slick!" />
+<img src="http://www.tamarabuchi.com/images/competition.jpg" title="Oh man, these guys look slick!" alt="Oh man, these guys look slick!" />
 

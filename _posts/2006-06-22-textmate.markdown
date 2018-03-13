@@ -7,5 +7,5 @@ categories: []
 
 ---
 
-p. I've been using <a href="http://www.macromates.com">TextMate</a> for as long as I've been using a mac, and it's probably the best $50 I've ever spent on software. And it just keeps getting better and better. A new bundle was released in the last version, that <a href="http://macromates.com/blog/archives/2006/06/19/blogging-from-textmate/">allows blogging</a>. And I'm writing this from inside my text editor. Nerdy, but cool.
+ I've been using <a href="http://www.macromates.com">TextMate</a> for as long as I've been using a mac, and it's probably the best $50 I've ever spent on software. And it just keeps getting better and better. A new bundle was released in the last version, that <a href="http://macromates.com/blog/archives/2006/06/19/blogging-from-textmate/">allows blogging</a>. And I'm writing this from inside my text editor. Nerdy, but cool.
 

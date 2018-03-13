@@ -10,15 +10,15 @@ categories:
 - wtf
 ---
 
-p. Nice one Adobe.
+ Nice one Adobe.
 
 
 
 
-	p. <img src="http://jordanbrock.com/assets/2008/6/13/how_much_space.jpg" alt="" />
+<img src="http://jordanbrock.com/assets/2008/6/13/how_much_space.jpg" alt="" />
 
 
 
 
-	p. Check out the space required, particularly when I don't have anything checked.
+Check out the space required, particularly when I don't have anything checked.
 

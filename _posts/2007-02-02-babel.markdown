@@ -3,15 +3,14 @@ layout: post
 title: Babel
 permalink: /2007/02/02/babel/index.html
 post_id: 258
-categories: 
+categories:
 - Movies
 - review
 ---
 
-p. 9.5/10
+ 9.5/10
 
 
 
 
-	p. Communicate Fools. <span class="caps">COMMUNICATE</span>!
-
+Communicate Fools. <span class="caps">COMMUNICATE</span>!

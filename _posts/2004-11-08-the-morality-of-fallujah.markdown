@@ -7,5 +7,5 @@ categories: []
 
 ---
 
-p. <a href="http://www.williamgibsonbooks.com/blog/2004_11_01_archive.asp#109980074468506393">We seem to be readying an all-out assault on the city, which will have the usual result when Goliath defeats David: a moral defeat for Goliath.</a>
+ <a href="http://www.williamgibsonbooks.com/blog/2004_11_01_archive.asp#109980074468506393">We seem to be readying an all-out assault on the city, which will have the usual result when Goliath defeats David: a moral defeat for Goliath.</a>
 

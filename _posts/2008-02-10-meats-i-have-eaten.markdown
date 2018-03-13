@@ -10,7 +10,7 @@ categories:
 - Personal
 ---
 
-p. Just to be contrarian (<a href="http://jordanbrock.com/2008/2/7/8-things-you-didn-t-know-about-me">see my last post</a>), here is a list of meats that I have eaten.
+ Just to be contrarian (<a href="http://jordanbrock.com/2008/2/7/8-things-you-didn-t-know-about-me">see my last post</a>), here is a list of meats that I have eaten.
 
 
 
@@ -43,12 +43,12 @@ p. Just to be contrarian (<a href="http://jordanbrock.com/2008/2/7/8-things-you-
 	</ul>
 
 
-	p. _Update_
+_Update_
 
 
 
 
-	p. So, I totally forgot my trip to South Africa:
+So, I totally forgot my trip to South Africa:
 
 
 
@@ -63,12 +63,12 @@ p. Just to be contrarian (<a href="http://jordanbrock.com/2008/2/7/8-things-you-
 	</ul>
 
 
-	p. _More Updates_
+_More Updates_
 
 
 
 
-	p. Rosemary reminded me about the frog legs I ate in French class one year. So ...
+Rosemary reminded me about the frog legs I ate in French class one year. So ...
 
 
 

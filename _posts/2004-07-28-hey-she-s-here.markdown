@@ -20,5 +20,5 @@ categories: []
 </div>
 Born at 16:29 on the 27th July, 2004. Weighing 7lb 12oz and 48cm long, she's one healthy little girl. With a good set of lungs, let me tell you!
 
-	p. Caren is recovering well, but you know, it takes a lot out of you. More news at 11.
+Caren is recovering well, but you know, it takes a lot out of you. More news at 11.
 

@@ -7,5 +7,5 @@ categories: []
 
 ---
 
-p. A <a href="http://susanmernit.blogspot.com/2004/12/mark-pesce-on-bittorrent.html">great article</a> by Mark Pesce about the <span class="caps">MPAA</span>'s crackdown on BitTorrent. Susan Mernit's Blog.
+ A <a href="http://susanmernit.blogspot.com/2004/12/mark-pesce-on-bittorrent.html">great article</a> by Mark Pesce about the <span class="caps">MPAA</span>'s crackdown on BitTorrent. Susan Mernit's Blog.
 

@@ -7,12 +7,12 @@ categories: []
 
 ---
 
-p. Another post as a reference item for me.
+ Another post as a reference item for me.
 
 
 
 
-	h3. Setting up a subversion project
+	###Setting up a subversion project
 
 
 
