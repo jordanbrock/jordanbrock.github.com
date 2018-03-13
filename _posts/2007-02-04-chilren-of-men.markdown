@@ -10,8 +10,5 @@ categories:
 
  9/10
 
-
-
-
 Not sure what to say about this. A great film, but it's still being processed in my head. Fantastic.
 

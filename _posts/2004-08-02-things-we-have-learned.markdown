@@ -9,9 +9,6 @@ categories: []
 
  In the last 24 hours, Caren and I have learned:
 
-
-
-
 	<ul>
 	<li>Eating Chilli Squid with Tamarind Sauce while breastfeeding is less than optimal.</li>
 		<li>Sleep, however fleeting, is nice.</li>

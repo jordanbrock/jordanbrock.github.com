@@ -9,8 +9,5 @@ categories: []
 
  The pledge of $350 million by the US to Tsunami Relief is magnificent, but deserves to be put into perspective.
 
-
-
-
 <a href="http://www.boosman.com/blog/archives/2005/01/when_does_350_m.html">pseudorandom: When Does $350 Million Equal 42 Hours?</a>.
 

@@ -9,13 +9,7 @@ categories: []
 
  Right.
 
-
-
-
 We're off to have a baby. It didn't want to come out on it's own accord, so we're off to force the issue. It's a birth canal showdown at the ok corral (or Mercy Hospital, whichever has the best facilities.)
-
-
-
 
 Next time we speak, I'll be a responsible father!
 
