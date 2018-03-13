@@ -1,7 +1,7 @@
 
 /* Begin Typography & Colors */
 body {
-  font-size: 18px; 
+  font-size: 18px;
   line-height: 19px;
   font-family: "ff-meta-serif-web-pro-1","ff-meta-serif-web-pro-2", serif;
   background: #efebe3;
@@ -14,7 +14,7 @@ body {
   border-radius : 10px;
   -webkit-border-radius : 10px;
   -mozilla-border-radius : 10px;
-}  
+}
 header {
   padding: 40px 20px 20px 20px;
 }
@@ -249,10 +249,10 @@ select {
 	padding: 2px;
 	}
 #respond:after {
-		content: "."; 
-	    display: block; 
-	    height: 0; 
-	    clear: both; 
+		content: ".";
+	    display: block;
+	    height: 0;
+	    clear: both;
 	    visibility: hidden;
 	}
 #commentform #submit {
@@ -307,7 +307,20 @@ a img {
 	}
 /* End Various Tags & Classes*/
 
+table {
+    width: 100%;
+}
 
+tr:nth-of-type(odd) {
+    background-color: #eee;
+}
+td {
+    padding: 3px;
+}
+th {
+    font-weight: bold;
+    padding: 3px;
+}
 
 /* Captions */
 .aligncenter,
