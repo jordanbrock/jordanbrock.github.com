@@ -13,7 +13,7 @@ I've spent the past couple of days playing with <a href="http://www.vagrantup.co
 
 Vagrant VM's are portable, which means that all of your team members can have exactly the same development environment, regardless of their own system setups. Once again: less headaches.
 
-###Vagrant
+### Vagrant
 
 How does it work? Well, first of all, you need the <a href="https://www.virtualbox.org/wiki/Downloads">latest version of VirtualBox</a>, and the vagrant gem. I installed it into my system gems, but there's no reason it couldn't be in your Gemfile if you're working on a ruby project.
 
@@ -43,7 +43,7 @@ vagrant ssh
 
 That's all very handy, but of course, you're going to want your machine to have some software configured. Enter Chef, stage left.
 
-###Chef
+### Chef
 
 <a href="http://wiki.opscode.com/display/chef/Home" target="_blank">Chef</a> is a framework that lets you create "recipes" to install and configure software on VM's. Basically, it's a scripting system for getting a blank VM up and running. 
 
@@ -73,7 +73,7 @@ vagrant box add vagrant-oneiric package.box
 
 At this point, you should have a base VM ready for configuring with Chef.
 
-###Vagrant and Chef, sitting in a tree
+### Vagrant and Chef, sitting in a tree
 
 Vagrant is built to work with provisioning software such as Chef (and <a href="http://puppetlabs.com/">puppet</a>). You add a series of Chef commands to your Vagrantfile that it will run on your VM as it is being configured. 
 
@@ -96,7 +96,7 @@ config.vm.provision :chef_solo do |chef|
 end
 {% endhighlight %}
 
-###OpenPhoto
+### OpenPhoto
 
 OpenPhoto is an open source photo service that allows you to retain control of your photos, rather than store them with some site that may not even exist in 3 years. Your photos are stored on AmazonS3 or on Dropbox, and you can run a server yourself to maintain total control over the whole setup if you wish, or use their hosted service available here: <a href="http://openphoto.me">http://openphoto.me</a>.
 
@@ -161,7 +161,7 @@ One of the great things about Vagrant is that you can quickly share folders with
 config.vm.share_folder "openphoto", "/var/www/openphoto", "/path/to/openphoto/frontend", :owner => "www-data", :group => "vagrant"
 {% endhighlight %}
 
-####Apache
+#### Apache
 
 You'll also need to configure Apache to use this directory. Here's my config file:
 

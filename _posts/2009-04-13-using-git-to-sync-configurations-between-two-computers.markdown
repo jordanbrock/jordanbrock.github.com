@@ -15,7 +15,7 @@ categories:
 
 I have two machines that I use for my development work: a 24" iMac and a MacBook Air (It is so choice. If you have the means, I highly recommend picking one up. _Bonus points for quote identification_). Naturally, doing any work spread over two machines leads to all sorts of problems: Inconsistencies in development platform, files, data, code and just the general configuration of the machine. Thankfully, there exists a number of solutions to these problems.
 
-###<a href="http://www.getdropbox.com">DropBox</a>
+### <a href="http://www.getdropbox.com">DropBox</a>
 
 
 DropBox is simply file synchronisation done right. You install it, drag the files you want to have synced between two computers into the Dropbox folder, and BOOM, it copies everything up to their server, and when you set it up on the second computer, copies everything back down again. After the initial sync, which can take quite a while if you've got lots of stuff, it's pretty much seamless. Create, or make a change to, a file on one computer, and before you know it, it's available on the other computer.
@@ -24,7 +24,7 @@ Need access to those files from another computer, or even from your phone? No pr
 
 To add a lovely cherry to the ice cream sundae that is DropBox, they also have versioning. That means if you make a series of dunderhead changes to a document, you can just rollback to the last good copy. Awesome.
 
-###<a href="http://git-scm.com/">Git</a> and <a href="http://www.github.com/">GitHub</a>
+### <a href="http://git-scm.com/">Git</a> and <a href="http://www.github.com/">GitHub</a>
 
 
 For the longest time (mostly while I was still working on Windows) "Source Control" was some mystical mumbo jumbo that only people in large companies needed to worry about. Of course, that was mainly because at the time the options for Visual Studio only included Microsoft SourceSafe, which is perhaps some of the crappiest, most unusable software ever foisted on the unsuspecting public by a company with a long history of foisting crap on the unsuspecting public.
@@ -33,7 +33,7 @@ Once I switched to MacOSX and started working with Rails, it became clear that a
 
 As with most things, people started grumbling about SVN and some of it's shortcomings: difficulties in merging different code branches, no distributed repositories and some general discontent. Git was the solution, and the rails community just jumped ships in the middle of the night. Before you knew it, everyone was using Git, and also GitHub. I won't go into the specifics of why this combo is so good, except to say that if you're not using git, well, good day to you sir.
 
-###git and <a href="http://github.com/jferris/config_files/tree/master">config_files</a>
+### git and <a href="http://github.com/jferris/config_files/tree/master">config_files</a>
 
 
 In addition to using git to store your development work, you can also use it to manage system configuration files. I found the wonderful <a href="http://github.com/jferris/config_files/tree/master">config_files</a>. It's a collection of shell, git, vim and irb configuration files. So? How does that help?

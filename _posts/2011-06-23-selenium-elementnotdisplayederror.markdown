@@ -19,7 +19,7 @@ After spending way too long to try and solve this problem ("THE ELEMENT *IS* VIS
 
 The key to this error is that Capybara is trying to find and/or interact with an element and it's not quite ready on the page yet because some JavaScript hasn't executed yet, or there's a delay with the test web server.
 
-###jQuery Effects
+### jQuery Effects
 
 
 If you're running tests, there's a pretty good chance you don't care about any jQuery effects. You're just interested in the result. If that's the case, then add this line to your page layout:
@@ -30,7 +30,7 @@ If you're running tests, there's a pretty good chance you don't care about any j
 
 That will turn jQuery effects off in the Rails test environment.
 
-###Capybara "wait_for"
+### Capybara "wait_for"
 
 This is a particularly helpful method that, like its name implies, causes Capybara to take a chill pill, and wait for a particular condition to be met. Call it like this:
 
@@ -41,7 +41,7 @@ wait_for(30) {page.should have_button "Button Text"}
 
 This just gives the page a little time to catch up before Capybara blows up on you.
 
-###capybara-webkit
+### capybara-webkit
 
 
 A new Selenium driver from the fine folks at <a href="http://robots.thoughtbot.com/post/4583605733/capybara-webkit">Thoughtbot</a>, this is a headless (this just means it doesn't open a visible window) browser that Capybara can interact with. Ideally it should be faster than opening up a browser window for each test. I managed to get it working, mostly. It's still kind of new, so there are a few things missing, but it might be a good idea to watch the <a href="https://github.com/thoughtbot/capybara-webkit">github project</a>.

@@ -16,7 +16,7 @@ categories:
 
 
 
-##Backup Overview
+## Backup Overview
 
 
 
@@ -26,7 +26,7 @@ categories:
 
 
 
-###Local Backups
+### Local Backups
 
 
 
@@ -41,7 +41,7 @@ categories:
 
 
 
-###Amazon S3
+### Amazon S3
 
 
 
@@ -51,7 +51,7 @@ categories:
 
 
 
-###Jungle Disk
+### Jungle Disk
 
 
 
@@ -66,7 +66,7 @@ categories:
 
 
 
-##The cost of Amazon S3
+## The cost of Amazon S3
 
 
 
@@ -76,7 +76,7 @@ categories:
 
 
 
-###iTunes TV Shows
+### iTunes TV Shows
 
 
 
@@ -96,7 +96,7 @@ categories:
 
 
 
-###iTunes Movies
+### iTunes Movies
 
 
 
@@ -111,7 +111,7 @@ categories:
 
 
 
-###iTunes/Amazon Music
+### iTunes/Amazon Music
 
 
 
@@ -126,7 +126,7 @@ categories:
 
 
 
-##Other possible solutions and problems.
+## Other possible solutions and problems.
 
 
 

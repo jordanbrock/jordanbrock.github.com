@@ -14,7 +14,7 @@ Around a year or so ago, someone posted a link to this photo on Flickr:
 
 <a href="http://www.flickr.com/photos/godiex/327798644/"><img src="http://farm1.static.flickr.com/140/327798644_483211785e_m.jpg" border="0" alt="" /></a>
 
-####duty
+#### duty
 
 
 _Uploaded by <a href="http://www.flickr.com/photos/godiex/">Godiex { ... }</a> on 20 Dec 06, 1.20PM WST._
@@ -23,7 +23,7 @@ Certainly an interesting photo, and one that deserved further investigation. So,
 
 <a href="http://www.flickr.com/photos/random-panda/17707084/"><img src="http://farm1.static.flickr.com/12/17707084_1432e96044_m.jpg" border="0" alt="" /></a>
 
-####home town
+#### home town
 
 
 _Uploaded by <a href="http://www.flickr.com/photos/random-panda/">randompanda</a> on 6 Jun 05, 10.41AM WST._
@@ -36,7 +36,7 @@ Through my virtual stalking, it appeared to me that they were waiting for the op
 
 <a href="http://www.flickr.com/photos/godiex/3572976564/"><img src="http://farm4.static.flickr.com/3555/3572976564_76bd27cc29_m.jpg" border="0" alt="" /></a>
 
-####this moon is over
+#### this moon is over
 
 _Uploaded by <a href="http://www.flickr.com/photos/godiex/">Godiex { ... }</a> on 28 May 09, 5.10PM WST_.
 

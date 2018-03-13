@@ -3,7 +3,7 @@ layout: post
 title: Web Directions South 08
 permalink: /2008/10/02/web-directions-south-08/index.html
 post_id: 347
-categories: 
+categories:
 - conference
 - Development
 - Tech
@@ -18,12 +18,12 @@ categories:
 
 
 
-	###Thursday, 25th September 2008
+### Thursday, 25th September 2008
 
 
 
 
-	####Opening Keynote - Lynne Johnson
+#### Opening Keynote - Lynne Johnson
 
 
 
@@ -33,7 +33,7 @@ Boo. So mismatched to the audience it wasn't amusing in the slightest. If we wer
 
 
 
-	####Derek Featherstone
+#### Derek Featherstone
 
 
 
@@ -48,7 +48,7 @@ I'll just pretend that the opening keynote didn't happen, and that this was the 
 
 
 
-	####iPhone Development
+#### iPhone Development
 
 
 
@@ -58,7 +58,7 @@ I'll just pretend that the opening keynote didn't happen, and that this was the 
 
 
 
-	####JavaScript Libraries/Frameworks
+#### JavaScript Libraries/Frameworks
 
 
 
@@ -73,7 +73,7 @@ I'm not sure if I actually learned anything, except that just about everyone is 
 
 
 
-	####August de la Rejos
+#### August de la Rejos
 
 
 
@@ -88,7 +88,7 @@ An interesting talk about the progress of user interaction with computers, as we
 
 
 
-	####WebJam8
+#### WebJam8
 
 
 
@@ -98,12 +98,12 @@ Bucketloads of awesome, mixed in with tasty beverages, fine companies that spons
 
 
 
-	###Friday, 26th September 2008
+### Friday, 26th September 2008
 
 
 
 
-	####Jeffrey Veen
+#### Jeffrey Veen
 
 
 
@@ -118,7 +118,7 @@ Awesome talk about visualising data, and what good design can achieve. Memorable
 
 
 
-	####Gina Bolton
+#### Gina Bolton
 
 
 
@@ -133,7 +133,7 @@ A thorough understanding of your topic, and avoiding statements like "I haven't 
 
 
 
-	####Michael(TM) Smith
+#### Michael(TM) Smith
 
 
 
@@ -148,7 +148,7 @@ And really? Michael(TM) What is this - Burning Man?
 
 
 
-	####Myles Eftos.
+#### Myles Eftos.
 
 
 
@@ -158,7 +158,7 @@ Huzzah! The <a href="http://madpilot.com.au">madpilot</a> flew like a crazy bast
 
 
 
-	####Douglas Crockford
+#### Douglas Crockford
 
 
 
@@ -173,7 +173,7 @@ And scary. (We are so totally screwed if even half of what he was saying comes t
 
 
 
-	####Mark Pesce
+#### Mark Pesce
 
 
 
@@ -193,7 +193,7 @@ A slight down to end on.
 
 
 
-	####<span class="caps">DRINKS</span>!!!!!
+#### <span class="caps">DRINKS</span>!!!!!
 
 
 
@@ -215,10 +215,9 @@ _12:18 AM September 27, 2008 from twitterrific_
 
 
 
-	####Would I go again?
+#### Would I go again?
 
 
 
 
 Totally. As <a href="http://edgeoftheweb.com.au">we are no doubt about to find out</a>, running a conference is a tricky thing. Getting a mix of the right speakers, hoping they are all in top form, and cultivating the vibe is no doubt a difficult thing. I had a great time in Sydney: I met some great people, learned lots, felt inadequate (I mean, you're talking to Douglas Crockford over a beer ... what do you say?), and saw a Europe video on a large screen.
-

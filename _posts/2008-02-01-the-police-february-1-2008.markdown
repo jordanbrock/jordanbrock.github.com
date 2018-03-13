@@ -14,7 +14,7 @@ categories:
 
 
 
-	###Message in a Bottle
+### Message in a Bottle
 
 
 
@@ -24,7 +24,7 @@ Ahh. Even though it's the first time I've seen them live, it feels like I'm putt
 
 
 
-	###Synchronicity II
+### Synchronicity II
 
 
 
@@ -34,7 +34,7 @@ Even though I knew what the set list was going to be, this took me a second to w
 
 
 
-	###Walking on the Moon
+### Walking on the Moon
 
 
 
@@ -44,7 +44,7 @@ One of a number of highlights of the night. The musicianship on display during t
 
 
 
-	###Voices Inside My Head / When the World is Running Down
+### Voices Inside My Head / When the World is Running Down
 
 
 
@@ -54,7 +54,7 @@ Done as a medley. Stings bass playing in this song was beyond compare: he was fi
 
 
 
-	###Don't Stand So Close To Me
+### Don't Stand So Close To Me
 
 
 
@@ -64,7 +64,7 @@ A duet with Fergie. I had heard that she came out in Adelaide, which filled me w
 
 
 
-	###Driven To Tears
+### Driven To Tears
 
 
 
@@ -74,7 +74,7 @@ Another highlight for me. One of my favourite police songs for years. Brilliant.
 
 
 
-	###Hole In My Life
+### Hole In My Life
 
 
 
@@ -100,7 +100,7 @@ I wonder if he was trying to tell Frances (his first wife) something at this sta
 
 
 
-	###Every Little Thing She Does Is Magic
+### Every Little Thing She Does Is Magic
 
 
 
@@ -110,7 +110,7 @@ A cool start on the guitar, and a great singalong song. And it sounds happy, eve
 
 
 
-	###Wrapped Around Your Finger
+### Wrapped Around Your Finger
 
 
 
@@ -120,7 +120,7 @@ Another drumming master class. A full percussion set appears on stage and Stewar
 
 
 
-	###De Do Do Do, De Da Da Da
+### De Do Do Do, De Da Da Da
 
 
 
@@ -130,7 +130,7 @@ Slightly low key ... not in a bad way, just gentle.
 
 
 
-	###Invisible Sun
+### Invisible Sun
 
 
 
@@ -140,7 +140,7 @@ A song about the "troubles" in Northern Ireland gets transformed into a song abo
 
 
 
-	###Walking In Your Footsteps
+### Walking In Your Footsteps
 
 
 
@@ -150,7 +150,7 @@ This song threatened to blowout into a funk explosion at one point. I felt kind 
 
 
 
-	###Can't Stand Losing You
+### Can't Stand Losing You
 
 
 
@@ -160,7 +160,7 @@ You can tell that they've been playing this song for a while. It just rocked. As
 
 
 
-	###Roxanne
+### Roxanne
 
 
 
@@ -170,7 +170,7 @@ An ambling (in a good way) excursion through the song, wandering down many avenu
 
 
 
-	###King of Pain
+### King of Pain
 
 
 
@@ -180,7 +180,7 @@ Never my favourite Police song, this was good, but not a standout by a long stre
 
 
 
-	###So Lonely
+### So Lonely
 
 
 
@@ -190,7 +190,7 @@ Bliss.
 
 
 
-	###Every Breath You Take
+### Every Breath You Take
 
 
 
@@ -200,7 +200,7 @@ A song that just haven't ever done it for me live (I think the original recorded
 
 
 
-	###Next To You
+### Next To You
 
 
 

@@ -14,7 +14,7 @@ My role at the conference was basically to be the room monitor for the main audi
 
 So, here's a brief run-down of who I saw, and what I remember. Unfortunately, I didn't have a chance to take notes, so some of this is going to be hazy.
 
-###<a href="http://dashes.com/anil/">Anil Dash</a> (<a href="http://twitter.com/anildash">@anildash</a>)
+### <a href="http://dashes.com/anil/">Anil Dash</a> (<a href="http://twitter.com/anildash">@anildash</a>)
 
 
 
@@ -22,7 +22,7 @@ For a few days it looked as though Anil wasn't going to be able to make it to Pe
 
 _Just a quick time out to thank Anil for his superhuman efforts in coming to speak. He ended up only being in Perth for about 35 hours, and spent 45 hours travelling to do that. I can't imagine how he felt at the end of the trip. Thanks heaps Anil._
 
-###<a href="http://lachstock.com.au/">Lachlan Hardy</a> (<a href="http://twitter.com/lachlanhardy">@lachlanhardy</a>)
+### <a href="http://lachstock.com.au/">Lachlan Hardy</a> (<a href="http://twitter.com/lachlanhardy">@lachlanhardy</a>)
 
 
 
@@ -30,7 +30,7 @@ Having received the perfect lead in from Anil, Lachlan spoke in depth about the 
 
 <a href="http://www.slideshare.net/lachlanhardy/the-open-web-2426118">View on slideshare </a>
 
-###<a href="http://dmitry.baranovskiy.com/">Dmitry Baranovskiy</a> (<a href="http://twitter.com/DmitryBaranovsk">@DmitryBaranovsk</a>)
+### <a href="http://dmitry.baranovskiy.com/">Dmitry Baranovskiy</a> (<a href="http://twitter.com/DmitryBaranovsk">@DmitryBaranovsk</a>)
 
 
 
@@ -38,7 +38,7 @@ Always entertaining, Dmitry has the knack of making a detailed and technical jou
 
 <a href="http://www.slideshare.net/Dmitry.Baranovskiy/your-javascript-library">View on slideshare </a>
 
-###<a href="http://nickcowie.com/">Nick Cowie</a> (<a href="http://twitter.com/nickobec">@nickobec</a>)
+### <a href="http://nickcowie.com/">Nick Cowie</a> (<a href="http://twitter.com/nickobec">@nickobec</a>)
 
 
 
@@ -46,7 +46,7 @@ Local web legend Nick Cowie gave an informative talk on some of the upcoming fea
 
 <a href="http://www.slideshare.net/nickobec/progressive-enhancement-with-css3">View on slideshare</a>
 
-###<a href="http://al3x.net">Alex Payne</a> (<a href="http://twitter.com/al3x/">@al3x</a>)
+### <a href="http://al3x.net">Alex Payne</a> (<a href="http://twitter.com/al3x/">@al3x</a>)
 
 
 
@@ -60,7 +60,7 @@ Quote of the day: "Throw the wallaby over the bush fire."
 
 <a href="http://www.slideshare.net/al3x/mind-the-tools">View on slideshare</a>
 
-###<a href="http://www.kevinyank.com/">Kevin Yank</a> (<a href="http://twitter.com/sentience">@sentience</a>)
+### <a href="http://www.kevinyank.com/">Kevin Yank</a> (<a href="http://twitter.com/sentience">@sentience</a>)
 
 
 
@@ -68,7 +68,7 @@ Being entirely in love with <a href="http://haml-lang.com">HAML</a> and <a href=
 
 <a href="http://www.slideshare.net/sentience/css-frameworks-make-the-right-choice-eotw09">View on slideshare</a>
 
-###<a href="http://www.ashdonaldson.com/">Ash Donaldson</a> (<a href="http://twitter.com/ashdonaldson">@ashdonaldson</a>)
+### <a href="http://www.ashdonaldson.com/">Ash Donaldson</a> (<a href="http://twitter.com/ashdonaldson">@ashdonaldson</a>)
 
 
 
@@ -76,13 +76,13 @@ Unfortunately, I only got to catch the last part of Ash's talk, so I can't reall
 
 <a href="http://www.slideshare.net/AshDonaldson/designing-to-persuade-shaping-the-user-experience">View on slideshare</a>
 
-###Malcolm Day
+### Malcolm Day
 
 
 
 After two days of talking about the benefits of various development methodologies and discussions on W3C standards and the like, it was refreshing to hear a talk about money, and to earn it. Malcolm, CEO of <a href="http://www.adultshop.com.au/">Adult Shop</a> (NSFW!), gave an entertaining (and potentially libellous) talk on his journey from being an engineer for a mining exploration company to the CEO of a publicly traded ecommerce company.
 
-###<a href="http://powazek.com/">Derek Powazek</a> (<a href="http://twitter.com/fraying">@fraying</a>)
+### <a href="http://powazek.com/">Derek Powazek</a> (<a href="http://twitter.com/fraying">@fraying</a>)
 
 
 

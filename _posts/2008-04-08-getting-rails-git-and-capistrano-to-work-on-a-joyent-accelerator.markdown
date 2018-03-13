@@ -26,7 +26,7 @@ Now, I should probably also say that I already had my site up and running using 
 
 
 
-	###Things You Will Need
+### Things You Will Need
 
 
 
@@ -38,7 +38,7 @@ Now, I should probably also say that I already had my site up and running using 
 	</ul>
 
 
-	###Getting started
+### Getting started
 
 
 
@@ -48,7 +48,7 @@ Assuming that you have your project in a git repository, and have a <a href="htt
 
 
 
-	####Compiling git on your accelerator
+#### Compiling git on your accelerator
 
 
 
@@ -75,7 +75,7 @@ Hopefully those threads will put you onto the path of successfully compiling and
 
 
 
-	####Setting up <span class="caps">SSH</span> keys with github and your accelerator
+#### Setting up <span class="caps">SSH</span> keys with github and your accelerator
 
 
 
@@ -90,7 +90,7 @@ Another tip: don't forget your passphrase. It's needed in the next step.
 
 
 
-	####Configuring capistrano
+#### Configuring capistrano
 
 
 
@@ -141,17 +141,17 @@ Here's my deploy.rb file:
   depend :remote, :gem, :BlueCloth, '>=1.0.0'
   depend :remote, :gem, :RubyInline, '>=3.6.3'
 
-  ################################
+  #### #### #### #### #### #### #### #### 
   # Some tasks for the old server
-  ################################
+  #### #### #### #### #### #### #### #### 
 
   task :after_deploy do
     # tasks to run after deploy
   end
 
-  ################################
+  #### #### #### #### #### #### #### #### 
   # End tasks for the old server
-  ################################
+  #### #### #### #### #### #### #### #### 
 
   deploy.task :restart do
     accelerator.smf_restart
