@@ -9,13 +9,7 @@ categories: []
 
  Another post as a reference item for me.
 
-
-
-
 ### Setting up a subversion project
-
-
-
 
 Create the trunk, tags and branches subdirectories.
 bq. 
@@ -23,7 +17,6 @@ bq.
 svn import /path/to/project http://server.com/svn/path -m "Initial Upload" 
 svn checkout http://server.com/svn/path/trunk project name
 </pre>
-
 
 Then some general housekeeping for Rails apps and subversion:
 bq. 

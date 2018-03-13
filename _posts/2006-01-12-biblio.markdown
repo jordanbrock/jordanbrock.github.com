@@ -9,18 +9,9 @@ categories: []
 
  The other day there was a <a href="sethgodin.typepad.com/seths_blog/2006/01/stuck_systems.html">post by Seth Godin</a>  in which he talked about the opportunity for an online bibliography creator that allowed you to just enter the <span class="caps">ISBN</span> for a book, and it would automatically find all of the relevant information for you, incorporate it into a bibliography, which you could then share with whomever you wanted to. I was sort of looking for some project where I could incorporate <a href="http://www.amazon.com">Amazon Web Services</a> and also start using Google AdSense. So this project basically slapped me in the head and said "Build Me".
 
-
-
-
 The upshot of all of that is that I did. Checkout <a href="http://biblio.spintech.com.au">Biblio - Online Bibliography Creator</a>. It's all very basic at the moment, but you can search for a book, build a bibliography and print it out in 5 different citation styles. There's alot of things I need to add to it: Search by Book Name, Manual Citation Entry (for sources not listed on Amazon), other Citation types (articles, web pages, journals etc etc). Still, it's a start.
 
-
-
-
 I built it relatively quickly in <a href="http://www.rubyonrails.com">RubyOnRails</a>. I have spent most of the past few months pretty much back in the world of <span class="caps">ASP</span>.Net and C# for a couple of projects that I'm working on - <a href="http://graddirect.sbdc.com.au">GradDirect</a> (I'm subcontracting for <a href="http://www.ibc.com.au"><span class="caps">IBC</span></a>) and on a new site for <a href="http://www.kvm.com.au"><span class="caps">KVM</span> Australia</a> which is just about getting ready to launch (man, talking about  WebCentral is a whole new post .. sigh). The upshot of it all was that I had slipped out of the RubyOnRails space, and I had forgotten just how damn cool it is. Good to know that she fits back on like a smooth glove.
-
-
-
 
 Anyway, check out <a href="http://biblio.spintech.com.au">Biblio</a>. Kick the tyres and leave a comment about what you thought of it.
 

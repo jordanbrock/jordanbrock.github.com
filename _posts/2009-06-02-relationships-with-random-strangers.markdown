@@ -16,7 +16,6 @@ Around a year or so ago, someone posted a link to this photo on Flickr:
 
 #### duty
 
-
 _Uploaded by <a href="http://www.flickr.com/photos/godiex/">Godiex { ... }</a> on 20 Dec 06, 1.20PM WST._
 
 Certainly an interesting photo, and one that deserved further investigation. So, I started looking at <a href="http://www.flickr.com/photos/godiex/">Godiex's photostream</a>, and noticed there were a few photos of <a href="http://www.flickr.com/photos/godiex/2048993674/in/set-72157600733009151/">this girl</a>, who turned out to be his girlfriend. I found her <a href="http://www.flickr.com/photos/random-panda">photostream</a>, and then saw this photo
@@ -24,7 +23,6 @@ Certainly an interesting photo, and one that deserved further investigation. So,
 <a href="http://www.flickr.com/photos/random-panda/17707084/"><img src="http://farm1.static.flickr.com/12/17707084_1432e96044_m.jpg" border="0" alt="" /></a>
 
 #### home town
-
 
 _Uploaded by <a href="http://www.flickr.com/photos/random-panda/">randompanda</a> on 6 Jun 05, 10.41AM WST._
 

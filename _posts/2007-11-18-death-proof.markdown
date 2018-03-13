@@ -9,8 +9,5 @@ categories:
 
  8/10
 
-
-
-
 Man, that's a serious foot and leg fetish you got going on there Quentin.
 

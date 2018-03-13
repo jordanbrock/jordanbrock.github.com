@@ -9,9 +9,6 @@ categories: []
 
  From <a href="http://habtm.com/articles/2006/01/18/insta_export">~:caboose</a>
 
-
-
-
 <pre>
   # this is used directly on models only
   # Usage: Customer.to_tab_delimited

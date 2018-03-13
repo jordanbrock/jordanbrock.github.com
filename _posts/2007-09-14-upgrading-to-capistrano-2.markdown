@@ -15,18 +15,9 @@ categories:
 
  For no other reason than this is something I need to remember on other projects, here is a list of the changes I made when I uninstalled deprec and upgraded to <a href="http://capify.org">capistrano 2</a> for deployment.
 
-
-
-
 ### Things to do
 
-
-
-
 Do this once
-
-
-
 
 @
 gem install mongrel_cluster
@@ -34,22 +25,13 @@ gem install mongrel_cluster
 
 then in the application directory
 
-
-
-
 @
 capify .
 @
 
 then remove "require &#8216;deprec/recipes' from the deploy.rb file
 
-
-
-
 then put the following in to the deploy.rb file
-
-
-
 
 @
 namespace :deploy do

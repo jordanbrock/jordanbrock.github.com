@@ -7,9 +7,6 @@ categories: []
 
 ---
 
- <a href="http://share.skype.com/sites/mac/2006/06/skype_for_mac_with_video_comin.html">Skype for Mac with video coming up - but don't use the buggy version - Skype for Mac</a>
+<a href="http://share.skype.com/sites/mac/2006/06/skype_for_mac_with_video_comin.html">Skype for Mac with video coming up - but don't use the buggy version - Skype for Mac</a>
 
-
-
-
-bq. Video support for Skype for Mac will be one of our major acts this year. You can tell that by just taking a look at our various blog posts and the comments here, especially in the Mac blog. Whatever we post, we have people asking "WHERE <span class="caps">IS VIDEO FOR SKYPE FOR MAC</span>? GIMME <span class="caps">SKYPE FOR MAC WITH VIDEO</span>." It's great to see this much interest and we'll surely meet it by bringing you a fine video version with the superb quality you've grown to expect from Skype.
+> Video support for Skype for Mac will be one of our major acts this year. You can tell that by just taking a look at our various blog posts and the comments here, especially in the Mac blog. Whatever we post, we have people asking "WHERE <span class="caps">IS VIDEO FOR SKYPE FOR MAC</span>? GIMME <span class="caps">SKYPE FOR MAC WITH VIDEO</span>." It's great to see this much interest and we'll surely meet it by bringing you a fine video version with the superb quality you've grown to expect from Skype.

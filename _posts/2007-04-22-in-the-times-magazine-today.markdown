@@ -20,11 +20,7 @@ categories:
 </div>
 So, this is very weird. 
 
-
-
 There's <a href="http://technology.timesonline.co.uk/tol/news/tech_and_web/the_web/article1666489.ece">an article</a> in The Times Magazine today about <a href="http://twitter.com">twitter</a>. And for some unknown reason, it has pictures of a bunch of Perth twitterers (twits?), including your humble correspondent. 
-
-
 
 Strange.
 <br clear="all" />

@@ -21,7 +21,6 @@ The key to this error is that Capybara is trying to find and/or interact with an
 
 ### jQuery Effects
 
-
 If you're running tests, there's a pretty good chance you don't care about any jQuery effects. You're just interested in the result. If that's the case, then add this line to your page layout:
 
 {% highlight ruby %}
@@ -42,6 +41,5 @@ wait_for(30) {page.should have_button "Button Text"}
 This just gives the page a little time to catch up before Capybara blows up on you.
 
 ### capybara-webkit
-
 
 A new Selenium driver from the fine folks at <a href="http://robots.thoughtbot.com/post/4583605733/capybara-webkit">Thoughtbot</a>, this is a headless (this just means it doesn't open a visible window) browser that Capybara can interact with. Ideally it should be faster than opening up a browser window for each test. I managed to get it working, mostly. It's still kind of new, so there are a few things missing, but it might be a good idea to watch the <a href="https://github.com/thoughtbot/capybara-webkit">github project</a>.

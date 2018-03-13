@@ -9,13 +9,9 @@ categories:
 - trailers
 ---
 
- <a href="http://www.apple.com/trailers/fox/borat/trailer/">Apple - Trailers - Borat - Trailer</a>
+<a href="http://www.apple.com/trailers/fox/borat/trailer/">Apple - Trailers - Borat - Trailer</a>
 
-
-
-
-bq. In this hilariously offensive movie, Borat travels from his primitive home in Kazakhstan to the U.S. to make a documentary. On his cross-country road-trip, Borat meets real people in real situations.
-
+> In this hilariously offensive movie, Borat travels from his primitive home in Kazakhstan to the U.S. to make a documentary. On his cross-country road-trip, Borat meets real people in real situations.
 
 Cinematic gold awaits us.
 

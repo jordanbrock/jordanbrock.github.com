@@ -10,8 +10,5 @@ categories:
 
  9/10
 
-
-
-
 The joke about the rat felt simultaneously brilliant and tacky beyond belief.
 

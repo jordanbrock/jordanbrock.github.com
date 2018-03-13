@@ -11,8 +11,5 @@ categories:
 
  <img src="http://jordanbrock.com/assets/2008/2/14/bitter-space.gif" alt="" />
 
-
-
-
 From <a href="http://www.woot.com/Blog/BlogEntry.aspx?BlogEntryId=3933">w00t</a>
 

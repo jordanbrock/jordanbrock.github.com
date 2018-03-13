@@ -10,8 +10,5 @@ categories:
 
  8/10
 
-
-
-
 So, how much Matthew Vaugh is in <a href="http://imdb.com/title/tt0120735/">Lock, Stock and Two Smoking Barrels</a> and <a href="http://imdb.com/title/tt0208092/">Snatch</a> ?
 
