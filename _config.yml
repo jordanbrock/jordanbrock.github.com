@@ -5,3 +5,6 @@ highlighter: rouge
 lsi: false
 markdown: kramdown
 paginate: 5
+plugins:
+  - jekyll-paginate
+ 
