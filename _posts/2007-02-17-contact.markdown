@@ -7,6 +7,6 @@ categories: []
 
 ---
 
- Jordan Brock
+Jordan Brock
 <a href="mailto:jordanbrock@gmail.com">jordanbrock@gmail.com</a>
 

@@ -11,7 +11,7 @@ categories:
 - television
 ---
 
- Several years ago, after enduring the woeful coverage of Formula 1 on Channel 9 with the twin wonders of Daryl Eastlake and Alan Jones, Channel 10 bought the broadcast rights and promised a new era of Formula 1 coverage. It sounded great, and I was looking forward to being able to watch races live (or close to live as they put it in the press release), and with improved coverage.
+Several years ago, after enduring the woeful coverage of Formula 1 on Channel 9 with the twin wonders of Daryl Eastlake and Alan Jones, Channel 10 bought the broadcast rights and promised a new era of Formula 1 coverage. It sounded great, and I was looking forward to being able to watch races live (or close to live as they put it in the press release), and with improved coverage.
 
 At first, they were good. Neil Crompton actually knew what he was talking about, and the races were shown live, or at 10:30 (after the Sunday night movie). I'm a realist. I know that they're not going to broadcast something that doesn't rate spectacularly well right in the middle of prime time. But at least it was within an hour or so of the race running, and at a standard time.
 

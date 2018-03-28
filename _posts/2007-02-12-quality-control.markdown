@@ -10,7 +10,7 @@ categories:
 - websites
 ---
 
- The Police have just announced a worldwide <strike>cynical money grab</strike> tour, and have launched a <a href="http://thepolicetour.com">website</a> to fill you in on all of the details. Unfortunately, whichever company they have tapped to produce the site seems to have just reskinned an old site, and haven't even managed to do a find/replace particularly well.
+The Police have just announced a worldwide <strike>cynical money grab</strike> tour, and have launched a <a href="http://thepolicetour.com">website</a> to fill you in on all of the details. Unfortunately, whichever company they have tapped to produce the site seems to have just reskinned an old site, and haven't even managed to do a find/replace particularly well.
 
 bq. <pre>
 <!DOCTYPE HTML PUBLIC '-//W3C//DTD HTML 4.01 Transitional//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd'><html>

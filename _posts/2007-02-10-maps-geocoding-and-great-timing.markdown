@@ -13,7 +13,7 @@ categories:
 - Web
 ---
 
- On one of the sites I've been working on for quite a while (<a href="http://www.schoolseek.com.au">SchoolSeek</a>) we've been wanting to add the ability for users to find out how far a school is from their current location. There are services that have been able to <a href="http://en.wikipedia.org/wiki/Geocode">geocode</a> addresses for a while, but they were either based in the US, or cost money. Not a lot of money, but free is always good.
+On one of the sites I've been working on for quite a while (<a href="http://www.schoolseek.com.au">SchoolSeek</a>) we've been wanting to add the ability for users to find out how far a school is from their current location. There are services that have been able to <a href="http://en.wikipedia.org/wiki/Geocode">geocode</a> addresses for a while, but they were either based in the US, or cost money. Not a lot of money, but free is always good.
 
 A couple of years ago, <a href="http://maps.google.com">Google Maps</a> launched in the US and opened up a massive range of possibilities for programmers to develop cool "mashups", which took information from one site, mashed it together with maps from google, and created a whole new website. They were all really cool, but unfortunately (at least for the non-US based of us) it was nothing more than something we could sit back and watch - which was kind of weird because the team of developers that built Google Maps was based in Sydney.
 

@@ -7,10 +7,7 @@ categories: []
 
 ---
 
- How will I ever compete?
-
-
-
+How will I ever compete?
 
 <img src="http://www.tamarabuchi.com/images/competition.jpg" title="Oh man, these guys look slick!" alt="Oh man, these guys look slick!" />
 

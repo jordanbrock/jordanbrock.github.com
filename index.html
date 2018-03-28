@@ -6,6 +6,7 @@ title: jordanbrock.com
 <p>
 I'm a Ruby developer who works for <a href="http://www.fivesenses.com.au" target="_blank">Five Senses Coffee</a>. I <a href="http://strava.com/athletes/jordanbrock">ride bikes</a>.
 </p>
+
 <h2>Recent Posts</h2>
 {% for post in site.posts limit:10 %}
 <h3>
@@ -13,7 +14,7 @@ I'm a Ruby developer who works for <a href="http://www.fivesenses.com.au" target
 </h3>
 <div class="meta">{{ post.date | date: "%b %d, %Y" }}</div>
 <div class="article">
-{% post.content %}
+{{ post.content }}
 </div>
 {% endfor %}
   

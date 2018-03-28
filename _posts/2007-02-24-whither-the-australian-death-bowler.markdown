@@ -11,7 +11,7 @@ categories:
 - worldcup
 ---
 
- In the past year, Australia has gone from being able to strangle the opposition's scoring at the end of an innings, to being having one of the most expensive bowling attacks in the world. Now, <a href="http://content-aus.cricinfo.com/columns/content/story/281283.html">this article</a> doesn't attempt to show why, but it certainly makes for alarming reading.
+In the past year, Australia has gone from being able to strangle the opposition's scoring at the end of an innings, to being having one of the most expensive bowling attacks in the world. Now, <a href="http://content-aus.cricinfo.com/columns/content/story/281283.html">this article</a> doesn't attempt to show why, but it certainly makes for alarming reading.
 
 One of the most (for me at least) interesting tidbit is about bowlers like <a href="http://content-aus.cricinfo.com/columns/content/player/42272.html">Rana Naved-ul-Hasan</a> and <a href="http://content-aus.cricinfo.com/columns/content/player/50804.html">Chaminda Vaas</a>. The former is horrifically expensive during the first 40 overs of the game, but in the last 10 overs he is transformed into a miser. Vaas, on the other hand, is almost unplayable with the new ball, but turns into a regular pie-chucker in the last 10.
 

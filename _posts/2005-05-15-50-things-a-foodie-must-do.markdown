@@ -7,10 +7,7 @@ categories: []
 
 ---
 
- From the Observer, <a href="http://observer.guardian.co.uk/foodmonthly/story/0,9950,1481375,00.html">50 Things a Foodie Must Do</a>
-
-
-
+From the Observer, <a href="http://observer.guardian.co.uk/foodmonthly/story/0,9950,1481375,00.html">50 Things a Foodie Must Do</a>
 
 Particularly keen on peeing against a glass wall in Hong Kong, and the one on the steak. Oh, and whizzing my hot parcel off to the beach.
 

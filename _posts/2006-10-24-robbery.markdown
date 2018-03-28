@@ -16,4 +16,3 @@ categories:
 As an experiment I went to the Apple US website, and priced the same spec machine. And what do you know? It comes to <span class="caps">AUD</span>$3818 at today's exchange rate. $800 difference. Just because it's in Australia? Even when you factor <span class="caps">GST</span> into it, it's still about $400 cheaper.
 
 So, guess what I'll be buying in the US?
-
