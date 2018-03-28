@@ -4,3 +4,4 @@ server_port: 4000
 highlighter: rouge
 lsi: false
 markdown: kramdown
+paginate: 5
