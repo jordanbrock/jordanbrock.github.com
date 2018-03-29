@@ -287,7 +287,7 @@ blockquote {
   border-left: 5px solid #ddd;
 }
 
-blockquote p {
+blockquote > p {
   margin-top: 5px;
   margin-bottom: 5px;
   font-size: 90%;
