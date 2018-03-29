@@ -287,6 +287,12 @@ blockquote {
   border-left: 5px solid #ddd;
 }
 
+blockquote p {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  font-size: 90%;
+}
+
 blockquote cite {
   margin: 5px 0 0;
   display: block;
@@ -324,11 +330,11 @@ tr:nth-of-type(odd) {
     background-color: #eee;
 }
 td {
-    padding: 3px;
+    padding: 5px;
 }
 th {
     font-weight: bold;
-    padding: 3px;
+    padding: 5px;
 }
 
 /* Captions */
