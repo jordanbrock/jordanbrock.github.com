@@ -5,6 +5,13 @@ layout: default
 <time class="meta" datetime="{{ page.date | date: "%Y-%m-%d" }}">
   {{ page.date | date: "%b %d, %Y" }}
 </time>
+
+<div class="tags">
+  {% for tag in post.tags %}
+     <a href="/tags/{{ tag }}/">{{ tag }}</a>, 
+  {% endfor %} 
+</div>
+
 <article class="post">
   {{ content }}
 </article>
