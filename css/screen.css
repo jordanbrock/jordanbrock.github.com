@@ -92,6 +92,12 @@ p{
 .meta{
   font-style: italic;
 }
+
+.tags{
+  padding-bottom: 9px;
+  font-size: 0.9em;
+}
+
 strong{
   font-weight: bold;
 }
