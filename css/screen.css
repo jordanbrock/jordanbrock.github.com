@@ -86,7 +86,7 @@ h3 {
 
 p{
   margin : 9px 0 14px 0;
-  line-height : 21px;
+  line-height : 23px;
 }
 
 .meta{
@@ -94,8 +94,8 @@ p{
 }
 
 .tags{
-  padding-bottom: 9px;
-  font-size: 0.9em;
+  padding: 4px 0px 9px 0px;
+  font-size: 0.8em;
 }
 
 strong{
