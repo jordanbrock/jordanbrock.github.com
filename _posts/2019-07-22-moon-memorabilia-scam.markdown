@@ -3,6 +3,7 @@ layout: post
 title: "First Scam on the Moon"
 date: "2019-07-22 09:52:18 +0800"
 published: true
+tags: [nasa, airmail]
 ---
 
 ##### [First Scam on the Moon | July 20, 2019 - Air Mail](https://airmail.news/issues/2019-7-20/first-scam-on-the-moon)
