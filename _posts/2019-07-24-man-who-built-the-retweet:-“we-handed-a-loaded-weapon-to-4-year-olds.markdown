@@ -1,5 +1,5 @@
 ---
-title: Man Who Built The Retweet: “We Handed A Loaded Weapon To 4-Year-Olds
+title: Man Who Built The Retweet: “We Handed A Loaded Weapon To 4-Year-Olds"
 date: 2019-07-24T14:07:47+08:00
 author: Jordan Brock
 published: true
