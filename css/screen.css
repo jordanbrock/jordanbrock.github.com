@@ -4,16 +4,16 @@ body {
   font-size: 18px;
   line-height: 19px;
   font-family: -apple-system, BlinkMacSystemFont, helvetica, sans-serif;
-  background: #efebe3;
   color: #4a4947;
 }
 #container{
-  margin : 30px;
+  margin : 30px auto;
   padding : 20px 40px;
   background-color : white;
   border-radius : 10px;
   -webkit-border-radius : 10px;
   -mozilla-border-radius : 10px;
+  max-width: 1440px;
 }
 #container ul{
   margin-left: 30px;
@@ -30,6 +30,7 @@ header {
 header h1 a{
   color: #4a4947;
   text-decoration: none;
+  line-height: 1.2em;
 }
 #content{
   float: left;
