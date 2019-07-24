@@ -3,7 +3,7 @@
 body {
   font-size: 18px;
   line-height: 19px;
-  font-family: "ff-meta-serif-web-pro-1","ff-meta-serif-web-pro-2", serif;
+  font-family: -apple-system, BlinkMacSystemFont, helvetica, sans-serif;
   background: #efebe3;
   color: #4a4947;
 }
@@ -53,13 +53,11 @@ footer {
 }
 
 small {
-	font-family: "ff-meta-serif-web-pro-1","ff-meta-serif-web-pro-2", serif;
 	font-size: 0.9em;
 	line-height: 1.5em;
 	}
 
 h1, h2, h3 {
-	font-family: "ff-meta-serif-web-pro-1","ff-meta-serif-web-pro-2", serif;
 	font-weight: bold;
 	}
 
