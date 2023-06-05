@@ -1,12 +1,10 @@
 ---
-title: Starting Fresh
+title: Starting Fresh (and fresher still)
 date: 2023-06-05T14:07:47+08:00
 author: Jordan Brock
 published: true
 layout: post
 ---
-
-# Starting Fresh (and fresher still)
 
 Some of this is not news by any real definition of the word, but I thought I should document it somewhere.
 
