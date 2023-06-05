@@ -1,0 +1,27 @@
+---
+title: Starting Fresh
+date: 2023-06-05T14:07:47+08:00
+author: Jordan Brock
+published: true
+layout: post
+---
+
+# Starting Fresh (and fresher still)
+
+Some of this is not news by any real definition of the word, but I thought I should document it somewhere.
+
+Last June, after working at [Five Senses Coffee](https://fivesenses.com.au) for 15 years, I finished up and started a new job at [The Lookout Way](https://thelookoutway.com). Working as the sole developer in a coffee roasting company I was beginning to feel like I was spinning my wheels. I enjoyed the work, but the prospect of working in a team began to appeal in a way it had never done before.
+
+I'd put a profile on [RailsDevs](https://railsdevs.com) at some point, but never really said I was looking for a job, so it was a bit of a surprise with The Lookout Way reached out. We had a few chats, began the interview process, and before I knew it, I had an offer, and I'd left Five Senses. Bittersweet to say the least, but exciting.
+
+Spending 15 years in a codebase meant I pretty much knew it back-to-front: Coming in cold on a 5 year old codebase that had 15 engineers working on it meant I didn't have a clue what was going on :) Daunting, frustrating, exhilarating, scary and exciting. I was incredibly lucky to end up in a team of engineers who were patient with my lack of team experience, my horrible git habits and my inexperience with the codebase.
+
+Unfortunately, just as I was beginning to feel like I was keeping my head above water after 7 months, there was a round of layoffs. As one of the most recent on, it's no surprise I was one of the first to go. I really began to wonder if I'd made the right decision to leave Five Senses.
+
+That only magnified after spending more than 3 months looking for a new job. Of course, I'm incredibly lucky to have a wife who provided never-ending support, tolerant kids who put up with a mildly despondent father, and also to be relatively financially secure so I had the freedom to look for the right job.
+
+And that job came along when [Streem](https://streem.com.au) reached out. Another interview process, and then I found myself starting work at a new company, digging into a new codebase again.
+
+I've just spent the last week in Sydney working in the main office, and all of the feelings I felt at The Lookout Way have resurfaced, but once again I've landed in a team of wonderful, talented, supportive developers who are more than willing to put up with a never-ending supply of base level questions.
+
+And so the second fresh start inside 12 months is underway.
