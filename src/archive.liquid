@@ -1,0 +1,13 @@
+---
+layout: default
+title: Archive
+permalink: /archive.html
+---
+
+<h2>Archive</h2>
+
+<ul>
+  {% for post in collections.posts.resources %}
+  <li><a href="{{ post.relative_url }}"><span class="date">{{ post.data.date | date: "%b %d, %Y" }}</span> &mdash; {{ post.data.title }}</a></li>
+  {% endfor %}
+</ul>

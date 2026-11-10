@@ -1,0 +1,29 @@
+---
+layout: default
+title: jordanbrock.com
+paginate:
+  collection: posts
+  per_page: 5
+  permalink: /page:num/
+---
+{% for post in paginator.resources %}
+<div class="article">
+  <h3><a href="{{ post.relative_url }}">{{ post.data.title }}</a></h3>
+  <div class="meta">{{ post.data.date | date: "%b %d, %Y" }}</div>
+  {{ post.content }}
+</div>
+{% endfor %}
+
+<div class="pagination">
+  {% if paginator.previous_page %}
+    <a href="{{ paginator.previous_page_path }}" class="previous">Previous</a>
+  {% else %}
+    <span class="previous">Previous</span>
+  {% endif %}
+  <span class="page_number">Page: {{ paginator.page }} of {{ paginator.total_pages }}</span>
+  {% if paginator.next_page %}
+    <a href="{{ paginator.next_page_path }}" class="next">Next</a>
+  {% else %}
+    <span class="next">Next</span>
+  {% endif %}
+</div>
