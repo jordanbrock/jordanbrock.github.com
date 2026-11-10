@@ -2,6 +2,8 @@ require "cgi"
 
 module Builders
   class Helpers < SiteBuilder
+    SITE_NAME = "Jordan Brock"
+
     def build
       # Title for feeds and lists; notes and photos have no title.
       helper :feed_title do |resource|
@@ -14,9 +16,10 @@ module Builders
       end
 
       # Absolute URL for <link rel="canonical">. Pages need the permalink too:
-      # relative_url turns /archive.html into /archive.
+      # relative_url turns /archive.html into /archive. Redirect stubs point
+      # at their target.
       helper :canonical_url do |resource|
-        site.config.url + PostUrl.for(resource)
+        site.config.url + (resource.data.redirect_to || PostUrl.for(resource))
       end
 
       # Marks HTML as plain text so the feed template's <%= %> escapes it
@@ -32,10 +35,12 @@ module Builders
         FeedEntry.lead(resource, photos: site.data.photos, base_url: site.config.url) + resource.content.to_s
       end
 
-      # <title> text: posts use feed_title, pages their own title.
+      # <title> text: posts use feed_title, pages their own title, then the
+      # site name, unless the title already starts with it ("Jordan Brock
+      # (Page 2)" on paginated pages).
       helper :page_title do |resource|
-        page = post?(resource) ? FeedEntry.title(resource) : resource.data.title
-        parts = [page, "Jordan Brock"].compact.map(&:to_s).reject(&:empty?).uniq
+        page = (post?(resource) ? FeedEntry.title(resource) : resource.data.title).to_s
+        parts = page.start_with?(SITE_NAME) ? [page] : [page, SITE_NAME].reject(&:empty?)
         parts.map { CGI.escapeHTML(_1) }.join(" &mdash; ").html_safe
       end
     end

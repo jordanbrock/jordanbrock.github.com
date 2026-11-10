@@ -72,6 +72,9 @@ table { display: block; overflow-x: auto; }
 .pagination { display: flex; justify-content: space-between; font: 0.8125rem var(--sans);
               color: var(--muted); border-top: 1px solid var(--rule); padding-top: 1rem; margin-top: 3rem; }
 
+/* Tag pages: the same gap under the h1 as the archive's first year. */
+.article__title + .stream { margin-top: 2rem; }
+
 .archive h2 { font: 600 1.25rem var(--display); margin: 2rem 0 0.5rem; }
 .archive > p { margin: 1rem 0; }
 .archive ul { list-style: none; padding: 0; margin: 0; }
@@ -89,6 +92,8 @@ table { display: block; overflow-x: auto; }
 /* Rouge */
 div.highlight { background: var(--card); padding: 0.75rem 1rem; border-radius: 6px; overflow-x: auto;
              font-size: 0.875rem; line-height: 1.5; }
+/* Same gap after a code block as after a paragraph (1em of body text). */
+div.highlight, pre { margin: 0 0 1.0625rem; }
 pre.highlight { margin: 0; padding: 0; background: none; }
 .highlight .c, .highlight .c1, .highlight .cm { color: var(--muted); font-style: italic; }
 .highlight .k, .highlight .kd, .highlight .kn { color: var(--accent); }

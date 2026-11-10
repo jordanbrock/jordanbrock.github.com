@@ -40,9 +40,6 @@ gem "falcon"
 # of your HTML or XML resources:
 # gem "nokogiri", "~> 1.18"
 
-# Or for faster parsing of HTML-only resources via Inspectors, use Nokolexbor:
-# gem "nokolexbor", "~> 0.6"
-
 gem "ruby-vips", "~> 2.2"
 gem "nokolexbor", "~> 0.6"
 

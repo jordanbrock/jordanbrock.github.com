@@ -13,7 +13,7 @@ module Builders
     def processor
       @processor ||= PhotoProcessor.new(
         source_dir: site.in_source_dir("photos"),
-        cache_dir: File.join(site.root_dir, ".bridgetown-cache", "photos")
+        cache_dir: File.join(site.root_dir, "tmp", "photos") # outside .bridgetown-cache, which clean deletes
       )
     end
 

@@ -23,7 +23,12 @@ module PostType
   # Uses the resource's real front matter: Bridgetown fills data.title from
   # the slug, which would make every untitled note look like an article.
   def self.front_matter(resource) = resource.model.attributes.to_h.reject { |k, _| k.to_s.start_with?("_") }
-  def self.for_resource(resource) = self.for(front_matter(resource))
+  def self.for_resource(resource)
+    self.for(front_matter(resource))
+  rescue ArgumentError => e
+    raise ArgumentError, "#{e.message} (in #{resource.relative_path})"
+  end
+
   def self.title(resource) = front_matter(resource)["title"].to_s.strip
 
   # Posts newest first (ties broken by path, so the order is stable),

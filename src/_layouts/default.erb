@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title><%= page_title(resource) %></title>
     <link rel="canonical" href="<%= canonical_url(resource) %>" />
+    <% if resource.data.redirect_to %><meta http-equiv="refresh" content="0; url=<%= resource.data.redirect_to %>" /><% end %>
     <link rel="alternate" type="application/atom+xml" title="Jordan Brock" href="/atom.xml" />
     <link rel="preload" href="/fonts/newsreader-400-normal.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="stylesheet" href="/css/site.css" />

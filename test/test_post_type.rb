@@ -32,6 +32,13 @@ class TestPostType < Minitest::Test
     assert_raises(ArgumentError) { t("type" => "video") }
   end
 
+  def test_for_resource_names_the_file_on_unknown_type
+    resource = Struct.new(:model, :relative_path).new(Struct.new(:attributes).new({ "type" => "video" }), "_posts/x.md")
+    err = assert_raises(ArgumentError) { PostType.for_resource(resource) }
+    assert_includes err.message, "Unknown post type: video"
+    assert_includes err.message, "_posts/x.md"
+  end
+
   def test_accepts_symbol_keys
     assert_equal "link", t(link: "https://example.com")
   end

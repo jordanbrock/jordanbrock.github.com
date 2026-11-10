@@ -67,6 +67,14 @@ class TestSite < Bridgetown::Test
       expect(view.page_title(page)).must_equal "A &amp; B &mdash; Jordan Brock"
     end
 
+    it "page_title drops the site name when the title already starts with it" do
+      page = ->(title) { Struct.new(:collection, :data).new(nil, Struct.new(:title).new(title)) }
+      expect(view.page_title(page.call("Jordan Brock (Page 2)"))).must_equal "Jordan Brock (Page 2)"
+      expect(view.page_title(page.call("Jordan Brock"))).must_equal "Jordan Brock"
+      html get "/page2/"
+      expect(document.query_selector("title").text).must_equal "Jordan Brock (Page 2)"
+    end
+
     it "feed_html drops html_safe so the template escapes exactly once" do
       out = view.feed_html("<p>a &amp; b</p>".html_safe)
       expect(out.html_safe?).must_equal false
@@ -178,6 +186,14 @@ class TestSite < Bridgetown::Test
       expect(bad.domain).must_equal PostType.link_domain("javascript:alert(1)") # matches feed_title, not "#"
     end
 
+    it "photo captions join paragraphs with a space and add no separator" do
+      resource = Struct.new(:content).new("<p>One.</p>\n<p>Two.</p>\n")
+      expect(Posts::Photo.new(resource:, mode: :full).caption_html).must_equal "One. Two."
+      post = first_of("photo")
+      html get post.relative_url
+      expect(document.query_selector(".photo figcaption").inner_html).wont_match(/(\u00b7|&middot;)\s*<div/)
+    end
+
     it "notes have no heading" do
       post = first_of("note")
       html get post.relative_url
@@ -266,6 +282,12 @@ class TestSite < Bridgetown::Test
       expect(document.query_selector("title").text).must_equal "#{text} \u2014 Jordan Brock"
     end
 
+    it "archive links to the notes and links pages" do
+      html get "/archive.html"
+      hrefs = document.query_selector_all("main > p a").map { _1["href"] }
+      expect(hrefs).must_equal %w[/notes/ /links/]
+    end
+
     it "about page has the bio from the old sidebar" do
       html get "/about/"
       text = document.query_selector("main").text
@@ -346,6 +368,27 @@ class TestSite < Bridgetown::Test
         html get path
         expect(document.query_selector("link[rel=canonical]")["href"]).must_equal "https://jordanbrock.com#{canonical}", path
       end
+    end
+
+    it "stubs only the legacy /pageN/ URLs that pagination no longer makes" do
+      real = site.generated_pages.map(&:relative_url).grep(%r{\A/page\d+/\z})
+      expect(real).wont_be_empty
+      expect(LegacyPagination.missing(site)).must_equal LegacyPagination.urls - real
+      LegacyPagination.urls.each { expect(File.file?(output(_1))).must_equal true, _1 }
+    end
+
+    it "legacy pagination stubs point readers and crawlers at the archive" do
+      stubs = LegacyPagination.missing(site).tap { skip("pagination covers every legacy page") if _1.empty? }
+      stubs.each do |path|
+        html get path
+        expect(document.query_selector("main h1").text).must_equal "This page has moved"
+        expect(document.query_selector("main a[href='/archive.html']")).wont_be_nil
+        expect(document.query_selector("meta[http-equiv=refresh]")["content"]).must_equal "0; url=/archive.html"
+        expect(document.query_selector("link[rel=canonical]")["href"]).must_equal "https://jordanbrock.com/archive.html"
+      end
+      html get "/page2/" # a real page: no redirect
+      expect(document.query_selector("meta[http-equiv=refresh]")).must_be_nil
+      expect(document.query_selector_all(".stream > *").size).must_equal 10
     end
 
     it "masthead nav links resolve" do

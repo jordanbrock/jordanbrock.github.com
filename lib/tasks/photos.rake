@@ -2,7 +2,7 @@ namespace :photos do
   desc "Strip GPS and other metadata from originals in src/photos that have GPS (in place, keeps ICC); a path forces one file"
   task :strip, [:path] do |_t, args|
     require_relative "../../plugins/photo_processor"
-    checker = PhotoProcessor.new(source_dir: "src/photos", cache_dir: ".bridgetown-cache/photos")
+    checker = PhotoProcessor.new(source_dir: "src/photos", cache_dir: "tmp/photos")
     files = args[:path] ? [args[:path]] : Dir["src/photos/**/*"].select { File.file?(_1) }
     files.each do |f|
       begin

@@ -7,9 +7,10 @@ on:
   workflow_dispatch:
   pull_request:
 
+# A newer push to a PR supersedes its running build; master builds always finish.
 concurrency:
-  group: pages
-  cancel-in-progress: false
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   build:
@@ -31,7 +32,7 @@ jobs:
       - name: Cache processed photos
         uses: actions/cache@v4
         with:
-          path: .bridgetown-cache/photos
+          path: tmp/photos
           key: photos-${{ hashFiles('src/photos/**') }}
           restore-keys: photos-
 
@@ -47,13 +48,18 @@ jobs:
         run: bin/bridgetown check:urls
 
       - name: Upload build artifact
+        if: github.ref == 'refs/heads/master' && github.event_name != 'pull_request'
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./output
 
   deploy:
     needs: build
-    if: github.event_name != 'pull_request'
+    if: github.ref == 'refs/heads/master' && github.event_name != 'pull_request'
+    # One Pages deploy at a time, never cancelled midway.
+    concurrency:
+      group: pages
+      cancel-in-progress: false
     permissions:
       pages: write
       id-token: write
