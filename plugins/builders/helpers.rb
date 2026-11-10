@@ -1,3 +1,5 @@
+require "cgi"
+
 module Builders
   class Helpers < SiteBuilder
     def build
@@ -10,7 +12,7 @@ module Builders
         title = resource.data.title.to_s.strip
         next title unless title.empty?
 
-        words = resource.content.to_s.gsub(/<[^>]+>/, " ").split # templates escape on output
+        words = CGI.unescapeHTML(resource.content.to_s.gsub(/<[^>]+>/, " ")).split # templates escape on output
         if words.empty?
           "#{PostType.for(resource.data).capitalize}, #{resource.date.strftime("%-d %b")}"
         else

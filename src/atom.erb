@@ -14,11 +14,11 @@ template_engine: erb
   </author>
   <% collections.posts.resources.first(20).each do |post| %>
   <entry>
-    <title><%= xml_escape feed_title(post) %></title>
+    <title><%= feed_title(post) %></title>
     <link href="<%= site.config.url %><%= post.data.permalink || post.relative_url %>"/>
     <updated><%= post.date.xmlschema %></updated>
     <id><%= "http://jordanbrock.com#{post.relative_url}" %></id>
-    <content type="html"><%= xml_escape post.content %></content>
+    <content type="html"><%= String.new(post.content.to_s) %></content>
   </entry>
   <% end %>
 </feed>
