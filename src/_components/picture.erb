@@ -1,0 +1,4 @@
+<picture>
+  <source type="image/webp" srcset="<%= srcset("webp") %>" sizes="<%= @sizes %>">
+  <img src="<%= fallback %>" srcset="<%= srcset("jpg") %>" sizes="<%= @sizes %>" width="<%= @info[:width] %>" height="<%= @info[:height] %>" alt="<%= @alt %>"<% unless @eager %> loading="lazy"<% end %> decoding="async">
+</picture>

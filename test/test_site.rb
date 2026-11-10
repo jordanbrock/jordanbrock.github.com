@@ -126,4 +126,61 @@ class TestSite < Bridgetown::Test
       expect(document.query_selector(".note h2, .note h1")).must_be_nil
     end
   end
+
+  describe "photos" do
+    def photo_srcs(img, source) = [img["src"], *"#{img["srcset"]}, #{source["srcset"]}".split(",").map { _1.strip.split.first }]
+
+    it "photo post page has an eager picture with webp and jpeg srcsets, dimensions and alt" do
+      post = first_of("photo")
+      html get post.relative_url
+      source = document.query_selector(".photo picture source[type='image/webp']")
+      img = document.query_selector(".photo picture img")
+      expect(source["srcset"]).must_match(/\.webp \d+w/)
+      expect(img["srcset"]).must_match(/\.jpg \d+w/)
+      expect(img["width"].to_i).must_be :>, 0
+      expect(img["height"].to_i).must_be :>, 0
+      expect(img["alt"]).must_equal post.data.alt
+      expect(img["loading"]).must_be_nil
+      photo_srcs(img, source).each { expect(File.file?(File.expand_path("../output#{_1}", __dir__))).must_equal true, _1 }
+    end
+
+    it "photos lazy-load in the stream" do
+      first_of("photo")
+      html get "/"
+      img = document.query_selector(".stream .photo picture img")
+      expect(img["loading"]).must_equal "lazy"
+    end
+
+    it "registers processed photos under the post's image path" do
+      post = first_of("photo")
+      info = site.data.photos[post.data.image]
+      expect(info[:widths]).wont_be_empty
+      expect(info[:base]).must_equal post.data.image.sub(/\.[^.]+\z/, "")
+    end
+
+    it "escapes alt text and names the image when it was not processed" do
+      Bridgetown::Current.site = site
+      post = first_of("photo")
+      html = Picture.new(image: post.data.image, alt: %(a "quoted" <b>)).render_in(Bridgetown::ERBView.new(post))
+      expect(html).must_include %(alt="a &quot;quoted&quot; &lt;b&gt;")
+      err = expect { Picture.new(image: "2026/missing.jpg", alt: "x") }.must_raise ArgumentError
+      expect(err.message).must_include "2026/missing.jpg"
+    end
+
+    it "never publishes originals" do
+      photos = File.expand_path("../src/photos", __dir__)
+      originals = Dir[File.join(photos, "**", "*")].select { File.file?(_1) }
+      expect(originals).wont_be_empty
+      originals.each do |orig|
+        rel = orig.delete_prefix("#{photos}/")
+        expect(File.exist?(File.expand_path("../output/photos/#{rel}", __dir__))).must_equal false, rel
+      end
+    end
+
+    it "publishes only resized files under output/photos" do
+      files = Dir[File.expand_path("../output/photos/**/*", __dir__)].select { File.file?(_1) }
+      expect(files).wont_be_empty
+      expect(files.reject { _1.match?(/-\d+\.(webp|jpg)\z/) || _1.end_with?("/photos/index.html") }).must_be_empty
+    end
+  end
 end
