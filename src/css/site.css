@@ -65,8 +65,10 @@ table { display: block; overflow-x: auto; }
 
 .note .prose > :last-child { margin-bottom: 0.15rem; }
 
-.photo figure { margin: 0; }
-.photo img { display: block; width: 100%; height: auto; }
+/* Portrait shots are capped to the viewport; the figure shrinks to the image
+   so the caption stays aligned with its left edge. */
+.photo figure { margin: 0 auto; width: fit-content; max-width: 100%; }
+.photo img { display: block; width: auto; max-width: 100%; max-height: 85vh; height: auto; }
 .photo figcaption { font: 0.8125rem/1.5 var(--sans); color: var(--ink-2); margin-top: 0.5rem; }
 
 .pagination { display: flex; justify-content: space-between; font: 0.8125rem var(--sans);
