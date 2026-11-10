@@ -36,6 +36,20 @@ class TestSite < Bridgetown::Test
     end
   end
 
+  describe "posts" do
+    it "have no unrendered Liquid tags in built HTML" do
+      offenders = site.collections.posts.resources.filter_map do |post|
+        url = post.relative_url
+        file = url.end_with?("/") ? "output#{url}index.html" : "output#{url}"
+        file = "#{file}.html" unless File.file?(file) || File.extname(file) == ".html"
+        next unless File.file?(file)
+
+        url if File.read(file, encoding: "UTF-8").match?(/\{%|%\}/)
+      end
+      expect(offenders).must_be_empty
+    end
+  end
+
   describe "templates" do
     it "uses no Liquid templates" do
       expect(Dir["src/**/*.liquid"]).must_be_empty
