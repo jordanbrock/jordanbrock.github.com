@@ -12,5 +12,8 @@ class Picture < Bridgetown::Component
   end
 
   def srcset(ext) = @info[:widths].map { "/photos/#{@info[:base]}-#{_1}.#{ext} #{_1}w" }.join(", ")
-  def fallback = "/photos/#{@info[:base]}-#{@info[:widths].select { _1 <= 960 }.max || @info[:widths].min}.jpg"
+  def fallback = self.class.fallback(@info)
+
+  # The JPEG for browsers without srcset (and for feeds): the widest up to 960px.
+  def self.fallback(info) = "/photos/#{info[:base]}-#{info[:widths].select { _1 <= 960 }.max || info[:widths].min}.jpg"
 end

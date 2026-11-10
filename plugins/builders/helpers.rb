@@ -19,6 +19,19 @@ module Builders
         site.config.url + PostUrl.for(resource)
       end
 
+      # Marks HTML as plain text so the feed template's <%= %> escapes it
+      # exactly once, as Atom's type="html" content requires. Never escape it
+      # again here: that double-escapes the feed.
+      helper :feed_html do |html|
+        String.new(html.to_s)
+      end
+
+      # Entry body for the feed: link posts lead with the external link,
+      # photo posts with their 960px JPEG.
+      helper :feed_body do |resource|
+        feed_lead(resource) + resource.content.to_s
+      end
+
       # <title> text: posts use feed_title, pages their own title.
       helper :page_title do |resource|
         page = post?(resource) ? feed_title_for(resource) : resource.data.title
@@ -29,7 +42,23 @@ module Builders
 
     private
 
-    def post?(resource) = resource.respond_to?(:collection) && resource.collection.label == "posts"
+    def post?(resource) = resource.respond_to?(:collection) && resource.collection&.label == "posts"
+
+    def feed_lead(resource)
+      case PostType.for_resource(resource)
+      when "link"
+        href = CGI.escapeHTML(PostType.safe_link(resource.data.link))
+        %(<p><a href="#{href}">#{CGI.escapeHTML(feed_title_for(resource))}</a></p>)
+      when "photo"
+        info = site.data.photos&.[](resource.data.image) or
+          raise ArgumentError, "No processed photo for #{resource.data.image}"
+        alt = resource.data.alt.to_s.strip
+        alt = feed_title_for(resource) if alt.empty?
+        %(<p><img src="#{CGI.escapeHTML(site.config.url + Picture.fallback(info))}" alt="#{CGI.escapeHTML(alt)}"></p>)
+      else
+        ""
+      end
+    end
 
     def feed_title_for(resource)
       type = PostType.for_resource(resource)

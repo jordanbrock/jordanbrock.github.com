@@ -1,5 +1,3 @@
-require "uri"
-
 module Posts
   class Link < Bridgetown::Component
     def initialize(resource:, mode:)
@@ -7,15 +5,9 @@ module Posts
       @mode = mode
     end
 
-    # Only http(s) links are rendered as hrefs; anything else (javascript:, data:) becomes "#".
-    def url
-      raw = @resource.data.link.to_s.strip
-      URI(raw).is_a?(URI::HTTP) ? raw : "#"
-    rescue URI::InvalidURIError
-      "#"
-    end
-
-    def domain = PostType.link_domain(url)
+    def url = PostType.safe_link(@resource.data.link)
+    # From the raw link, so the card agrees with feed_title even when url is "#".
+    def domain = PostType.link_domain(@resource.data.link)
 
     def title
       t = PostType.title(@resource)

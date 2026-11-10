@@ -55,4 +55,13 @@ class TestPostType < Minitest::Test
     assert_equal "example.com", PostType.link_domain("https://www.example.com/x")
     assert_equal "not a url", PostType.link_domain("not a url")
   end
+
+  def test_safe_link_allows_only_http
+    assert_equal "https://a.com/x", PostType.safe_link(" https://a.com/x ")
+    assert_equal "http://a.com", PostType.safe_link("http://a.com")
+    assert_equal "#", PostType.safe_link("javascript:alert(1)")
+    assert_equal "#", PostType.safe_link("data:text/html,x")
+    assert_equal "#", PostType.safe_link("http://a b")
+    assert_equal "#", PostType.safe_link(nil)
+  end
 end

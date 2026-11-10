@@ -1,5 +1,6 @@
 require "minitest_helper"
 require "rexml/document"
+require "cgi"
 require_relative "../plugins/post_type"
 
 class TestSite < Bridgetown::Test
@@ -19,9 +20,64 @@ class TestSite < Bridgetown::Test
       expect(entries.first.elements["content"].text.to_s).must_match(/\A\s*</)
     end
 
+    it "lists the 20 newest posts, newest first, with unchanged ids" do
+      doc = REXML::Document.new(File.read(File.expand_path("../output/atom.xml", __dir__)))
+      ids = REXML::XPath.match(doc, "//entry/id").map(&:text)
+      expected = PostType.posts(site.collections.posts.resources).first(20)
+      expect(ids).must_equal expected.map { "http://jordanbrock.com#{_1.relative_url}" }
+    end
+
     it "sitemap.xml is well-formed and lists every post" do
       doc = REXML::Document.new(File.read("output/sitemap.xml"))
       expect(REXML::XPath.match(doc, "//url").size).must_be :>=, site.collections.posts.resources.size
+    end
+  end
+
+  describe "feed content" do
+    def entry_for(post)
+      doc = REXML::Document.new(File.read(File.expand_path("../output/atom.xml", __dir__)))
+      REXML::XPath.match(doc, "//entry").find { _1.elements["id"].text == "http://jordanbrock.com#{post.relative_url}" } or skip("post not in feed")
+    end
+
+    it "link entries start with the external link" do
+      post = first_of("link")
+      content = entry_for(post).elements["content"].text
+      expect(content).must_match(/\A<p><a href="#{Regexp.escape(CGI.escapeHTML(post.data.link))}">/)
+    end
+
+    it "photo entries include the absolute 960px JPEG with its alt" do
+      post = first_of("photo")
+      info = site.data.photos[post.data.image]
+      w = info[:widths].select { _1 <= 960 }.max || info[:widths].min
+      content = entry_for(post).elements["content"].text
+      expect(content).must_include %(<img src="#{site.config.url}/photos/#{info[:base]}-#{w}.jpg" alt="#{CGI.escapeHTML(post.data.alt)}">)
+    end
+
+    it "untitled entries get a generated title" do
+      post = first_of("note")
+      expect(entry_for(post).elements["title"].text.to_s.strip).wont_be_empty
+    end
+  end
+
+  describe "helpers" do
+    def view = Bridgetown::ERBView.new(site.collections.posts.resources.first)
+
+    it "page_title escapes a page title once" do
+      page = Struct.new(:collection, :data).new(nil, Struct.new(:title).new("A & B"))
+      expect(view.page_title(page)).must_equal "A &amp; B &mdash; Jordan Brock"
+    end
+
+    it "feed_html drops html_safe so the template escapes exactly once" do
+      out = view.feed_html("<p>a &amp; b</p>".html_safe)
+      expect(out.html_safe?).must_equal false
+      expect(out).must_equal "<p>a &amp; b</p>"
+    end
+
+    it "PostUrl ignores a permalink with unexpanded placeholders" do
+      stub = Struct.new(:data, :relative_url)
+      expect(PostUrl.for(stub.new(Struct.new(:permalink).new("/:year/:slug/"), "/2026/x/"))).must_equal "/2026/x/"
+      expect(PostUrl.for(stub.new(Struct.new(:permalink).new("/2023/a.html"), "/2023/a"))).must_equal "/2023/a.html"
+      expect(PostUrl.for(stub.new(Struct.new(:permalink).new(nil), "/2023/a"))).must_equal "/2023/a"
     end
   end
 
@@ -117,7 +173,9 @@ class TestSite < Bridgetown::Test
       link = Posts::Link.new(resource: stub.call("https://www.example.com/x"), mode: :full)
       expect(link.title).must_equal "example.com"
       expect(link.url).must_equal "https://www.example.com/x"
-      expect(Posts::Link.new(resource: stub.call("javascript:alert(1)"), mode: :full).url).must_equal "#"
+      bad = Posts::Link.new(resource: stub.call("javascript:alert(1)"), mode: :full)
+      expect(bad.url).must_equal "#"
+      expect(bad.domain).must_equal PostType.link_domain("javascript:alert(1)") # matches feed_title, not "#"
     end
 
     it "notes have no heading" do

@@ -33,6 +33,15 @@ module PostType
     resources.sort_by { [-_1.date.to_i, _1.relative_path.to_s] }
   end
 
+  # The link as an href: only http(s) URLs pass; anything else (javascript:,
+  # data:, unparseable) becomes "#".
+  def self.safe_link(url)
+    raw = url.to_s.strip
+    URI(raw).is_a?(URI::HTTP) ? raw : "#"
+  rescue URI::InvalidURIError
+    "#"
+  end
+
   # Host of a URL without "www.", or the raw string when there is no host.
   def self.link_domain(url)
     host = URI(url.to_s).host.to_s.delete_prefix("www.")
