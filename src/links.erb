@@ -1,0 +1,7 @@
+---
+layout: default
+title: Links
+permalink: /links/
+---
+<h1 class="article__title col">Links</h1>
+<%= render ArchiveList.new(posts: collections.posts.resources.select { PostType.for_resource(_1) == "link" }, show_type: false, empty: "No links yet.") %>

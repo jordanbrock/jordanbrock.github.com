@@ -1,6 +1,7 @@
 require "minitest_helper"
 require "rexml/document"
 require_relative "../plugins/post_type"
+require_relative "../plugins/tag_pages"
 
 class TestSite < Bridgetown::Test
   describe "feeds" do
@@ -182,6 +183,103 @@ class TestSite < Bridgetown::Test
       originals
       files = Dir[File.expand_path("../output/photos/**/*", __dir__)].select { File.file?(_1) }
       expect(files.reject { _1.match?(/-\d+\.(webp|jpg)\z/) || _1.end_with?("/photos/index.html") }).must_be_empty
+    end
+  end
+  describe "pages" do
+    def posts_of(type) = site.collections.posts.resources.select { PostType.for_resource(_1) == type }
+    def output(path) = File.expand_path("../output#{path}#{"index.html" if path.end_with?("/")}", __dir__)
+
+    it "archive groups every post by year, newest first, with type markers and feed titles" do
+      html get "/archive.html"
+      years = document.query_selector_all(".archive h2").map { _1.text.to_i }
+      expect(years).must_equal years.sort.reverse
+      expect(years.last).must_equal 2003
+      expect(document.query_selector_all(".archive li").size).must_equal site.collections.posts.resources.size
+
+      newest = site.collections.posts.resources.max_by(&:date)
+      typed = site.collections.posts.resources.count { PostType.for_resource(_1) != "article" }
+      expect(document.query_selector_all(".archive li .type").size).must_equal typed
+      expect(document.query_selector_all(".archive li .type").map(&:text).uniq).wont_include "article"
+
+      first = document.query_selector(".archive li a")
+      expect(first["href"]).must_equal newest.relative_url
+      text = first.text
+      html get newest.relative_url # its <title> comes from feed_title too
+      expect(document.query_selector("title").text).must_equal "#{text} \u2014 Jordan Brock"
+    end
+
+    it "about page has the bio from the old sidebar" do
+      html get "/about/"
+      text = document.query_selector("main").text
+      expect(text).must_include "Ruby developer who works for"
+      expect(text).must_include "I play cricket, and I volunteer at Subiaco-Floreat Cricket Club"
+      expect(document.query_selector("main a[href='https://streem.com.au']")).wont_be_nil
+    end
+
+    it "notes and links pages list exactly the posts of their type" do
+      %w[note link].each do |type|
+        html get "/#{type}s/"
+        expected = posts_of(type).map(&:relative_url).sort
+        expect(document.query_selector_all(".archive li a").map { _1["href"] }.sort).must_equal expected
+        expect(document.query_selector(".archive ul")).must_be_nil if expected.empty?
+      end
+    end
+
+    it "photos page shows a lazy grid of every photo post" do
+      photos = posts_of("photo").tap { skip("no photo posts") if _1.empty? }
+      html get "/photos/"
+      links = document.query_selector_all(".photo-grid a")
+      expect(links.map { _1["href"] }.sort).must_equal photos.map(&:relative_url).sort
+      links.each do |a|
+        img = a.query_selector("picture img")
+        expect(img["loading"]).must_equal "lazy"
+        expect(img["sizes"]).must_match(/13rem/)
+      end
+    end
+
+    it "every tag link resolves to a built tag page" do
+      hrefs = Dir[File.expand_path("../output/**/*.html", __dir__)].flat_map do |file|
+        File.read(file, encoding: "UTF-8").scan(%r{href="(/tags/[^"]*)"}).flatten
+      end.uniq
+      expect(hrefs).wont_be_empty
+      hrefs.each { expect(File.file?(output(_1))).must_equal true, "missing tag page for #{_1}" }
+    end
+
+    it "builds a tag page for each tag on enough posts, listing exactly those posts, and no others" do
+      by_tag = site.collections.posts.resources.flat_map { |post| Array(post.data.tags).map { [_1.to_s.downcase.strip, post] } }
+                   .group_by(&:first).transform_values { _1.map(&:last) }
+      by_tag.each do |tag, posts|
+        path = "/tags/#{Bridgetown::Utils.slugify(tag)}/"
+        if posts.size >= TagPages::MIN_POSTS
+          html get path
+          expect(document.query_selector_all(".stream > *").size).must_equal posts.size, path
+        else
+          expect(File.exist?(output(path))).must_equal false, "#{path} has only #{posts.size} posts"
+        end
+      end
+      built = Dir[File.expand_path("../output/tags/*/index.html", __dir__)].size
+      expect(built).must_equal by_tag.count { _2.size >= TagPages::MIN_POSTS }
+    end
+
+    it "post meta links only tags that have a page" do
+      Bridgetown::Current.site = site
+      post = site.collections.posts.resources.first
+      stub = Struct.new(:site, :relative_url, :date, :data).new(site, "/x/", post.date, Struct.new(:tags).new([" Rails ", "never-used", "!!!"]))
+      html = PostMeta.new(resource: stub, show_type: false).render_in(Bridgetown::ERBView.new(post))
+      expect(html.scan(%r{href="/tags/[^"]*"})).must_equal [%(href="/tags/rails/")]
+      expect(html).must_include "#never-used"
+      expect(html).must_include "#!!!"
+    end
+
+    it "sitemap lists the static pages" do
+      doc = REXML::Document.new(File.read(File.expand_path("../output/sitemap.xml", __dir__)))
+      locs = REXML::XPath.match(doc, "//loc").map(&:text)
+      %w[/ /archive.html /notes/ /links/ /photos/ /about/].each { expect(locs).must_include "#{site.config.url}#{_1}" }
+    end
+
+    it "masthead nav links resolve" do
+      html get "/"
+      document.query_selector_all(".masthead nav a").each { expect(File.file?(output(_1["href"]))).must_equal true, _1["href"] }
     end
   end
 end

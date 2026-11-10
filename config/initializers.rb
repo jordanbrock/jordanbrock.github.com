@@ -2,7 +2,7 @@ Bridgetown.configure do |config|
   url "https://jordanbrock.com"
   template_engine "erb"
   timezone "Australia/Perth"
-  exclude ["photos"]
+  exclude ["photos/"] # trailing slash: a bare "photos" prefix-matches photos.erb too
 
   # Notes, links and photos have no layout in their front matter.
   config.defaults = [{ "scope" => { "collection" => "posts" }, "values" => { "layout" => "post" } }]

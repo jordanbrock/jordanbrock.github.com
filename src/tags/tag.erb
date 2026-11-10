@@ -1,0 +1,16 @@
+---
+layout: default
+title: "Tagged #:prototype-term"
+permalink: /tags/:term/
+prototype:
+  collection: posts
+  term: tag
+paginate:
+  per_page: 10000
+---
+<h1 class="article__title col"><%= data.title %></h1>
+<div class="stream">
+  <% paginator.resources.each do |post| %>
+    <%= render PostEntry.new(resource: post) %>
+  <% end %>
+</div>

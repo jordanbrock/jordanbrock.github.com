@@ -1,0 +1,13 @@
+<div class="archive col">
+  <% if @posts.empty? %>
+    <p class="meta"><%= @empty %></p>
+  <% end %>
+  <% years.each do |year, posts| %>
+    <h2><%= year %></h2>
+    <ul>
+      <% posts.each do |post| %>
+        <li><span class="meta"><%= post.date.strftime("%-d %b") %></span><span><a href="<%= post.relative_url %>"><%= helpers.feed_title(post) %></a><% if (t = marker(post)) %><span class="meta"> &middot; <span class="type"><%= t %></span></span><% end %></span></li>
+      <% end %>
+    </ul>
+  <% end %>
+</div>

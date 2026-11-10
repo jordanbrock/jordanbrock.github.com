@@ -4,7 +4,7 @@ template_engine: erb
 ---
 <?xml version="1.0" encoding="utf-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <% %w[/ /archive.html].each do |path| %>
+  <% %w[/ /archive.html /notes/ /links/ /photos/ /about/].each do |path| %>
   <url><loc><%= site.config.url %><%= path %></loc><lastmod><%= site.time.xmlschema %></lastmod></url>
   <% end %>
   <% collections.posts.resources.each do |post| %>

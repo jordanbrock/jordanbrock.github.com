@@ -73,11 +73,14 @@ table { display: block; overflow-x: auto; }
               color: var(--muted); border-top: 1px solid var(--rule); padding-top: 1rem; margin-top: 3rem; }
 
 .archive h2 { font: 600 1.25rem var(--display); margin: 2rem 0 0.5rem; }
+.archive > p { margin: 1rem 0; }
 .archive ul { list-style: none; padding: 0; margin: 0; }
 .archive li { display: grid; grid-template-columns: 4.5rem minmax(0, 1fr); gap: 0.75rem; padding: 0.3rem 0;
               border-bottom: 1px solid var(--rule); }
 
-.photo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr)); gap: 0.5rem; }
+/* Fixed column counts so the Picture sizes in src/photos.erb stay exact. */
+.photo-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.5rem; }
+@media (min-width: 36rem) { .photo-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
 .photo-grid img { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; }
 
 .site-footer { font: 0.75rem var(--sans); color: var(--muted); border-top: 1px solid var(--rule);
