@@ -72,9 +72,9 @@ class TestFeedEntry < Minitest::Test
     assert_equal "Note, 7 Nov", FeedEntry.title(Post.new({}))
   end
 
-  def test_post_type_alt_falls_back_to_the_feed_title
-    assert_equal "Own alt", PostType.alt(Post.new({ "image" => "2026/a.jpg", "alt" => " Own alt " }))
-    assert_equal "Photo, 7 Nov", PostType.alt(Post.new({ "image" => "2026/a.jpg", "alt" => "" }))
+  def test_alt_falls_back_to_the_title
+    assert_equal "Own alt", FeedEntry.alt(Post.new({ "image" => "2026/a.jpg", "alt" => " Own alt " }))
+    assert_equal "Photo, 7 Nov", FeedEntry.alt(Post.new({ "image" => "2026/a.jpg", "alt" => "" }))
   end
 
   def test_photo_paths

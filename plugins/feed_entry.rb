@@ -1,7 +1,7 @@
 require "cgi"
 
-# How a post appears in feeds and lists: a title for every type, and the HTML
-# that leads its Atom entry. Plain functions of the resource, so they can be
+# How a post is presented in feeds and lists: its id, a title for every type,
+# photo alt text, and the HTML that leads its Atom entry. Plain functions of the resource, so they can be
 # unit-tested with stubs; Builders::Helpers wraps them for templates.
 module FeedEntry
   # The post's title; notes and photos have none, so the first 8 words of the
@@ -19,6 +19,16 @@ module FeedEntry
     words.first(8).join(" ") + (words.size > 8 ? "…" : "")
   end
 
+  # Atom <id>: the old site's scheme. Never change it, or feed readers
+  # re-show every post.
+  def self.id(resource) = "http://jordanbrock.com#{resource.relative_url}"
+
+  # Alt text for a photo post: its own, or its title when blank.
+  def self.alt(resource)
+    alt = resource.data.alt.to_s.strip
+    alt.empty? ? title(resource) : alt
+  end
+
   # HTML before the body: link posts lead with the external link, photo posts
   # with their 960px JPEG (absolute, from base_url). Empty for other types.
   def self.lead(resource, photos:, base_url:)
@@ -28,7 +38,7 @@ module FeedEntry
     when "photo"
       info = PhotoProcessor.lookup!(photos, resource.data.image, post: source(resource))
       src = base_url.to_s + PhotoProcessor.jpeg_path(info)
-      %(<p><img src="#{CGI.escapeHTML(src)}" alt="#{CGI.escapeHTML(PostType.alt(resource))}"></p>)
+      %(<p><img src="#{CGI.escapeHTML(src)}" alt="#{CGI.escapeHTML(alt(resource))}"></p>)
     else
       ""
     end

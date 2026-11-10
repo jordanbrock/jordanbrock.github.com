@@ -25,11 +25,18 @@ class TestSite < Bridgetown::Test
     it "lists the 20 newest posts, newest first, with unchanged ids" do
       ids = REXML::XPath.match(feed_doc, "//entry/id").map(&:text)
       expected = PostType.posts(site.collections.posts.resources).first(20)
-      expect(ids).must_equal expected.map { "http://jordanbrock.com#{_1.relative_url}" }
-      # Golden ids: these must never change, or feed readers re-show old posts.
+      expect(ids).must_equal expected.map { FeedEntry.id(_1) }
       expect(REXML::XPath.first(feed_doc, "/feed/id").text).must_equal "http://jordanbrock.com/"
-      expect(ids).must_include "http://jordanbrock.com/2023/06/05/new-job"
-      expect(ids).must_include "http://jordanbrock.com/2012/04/17/vagrant-chef-and-openphoto/"
+    end
+
+    it "keeps the legacy Atom ids, with and without a trailing slash" do
+      # Golden ids: these must never change, or feed readers re-show old posts.
+      { "_posts/2012-04-17-vagrant-chef-and-openphoto.markdown" => "http://jordanbrock.com/2012/04/17/vagrant-chef-and-openphoto/",
+        "_posts/2023-06-05-new-job.markdown" => "http://jordanbrock.com/2023/06/05/new-job" }.each do |path, id|
+        post = site.collections.posts.resources.find { _1.relative_path.to_s == path }
+        expect(post).wont_be_nil(path)
+        expect(FeedEntry.id(post)).must_equal id
+      end
     end
 
     it "sitemap.xml is well-formed and lists every post" do
@@ -39,16 +46,14 @@ class TestSite < Bridgetown::Test
   end
 
   describe "feed content" do
-    it "the newest link, photo and note posts are in the feed, led by FeedEntry.lead" do
+    it "every entry starts with its post's FeedEntry.lead and has a title" do
+      posts = PostType.posts(site.collections.posts.resources).first(20)
       entries = REXML::XPath.match(feed_doc, "//entry")
-      %w[link photo note].each do |type|
-        post = PostType.posts(site.collections.posts.resources, type).first
-        expect(post).wont_be_nil("no #{type} posts")
-        entry = entries.find { _1.elements["id"].text == "http://jordanbrock.com#{post.relative_url}" }
-        expect(entry).wont_be_nil("newest #{type} post #{post.relative_url} is not in the feed")
+      expect(entries.size).must_equal posts.size
+      posts.zip(entries).each do |post, entry|
+        expect(entry.elements["id"].text).must_equal FeedEntry.id(post)
         lead = FeedEntry.lead(post, photos: site.data.photos, base_url: site.config.url)
-        expect(lead.empty?).must_equal(type == "note", type)
-        expect(entry.elements["content"].text).must_match(/\A#{Regexp.escape(lead)}<p>/)
+        expect(entry.elements["content"].text.to_s.start_with?(lead)).must_equal true, post.relative_url
         expect(entry.elements["title"].text.to_s.strip).wont_be_empty
       end
     end

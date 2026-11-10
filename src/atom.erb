@@ -17,7 +17,7 @@ template_engine: erb
     <title><%= feed_title(post) %></title>
     <link href="<%= site.config.url %><%= post_url(post) %>"/>
     <updated><%= post.date.xmlschema %></updated>
-    <id><%= "http://jordanbrock.com#{post.relative_url}" %></id>
+    <id><%= FeedEntry.id(post) %></id>
     <content type="html"><%= feed_html(feed_body(post)) %></content>
   </entry>
   <% end %>

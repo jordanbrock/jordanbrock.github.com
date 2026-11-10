@@ -33,12 +33,6 @@ module PostType
     resources.sort_by { [-_1.date.to_i, _1.relative_path.to_s] }
   end
 
-  # Alt text for a photo post: its own, or its feed title when blank.
-  def self.alt(resource)
-    alt = resource.data.alt.to_s.strip
-    alt.empty? ? FeedEntry.title(resource) : alt
-  end
-
   # The link as an href: only http(s) URLs pass; anything else (javascript:,
   # data:, host-less like http:foo, unparseable) becomes "#".
   def self.safe_link(url)
