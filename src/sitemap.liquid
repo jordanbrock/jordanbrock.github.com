@@ -1,0 +1,21 @@
+---
+permalink: /sitemap.xml
+template_engine: liquid
+---
+<?xml version="1.0" encoding="utf-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>{{ site.url }}/</loc>
+    <lastmod>{{ site.time | date_to_xmlschema }}</lastmod>
+  </url>
+  <url>
+    <loc>{{ site.url }}/archive.html</loc>
+    <lastmod>{{ site.time | date_to_xmlschema }}</lastmod>
+  </url>
+  {% for post in collections.posts.resources %}
+  <url>
+    <loc>{{ site.url }}{{ post.data.permalink }}</loc>
+    <lastmod>{{ post.data.date | date_to_xmlschema }}</lastmod>
+  </url>
+  {% endfor %}
+</urlset>
