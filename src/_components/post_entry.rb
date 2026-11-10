@@ -5,7 +5,7 @@ class PostEntry < Bridgetown::Component
   end
 
   def call
-    klass = Object.const_get("Posts::#{PostType.for(@resource.data).capitalize}")
+    klass = Object.const_get("Posts::#{PostType.for_resource(@resource).capitalize}")
     render klass.new(resource: @resource, mode: @mode)
   end
 end

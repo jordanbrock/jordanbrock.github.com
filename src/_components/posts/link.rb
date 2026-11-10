@@ -16,7 +16,7 @@ module Posts
     end
 
     def title
-      t = @resource.data.title.to_s.strip
+      t = @resource.model.attributes["title"].to_s.strip
       t.empty? ? domain : t
     end
   end

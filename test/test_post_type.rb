@@ -35,4 +35,12 @@ class TestPostType < Minitest::Test
   def test_accepts_symbol_keys
     assert_equal "link", t(link: "https://example.com")
   end
+
+  def test_for_resource_ignores_slug_derived_title_and_underscore_keys
+    attrs = { "_id_" => "x", "_content_" => "body" }
+    resource = Struct.new(:model).new(Struct.new(:attributes).new(attrs))
+    assert_equal "note", PostType.for_resource(resource)
+    attrs["title"] = "Real"
+    assert_equal "article", PostType.for_resource(resource)
+  end
 end

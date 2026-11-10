@@ -18,6 +18,13 @@ module PostType
     "note"
   end
 
+  # Uses the resource's real front matter: Bridgetown fills data.title from
+  # the slug, which would make every untitled note look like an article.
+  def self.for_resource(resource)
+    attrs = resource.model.attributes.to_h.reject { |k, _| k.to_s.start_with?("_") }
+    self.for(attrs)
+  end
+
   def self.present?(value) = !value.to_s.strip.empty?
   private_class_method :present?
 end

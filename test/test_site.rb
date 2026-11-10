@@ -61,7 +61,7 @@ class TestSite < Bridgetown::Test
   end
 
   def first_of(type)
-    site.collections.posts.resources.find { PostType.for(_1.data) == type } or skip("no #{type} posts")
+    site.collections.posts.resources.find { PostType.for_resource(_1) == type } or skip("no #{type} posts")
   end
 
   describe "layout" do
@@ -97,6 +97,12 @@ class TestSite < Bridgetown::Test
       a = document.query_selector(".link-card a.link-card__title")
       expect(a["href"]).must_equal post.data.link
       expect(document.query_selector(".link-card .meta").text).must_include URI(post.data.link).host.delete_prefix("www.")
+    end
+
+    it "a type-less, title-less post renders as a note with a body-derived title" do
+      html get "/2026/11/08/rain-delay/"
+      expect(document.query_selector("main .note")).wont_be_nil
+      expect(document.query_selector("title").text).must_match(/\ARain delay at the WACA/)
     end
 
     it "notes have no heading" do
