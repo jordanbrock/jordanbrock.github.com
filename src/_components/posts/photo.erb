@@ -1,0 +1,6 @@
+<article class="photo">
+  <figure>
+    <%= render Picture.new(image: image, alt: alt, eager: eager?) %>
+    <figcaption><% if @resource.content.to_s.strip != "" %><%= @resource.content.to_s.gsub(%r{</?p>}, "").strip.html_safe %> &middot; <% end %><%= render PostMeta.new(resource: @resource, show_type: false) %></figcaption>
+  </figure>
+</article>

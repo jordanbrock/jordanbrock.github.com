@@ -31,6 +31,7 @@ strong, b { font-weight: 500; }
 .prose, .link-card, .meta, .article__title { overflow-wrap: anywhere; }
 pre { overflow-x: auto; max-width: 100%; }
 pre, code { font-family: var(--mono); font-size: 0.875em; }
+pre code { font-size: inherit; }
 table { display: block; overflow-x: auto; }
 
 .wrap { max-width: var(--bleed); margin: 0 auto; padding: 0 1.25rem; }

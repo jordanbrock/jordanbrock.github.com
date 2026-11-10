@@ -3,35 +3,22 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title><%= [data.title, "jordanbrock.com"].compact.uniq.join(" — ") %></title>
-    <link href="/atom.xml" rel="alternate" type="application/atom+xml" title="Jordan Brock" />
-    <link href="/css/reset.css" rel="stylesheet" type="text/css" />
-    <link href="/css/screen.css" media="screen" rel="stylesheet" type="text/css" />
-    <link href="/css/syntax.css" media="screen" rel="stylesheet" type="text/css" />
+    <title><%= [data.title, "Jordan Brock"].compact.reject(&:empty?).uniq.join(" — ") %></title>
+    <link rel="alternate" type="application/atom+xml" title="Jordan Brock" href="/atom.xml" />
+    <link rel="preload" href="/fonts/newsreader-400-normal.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="stylesheet" href="/css/site.css" />
     <%= live_reload_dev_js %>
   </head>
   <body>
-    <div id="container">
-      <header>
-        <h1><a href="/">Jordan Brock</a></h1>
+    <div class="wrap">
+      <header class="masthead">
+        <a class="masthead__name" href="/">Jordan Brock</a>
+        <nav><a href="/archive.html">Archive</a><a href="/photos/">Photos</a><a href="/about/">About</a></nav>
       </header>
-      <div id="content"><%= yield %></div>
-      <div id="sidebar">
-        <h2>Stuff</h2>
-        <ul>
-          <li><a href="/archive.html">Archive</a></li>
-          <li><a href="https://pixelfed.au/jordanbrock">PixelFed.AU</a></li>
-          <li><a rel="me" href="https://brocks.social/@jordan">Mastodon</a></li>
-        </ul>
-        <h2>About Me</h2>
-        <p>
-          I'm a Ruby developer who works for
-          <a href="https://streem.com.au" target="_blank">Streem</a>. I ride
-          bikes. I play cricket, and I volunteer at
-          <a href="https://sfcc.asn.au">Subiaco-Floreat Cricket Club</a>
-        </p>
-      </div>
-      <footer>By me.</footer>
+      <main><%= yield %></main>
+      <footer class="site-footer">
+        <a rel="me" href="https://brocks.social/@jordan">Mastodon</a> · <a href="https://pixelfed.au/jordanbrock">Pixelfed</a> · <a href="/atom.xml">Feed</a>
+      </footer>
     </div>
   </body>
 </html>

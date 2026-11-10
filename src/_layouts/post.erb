@@ -1,11 +1,6 @@
 ---
 layout: default
 ---
-<h2><%= data.title %></h2>
-<time class="meta" datetime="<%= resource.date.strftime("%Y-%m-%d") %>">
-  <%= resource.date.strftime("%b %d, %Y") %>
-</time>
-
-<article class="post">
-  <%= yield %>
-</article>
+<div class="stream">
+  <%= render PostEntry.new(resource: resource, mode: :full) %>
+</div>

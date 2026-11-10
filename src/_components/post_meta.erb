@@ -1,0 +1,3 @@
+<div class="meta">
+  <a href="<%= @resource.relative_url %>"><time datetime="<%= date.strftime("%Y-%m-%d") %>"><%= date.strftime("%-d %b %Y") %></time></a><% if show_type? %> &middot; <span class="type"><%= type %></span><% end %><% tags.each do |tag| %> &middot; <a href="/tags/<%= Bridgetown::Utils.slugify(tag) %>/">#<%= tag %></a><% end %>
+</div>

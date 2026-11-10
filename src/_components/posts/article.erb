@@ -1,0 +1,11 @@
+<article class="article col">
+  <%= render PostMeta.new(resource: @resource) %>
+  <% if full? %>
+    <h1 class="article__title"><%= @resource.data.title %></h1>
+    <div class="prose"><%= @resource.content %></div>
+  <% else %>
+    <h2 class="article__title"><a href="<%= @resource.relative_url %>"><%= @resource.data.title %></a></h2>
+    <div class="prose"><%= summary_html.html_safe %></div>
+    <a class="more" href="<%= @resource.relative_url %>">Keep reading &rarr;</a>
+  <% end %>
+</article>
