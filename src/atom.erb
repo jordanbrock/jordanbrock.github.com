@@ -1,0 +1,24 @@
+---
+permalink: /atom.xml
+template_engine: erb
+---
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>Jordan Brock</title>
+  <link href="<%= site.config.url %>/atom.xml" rel="self"/>
+  <link href="<%= site.config.url %>/" />
+  <updated><%= site.time.xmlschema %></updated>
+  <id>http://jordanbrock.com/</id>
+  <author>
+    <name>Jordan Brock</name>
+  </author>
+  <% collections.posts.resources.first(20).each do |post| %>
+  <entry>
+    <title><%= xml_escape feed_title(post) %></title>
+    <link href="<%= site.config.url %><%= post.data.permalink || post.relative_url %>"/>
+    <updated><%= post.date.xmlschema %></updated>
+    <id><%= "http://jordanbrock.com#{post.relative_url}" %></id>
+    <content type="html"><%= xml_escape post.content %></content>
+  </entry>
+  <% end %>
+</feed>

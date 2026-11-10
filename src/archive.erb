@@ -1,0 +1,13 @@
+---
+layout: default
+title: Archive
+permalink: /archive.html
+---
+
+<h2>Archive</h2>
+
+<ul>
+  <% collections.posts.resources.each do |post| %>
+  <li><a href="<%= post.relative_url %>"><span class="date"><%= post.date.strftime("%b %d, %Y") %></span> &mdash; <%= feed_title(post) %></a></li>
+  <% end %>
+</ul>

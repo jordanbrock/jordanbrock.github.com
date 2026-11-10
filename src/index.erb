@@ -1,0 +1,29 @@
+---
+layout: default
+title: jordanbrock.com
+paginate:
+  collection: posts
+  per_page: 10
+  permalink: /page:num/
+---
+<% paginator.resources.each do |post| %>
+<div class="article">
+  <h3><a href="<%= post.relative_url %>"><%= feed_title(post) %></a></h3>
+  <div class="meta"><%= post.date.strftime("%b %d, %Y") %></div>
+  <%= post.content %>
+</div>
+<% end %>
+
+<div class="pagination">
+  <% if paginator.previous_page %>
+    <a href="<%= paginator.previous_page_path %>" class="previous">Previous</a>
+  <% else %>
+    <span class="previous">Previous</span>
+  <% end %>
+  <span class="page_number">Page: <%= paginator.page %> of <%= paginator.total_pages %></span>
+  <% if paginator.next_page %>
+    <a href="<%= paginator.next_page_path %>" class="next">Next</a>
+  <% else %>
+    <span class="next">Next</span>
+  <% end %>
+</div>

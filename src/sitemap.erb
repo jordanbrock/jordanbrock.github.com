@@ -1,0 +1,13 @@
+---
+permalink: /sitemap.xml
+template_engine: erb
+---
+<?xml version="1.0" encoding="utf-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <% %w[/ /archive.html].each do |path| %>
+  <url><loc><%= site.config.url %><%= path %></loc><lastmod><%= site.time.xmlschema %></lastmod></url>
+  <% end %>
+  <% collections.posts.resources.each do |post| %>
+  <url><loc><%= site.config.url %><%= post.data.permalink || post.relative_url %></loc><lastmod><%= post.date.xmlschema %></lastmod></url>
+  <% end %>
+</urlset>

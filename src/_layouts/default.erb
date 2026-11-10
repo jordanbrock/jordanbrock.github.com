@@ -3,19 +3,19 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{{ data.title }} &mdash; jordanbrock.com</title>
+    <title><%= [data.title, "jordanbrock.com"].compact.uniq.join(" — ") %></title>
     <link href="/atom.xml" rel="alternate" type="application/atom+xml" title="Jordan Brock" />
     <link href="/css/reset.css" rel="stylesheet" type="text/css" />
     <link href="/css/screen.css" media="screen" rel="stylesheet" type="text/css" />
     <link href="/css/syntax.css" media="screen" rel="stylesheet" type="text/css" />
-    {% live_reload_dev_js %}
+    <%= live_reload_dev_js %>
   </head>
   <body>
     <div id="container">
       <header>
         <h1><a href="/">Jordan Brock</a></h1>
       </header>
-      <div id="content">{{ content }}</div>
+      <div id="content"><%= yield %></div>
       <div id="sidebar">
         <h2>Stuff</h2>
         <ul>
