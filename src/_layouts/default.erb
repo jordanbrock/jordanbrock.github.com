@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title><%= [resource.respond_to?(:collection) && resource.collection.label == "posts" ? feed_title(resource) : data.title, "Jordan Brock"].compact.reject(&:empty?).uniq.join(" — ") %></title>
+    <title><%= page_title(resource) %></title>
     <link rel="alternate" type="application/atom+xml" title="Jordan Brock" href="/atom.xml" />
     <link rel="preload" href="/fonts/newsreader-400-normal.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="stylesheet" href="/css/site.css" />
@@ -17,7 +17,7 @@
       </header>
       <main><%= yield %></main>
       <footer class="site-footer">
-        <a rel="me" href="https://brocks.social/@jordan">Mastodon</a> · <a href="https://pixelfed.au/jordanbrock">Pixelfed</a> · <a href="/atom.xml">Feed</a>
+        <a rel="me" href="https://brocks.social/@jordan">Mastodon</a> &middot; <a href="https://pixelfed.au/jordanbrock">Pixelfed</a> &middot; <a href="/atom.xml">Feed</a>
       </footer>
     </div>
   </body>

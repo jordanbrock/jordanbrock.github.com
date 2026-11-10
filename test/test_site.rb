@@ -27,7 +27,7 @@ class TestSite < Bridgetown::Test
 
   describe "site" do
     it "loads all posts" do
-      expect(site.collections.posts.resources.size).must_equal Dir["src/_posts/*.{md,markdown}"].size
+      expect(site.collections.posts.resources.size).must_equal Dir[File.expand_path("../src/_posts/*.{md,markdown}", __dir__)].size
     end
 
     it "applies the initializer's default permalink to posts" do
@@ -82,12 +82,15 @@ class TestSite < Bridgetown::Test
     it "renders each type with its own class" do
       html get "/"
       classes = document.query_selector_all(".stream > *").map { _1["class"] }
+      expect(classes).wont_be_empty
       expect(classes.all? { _1 =~ /\b(article|note|link|photo)\b/ }).must_equal true
     end
 
     it "articles in the stream show a summary and keep-reading link" do
-      html get "/page2/"
+      first_of("article")
+      html get "/"
       article = document.query_selector(".stream > .article")
+      expect(article).wont_be_nil
       expect(article.query_selector(".more")).wont_be_nil
     end
 
@@ -96,13 +99,25 @@ class TestSite < Bridgetown::Test
       html get post.relative_url
       a = document.query_selector(".link-card a.link-card__title")
       expect(a["href"]).must_equal post.data.link
-      expect(document.query_selector(".link-card .meta").text).must_include URI(post.data.link).host.delete_prefix("www.")
+      expect(document.query_selector(".link-card .meta").text).must_include "example.com"
     end
 
     it "a type-less, title-less post renders as a note with a body-derived title" do
       html get "/2026/11/08/rain-delay/"
       expect(document.query_selector("main .note")).wont_be_nil
       expect(document.query_selector("title").text).must_match(/\ARain delay at the WACA/)
+    end
+
+    it "title-less link posts fall back to the domain, and non-http links are neutralised" do
+      stub = lambda do |link|
+        model = Struct.new(:attributes).new({ "link" => link })
+        data = Struct.new(:link).new(link)
+        Struct.new(:model, :data).new(model, data)
+      end
+      link = Posts::Link.new(resource: stub.call("https://www.example.com/x"), mode: :full)
+      expect(link.title).must_equal "example.com"
+      expect(link.url).must_equal "https://www.example.com/x"
+      expect(Posts::Link.new(resource: stub.call("javascript:alert(1)"), mode: :full).url).must_equal "#"
     end
 
     it "notes have no heading" do

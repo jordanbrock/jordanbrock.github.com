@@ -7,16 +7,18 @@ module Posts
       @mode = mode
     end
 
-    def url = @resource.data.link.to_s
-
-    def domain
-      URI(url).host.to_s.delete_prefix("www.")
+    # Only http(s) links are rendered as hrefs; anything else (javascript:, data:) becomes "#".
+    def url
+      raw = @resource.data.link.to_s.strip
+      URI(raw).is_a?(URI::HTTP) ? raw : "#"
     rescue URI::InvalidURIError
-      url
+      "#"
     end
 
+    def domain = PostType.link_domain(url)
+
     def title
-      t = @resource.model.attributes["title"].to_s.strip
+      t = PostType.title(@resource)
       t.empty? ? domain : t
     end
   end

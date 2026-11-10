@@ -43,4 +43,16 @@ class TestPostType < Minitest::Test
     attrs["title"] = "Real"
     assert_equal "article", PostType.for_resource(resource)
   end
+
+  def stub_resource(attrs) = Struct.new(:model).new(Struct.new(:attributes).new(attrs))
+
+  def test_title_reads_real_front_matter_only
+    assert_equal "", PostType.title(stub_resource("link" => "https://a.com", "_id_" => "x"))
+    assert_equal "Hi", PostType.title(stub_resource("title" => " Hi "))
+  end
+
+  def test_link_domain
+    assert_equal "example.com", PostType.link_domain("https://www.example.com/x")
+    assert_equal "not a url", PostType.link_domain("not a url")
+  end
 end

@@ -5,7 +5,7 @@ class PostMeta < Bridgetown::Component
   end
 
   def date = @resource.date
-  def type = PostType.for_resource(@resource)
+  def type = @type ||= PostType.for_resource(@resource)
   def show_type? = @show_type && type != "article"
 
   def tags

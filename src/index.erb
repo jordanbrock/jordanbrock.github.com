@@ -12,7 +12,7 @@ paginate:
   <% end %>
 </div>
 <nav class="pagination col">
-  <span><% if paginator.next_page %><a href="<%= paginator.next_page_path %>">← Older</a><% end %></span>
+  <span><% if paginator.next_page %><a href="<%= paginator.next_page_path %>">&larr; Older</a><% end %></span>
   <span>Page <%= paginator.page %> of <%= paginator.total_pages %></span>
-  <span><% if paginator.previous_page %><a href="<%= paginator.previous_page_path %>">Newer →</a><% end %></span>
+  <span><% if paginator.previous_page %><a href="<%= paginator.previous_page_path %>">Newer &rarr;</a><% end %></span>
 </nav>

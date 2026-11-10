@@ -1,3 +1,5 @@
+require "uri"
+
 # Decides which of the four post types a post is, from its front matter.
 module PostType
   TYPES = %w[article note link photo].freeze
@@ -20,9 +22,16 @@ module PostType
 
   # Uses the resource's real front matter: Bridgetown fills data.title from
   # the slug, which would make every untitled note look like an article.
-  def self.for_resource(resource)
-    attrs = resource.model.attributes.to_h.reject { |k, _| k.to_s.start_with?("_") }
-    self.for(attrs)
+  def self.front_matter(resource) = resource.model.attributes.to_h.reject { |k, _| k.to_s.start_with?("_") }
+  def self.for_resource(resource) = self.for(front_matter(resource))
+  def self.title(resource) = front_matter(resource)["title"].to_s.strip
+
+  # Host of a URL without "www.", or the raw string when there is no host.
+  def self.link_domain(url)
+    host = URI(url.to_s).host.to_s.delete_prefix("www.")
+    host.empty? ? url.to_s : host
+  rescue URI::InvalidURIError
+    url.to_s
   end
 
   def self.present?(value) = !value.to_s.strip.empty?
