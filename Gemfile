@@ -43,7 +43,6 @@ gem "falcon"
 # Or for faster parsing of HTML-only resources via Inspectors, use Nokolexbor:
 # gem "nokolexbor", "~> 0.6"
 
-gem "image_processing", "~> 1.13"
 gem "ruby-vips", "~> 2.2"
 gem "nokolexbor", "~> 0.6"
 

@@ -5,8 +5,13 @@ namespace :photos do
     checker = PhotoProcessor.new(source_dir: "src/photos", cache_dir: ".bridgetown-cache/photos")
     files = args[:path] ? [args[:path]] : Dir["src/photos/**/*"].select { File.file?(_1) }
     files.each do |f|
-      unless args[:path] || checker.gps?(f)
-        puts "clean #{f}"
+      begin
+        unless args[:path] || checker.gps?(f)
+          puts "clean #{f}"
+          next
+        end
+      rescue PhotoProcessor::GpsError # gps? raises this for files vips can't read
+        puts "skip #{f}: unreadable"
         next
       end
 

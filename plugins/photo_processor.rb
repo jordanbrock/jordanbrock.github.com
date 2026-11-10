@@ -33,8 +33,9 @@ class PhotoProcessor
   def self.base_for(relative) = relative.sub(/\.[^.\/]+\z/, "")
 
   # Raise if two different originals would share output files (dup.jpg, dup.png).
+  # Case-insensitive, as APFS is: Dup.jpg and dup.png collide too.
   def self.check_collisions!(images)
-    images.uniq.group_by { base_for(_1) }.each do |base, group|
+    images.uniq.group_by { base_for(_1).downcase }.each do |base, group|
       raise CollisionError, "Photos #{group.join(" and ")} would both publish as #{base}-*" if group.size > 1
     end
   end

@@ -156,6 +156,12 @@ class TestPhotoProcessor < Minitest::Test
     PhotoProcessor.check_collisions!(%w[a/dup.jpg a/dup.jpg b/dup.jpg])
   end
 
+  def test_base_collisions_ignore_case
+    err = assert_raises(PhotoProcessor::CollisionError) { PhotoProcessor.check_collisions!(%w[a/Dup.jpg a/dup.png]) }
+    assert_includes err.message, "a/Dup.jpg"
+    assert_includes err.message, "a/dup.png"
+  end
+
   def test_requires_libvips_8_15
     err = assert_raises(PhotoProcessor::Error) { PhotoProcessor.require_libvips!(false) }
     assert_includes err.message, "libvips >= 8.15 required"
