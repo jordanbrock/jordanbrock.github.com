@@ -290,6 +290,12 @@ class TestSite < Bridgetown::Test
       expect(hrefs).must_equal %w[/notes/ /links/]
     end
 
+    it "has a 404 page for GitHub Pages to serve" do
+      html get "/404.html"
+      expect(document.query_selector("main h1").text).must_equal "Not found"
+      expect(document.query_selector("main a[href='/archive.html']")).wont_be_nil
+    end
+
     it "about page has the bio from the old sidebar" do
       html get "/about/"
       text = document.query_selector("main").text
