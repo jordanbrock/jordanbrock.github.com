@@ -18,6 +18,7 @@ class PhotoProcessor
   FORMATS = { "webp" => { Q: 80 }, "jpg" => { Q: 82 } }.freeze
   SEGMENT = /\A[A-Za-z0-9._-]+\z/
   STRIP_HINT = "run bin/bridgetown photos:strip".freeze
+  FALLBACK_WIDTH = 960 # the single JPEG for old browsers and feeds
 
   def self.fingerprint(version: PIPELINE_VERSION, widths: WIDTHS, formats: FORMATS)
     Digest::SHA256.hexdigest(JSON.generate([version, widths, formats]))
@@ -28,6 +29,26 @@ class PhotoProcessor
   # keep: needs libvips 8.15; older versions silently ignore it and leak EXIF.
   def self.require_libvips!(ok = Vips.at_least_libvips?(8, 15))
     ok or raise Error, "libvips >= 8.15 required (found #{Vips.version_string})"
+  end
+
+  # Public URL path of one processed size.
+  def self.url_path(info, width, ext) = "/photos/#{info[:base]}-#{width}.#{ext}"
+
+  # The widest JPEG no wider than max (or the narrowest, if all are wider).
+  def self.jpeg_path(info, max: FALLBACK_WIDTH)
+    url_path(info, info[:widths].select { _1 <= max }.max || info[:widths].min, "jpg")
+  end
+
+  def self.srcset(info, ext) = info[:widths].map { "#{url_path(info, _1, ext)} #{_1}w" }.join(", ")
+
+  # The registry entry (site.data.photos) for image, or a clear error naming
+  # the image and, when known, the post.
+  def self.lookup!(registry, image, post: nil)
+    where = post ? " in #{post}" : ""
+    raise InvalidError, "Photo post has no image#{where}" if image.to_s.strip.empty?
+
+    registry&.[](image.to_s) or
+      raise MissingError, "No processed photo for #{image}#{where}; is it the image of a photo post?"
   end
 
   def self.base_for(relative) = relative.sub(/\.[^.\/]+\z/, "")

@@ -3,7 +3,7 @@ permalink: /atom.xml
 template_engine: erb
 ---
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom">
+<feed xmlns="http://www.w3.org/2005/Atom" xml:base="<%= site.config.url %>/">
   <title>Jordan Brock</title>
   <link href="<%= site.config.url %>/atom.xml" rel="self"/>
   <link href="<%= site.config.url %>/" />

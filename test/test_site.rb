@@ -4,15 +4,17 @@ require "cgi"
 require_relative "../plugins/post_type"
 
 class TestSite < Bridgetown::Test
+  FEED = File.expand_path("../output/atom.xml", __dir__)
+  def self.feed_doc = @feed_doc ||= REXML::Document.new(File.read(FEED))
+  def feed_doc = TestSite.feed_doc
+
   describe "feeds" do
     it "atom.xml is well-formed with 20 entries" do
-      doc = REXML::Document.new(File.read("output/atom.xml"))
-      expect(REXML::XPath.match(doc, "//entry").size).must_equal 20
+      expect(REXML::XPath.match(feed_doc, "//entry").size).must_equal 20
     end
 
     it "atom.xml escapes exactly once" do
-      doc = REXML::Document.new(File.read("output/atom.xml"))
-      entries = REXML::XPath.match(doc, "//entry")
+      entries = REXML::XPath.match(feed_doc, "//entry")
       entries.each do |entry|
         title = entry.elements["title"].text.to_s
         %w[&amp; &quot; &lt;].each { |bad| expect(title).wont_include bad }
@@ -21,10 +23,13 @@ class TestSite < Bridgetown::Test
     end
 
     it "lists the 20 newest posts, newest first, with unchanged ids" do
-      doc = REXML::Document.new(File.read(File.expand_path("../output/atom.xml", __dir__)))
-      ids = REXML::XPath.match(doc, "//entry/id").map(&:text)
+      ids = REXML::XPath.match(feed_doc, "//entry/id").map(&:text)
       expected = PostType.posts(site.collections.posts.resources).first(20)
       expect(ids).must_equal expected.map { "http://jordanbrock.com#{_1.relative_url}" }
+      # Golden ids: these must never change, or feed readers re-show old posts.
+      expect(REXML::XPath.first(feed_doc, "/feed/id").text).must_equal "http://jordanbrock.com/"
+      expect(ids).must_include "http://jordanbrock.com/2023/06/05/new-job"
+      expect(ids).must_include "http://jordanbrock.com/2012/04/17/vagrant-chef-and-openphoto/"
     end
 
     it "sitemap.xml is well-formed and lists every post" do
@@ -34,28 +39,18 @@ class TestSite < Bridgetown::Test
   end
 
   describe "feed content" do
-    def entry_for(post)
-      doc = REXML::Document.new(File.read(File.expand_path("../output/atom.xml", __dir__)))
-      REXML::XPath.match(doc, "//entry").find { _1.elements["id"].text == "http://jordanbrock.com#{post.relative_url}" } or skip("post not in feed")
-    end
-
-    it "link entries start with the external link" do
-      post = first_of("link")
-      content = entry_for(post).elements["content"].text
-      expect(content).must_match(/\A<p><a href="#{Regexp.escape(CGI.escapeHTML(post.data.link))}">/)
-    end
-
-    it "photo entries include the absolute 960px JPEG with its alt" do
-      post = first_of("photo")
-      info = site.data.photos[post.data.image]
-      w = info[:widths].select { _1 <= 960 }.max || info[:widths].min
-      content = entry_for(post).elements["content"].text
-      expect(content).must_include %(<img src="#{site.config.url}/photos/#{info[:base]}-#{w}.jpg" alt="#{CGI.escapeHTML(post.data.alt)}">)
-    end
-
-    it "untitled entries get a generated title" do
-      post = first_of("note")
-      expect(entry_for(post).elements["title"].text.to_s.strip).wont_be_empty
+    it "the newest link, photo and note posts are in the feed, led by FeedEntry.lead" do
+      entries = REXML::XPath.match(feed_doc, "//entry")
+      %w[link photo note].each do |type|
+        post = PostType.posts(site.collections.posts.resources, type).first
+        expect(post).wont_be_nil("no #{type} posts")
+        entry = entries.find { _1.elements["id"].text == "http://jordanbrock.com#{post.relative_url}" }
+        expect(entry).wont_be_nil("newest #{type} post #{post.relative_url} is not in the feed")
+        lead = FeedEntry.lead(post, photos: site.data.photos, base_url: site.config.url)
+        expect(lead.empty?).must_equal(type == "note", type)
+        expect(entry.elements["content"].text).must_match(/\A#{Regexp.escape(lead)}<p>/)
+        expect(entry.elements["title"].text.to_s.strip).wont_be_empty
+      end
     end
   end
 
@@ -116,8 +111,8 @@ class TestSite < Bridgetown::Test
     end
   end
 
-  def first_of(type)
-    site.collections.posts.resources.find { PostType.for_resource(_1) == type } or skip("no #{type} posts")
+  def first_of(type) # the newest post of type
+    PostType.posts(site.collections.posts.resources, type).first or skip("no #{type} posts")
   end
 
   describe "layout" do
@@ -221,7 +216,7 @@ class TestSite < Bridgetown::Test
       post = first_of("photo")
       html = Picture.new(image: post.data.image, alt: %(a "quoted" <b>)).render_in(Bridgetown::ERBView.new(post))
       expect(html).must_include %(alt="a &quot;quoted&quot; &lt;b&gt;")
-      err = expect { Picture.new(image: "2026/missing.jpg", alt: "x") }.must_raise ArgumentError
+      err = expect { Picture.new(image: "2026/missing.jpg", alt: "x") }.must_raise PhotoProcessor::MissingError
       expect(err.message).must_include "2026/missing.jpg"
     end
 

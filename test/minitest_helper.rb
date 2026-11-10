@@ -16,6 +16,10 @@ module TestSiteLoader
   end
 end
 
+# Boot it now, not on first use: that also sets up the autoloader for
+# src/_components, so tests naming components pass in any order.
+TestSiteLoader.site
+
 class Bridgetown::Test
   def site = TestSiteLoader.site
 end

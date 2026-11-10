@@ -62,6 +62,8 @@ class TestPostType < Minitest::Test
     assert_equal "#", PostType.safe_link("javascript:alert(1)")
     assert_equal "#", PostType.safe_link("data:text/html,x")
     assert_equal "#", PostType.safe_link("http://a b")
+    assert_equal "#", PostType.safe_link("http:foo")
+    assert_equal "#", PostType.safe_link("https://")
     assert_equal "#", PostType.safe_link(nil)
   end
 end

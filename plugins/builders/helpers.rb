@@ -5,7 +5,7 @@ module Builders
     def build
       # Title for feeds and lists; notes and photos have no title.
       helper :feed_title do |resource|
-        feed_title_for(resource)
+        FeedEntry.title(resource)
       end
 
       # Where a post is linked: its legacy .html permalink if it has one.
@@ -29,12 +29,12 @@ module Builders
       # Entry body for the feed: link posts lead with the external link,
       # photo posts with their 960px JPEG.
       helper :feed_body do |resource|
-        feed_lead(resource) + resource.content.to_s
+        FeedEntry.lead(resource, photos: site.data.photos, base_url: site.config.url) + resource.content.to_s
       end
 
       # <title> text: posts use feed_title, pages their own title.
       helper :page_title do |resource|
-        page = post?(resource) ? feed_title_for(resource) : resource.data.title
+        page = post?(resource) ? FeedEntry.title(resource) : resource.data.title
         parts = [page, "Jordan Brock"].compact.map(&:to_s).reject(&:empty?).uniq
         parts.map { CGI.escapeHTML(_1) }.join(" &mdash; ").html_safe
       end
@@ -43,34 +43,5 @@ module Builders
     private
 
     def post?(resource) = resource.respond_to?(:collection) && resource.collection&.label == "posts"
-
-    def feed_lead(resource)
-      case PostType.for_resource(resource)
-      when "link"
-        href = CGI.escapeHTML(PostType.safe_link(resource.data.link))
-        %(<p><a href="#{href}">#{CGI.escapeHTML(feed_title_for(resource))}</a></p>)
-      when "photo"
-        info = site.data.photos&.[](resource.data.image) or
-          raise ArgumentError, "No processed photo for #{resource.data.image}"
-        alt = resource.data.alt.to_s.strip
-        alt = feed_title_for(resource) if alt.empty?
-        %(<p><img src="#{CGI.escapeHTML(site.config.url + Picture.fallback(info))}" alt="#{CGI.escapeHTML(alt)}"></p>)
-      else
-        ""
-      end
-    end
-
-    def feed_title_for(resource)
-      type = PostType.for_resource(resource)
-      # data.title is slug-derived for untitled posts, so read the real front matter
-      title = %w[article link].include?(type) ? PostType.title(resource) : ""
-      title = PostType.link_domain(resource.data.link) if title.empty? && type == "link"
-      return title unless title.empty?
-
-      words = CGI.unescapeHTML(resource.content.to_s.gsub(/<[^>]+>/, " ")).split # templates escape on output
-      return "#{type.capitalize}, #{resource.date.strftime("%-d %b")}" if words.empty?
-
-      words.first(8).join(" ") + (words.size > 8 ? "…" : "")
-    end
   end
 end

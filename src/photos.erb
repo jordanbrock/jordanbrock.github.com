@@ -11,8 +11,7 @@ permalink: /photos/
   <div class="photo-grid">
     <% photos.each do |post| %>
       <%# sizes follows the .photo-grid columns in site.css: 4 across from 36rem, 2 below, inside .wrap %>
-      <% alt = post.data.alt.to_s.strip %>
-      <a href="<%= post_url(post) %>"><%= render Picture.new(image: post.data.image.to_s, alt: alt.empty? ? feed_title(post) : alt, sizes: "(min-width: 56rem) 13rem, (min-width: 36rem) calc((100vw - 4rem) / 4), calc((100vw - 3rem) / 2)") %></a>
+      <a href="<%= post_url(post) %>"><%= render Picture.new(image: post.data.image.to_s, alt: PostType.alt(post), sizes: "(min-width: 56rem) 13rem, (min-width: 36rem) calc((100vw - 4rem) / 4), calc((100vw - 3rem) / 2)") %></a>
     <% end %>
   </div>
 <% end %>
