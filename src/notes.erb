@@ -4,4 +4,4 @@ title: Notes
 permalink: /notes/
 ---
 <h1 class="article__title col">Notes</h1>
-<%= render ArchiveList.new(posts: collections.posts.resources.select { PostType.for_resource(_1) == "note" }, show_type: false, empty: "No notes yet.") %>
+<%= render ArchiveList.new(posts: collections.posts.resources, type: "note", empty: "No notes yet.") %>

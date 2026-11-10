@@ -15,7 +15,7 @@ template_engine: erb
   <% collections.posts.resources.first(20).each do |post| %>
   <entry>
     <title><%= feed_title(post) %></title>
-    <link href="<%= site.config.url %><%= post.data.permalink || post.relative_url %>"/>
+    <link href="<%= site.config.url %><%= post_url(post) %>"/>
     <updated><%= post.date.xmlschema %></updated>
     <id><%= "http://jordanbrock.com#{post.relative_url}" %></id>
     <content type="html"><%= String.new(post.content.to_s) %></content>

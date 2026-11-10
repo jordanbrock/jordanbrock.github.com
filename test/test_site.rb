@@ -1,7 +1,6 @@
 require "minitest_helper"
 require "rexml/document"
 require_relative "../plugins/post_type"
-require_relative "../plugins/tag_pages"
 
 class TestSite < Bridgetown::Test
   describe "feeds" do
@@ -186,7 +185,7 @@ class TestSite < Bridgetown::Test
     end
   end
   describe "pages" do
-    def posts_of(type) = site.collections.posts.resources.select { PostType.for_resource(_1) == type }
+    def posts_of(type) = PostType.posts(site.collections.posts.resources, type)
     def output(path) = File.expand_path("../output#{path}#{"index.html" if path.end_with?("/")}", __dir__)
 
     it "archive groups every post by year, newest first, with type markers and feed titles" do
@@ -196,15 +195,16 @@ class TestSite < Bridgetown::Test
       expect(years.last).must_equal 2003
       expect(document.query_selector_all(".archive li").size).must_equal site.collections.posts.resources.size
 
-      newest = site.collections.posts.resources.max_by(&:date)
       typed = site.collections.posts.resources.count { PostType.for_resource(_1) != "article" }
       expect(document.query_selector_all(".archive li .type").size).must_equal typed
       expect(document.query_selector_all(".archive li .type").map(&:text).uniq).wont_include "article"
 
-      first = document.query_selector(".archive li a")
-      expect(first["href"]).must_equal newest.relative_url
-      text = first.text
-      html get newest.relative_url # its <title> comes from feed_title too
+      links = document.query_selector_all(".archive li a")
+      expected = PostType.posts(site.collections.posts.resources)
+      expect(links.map { _1["href"] }).must_equal expected.map { PostUrl.for(_1) }
+      expect(links.map { _1["href"] }).must_include "/2023/06/05/new-job.html"
+      text = links.first.text
+      html get PostUrl.for(expected.first) # its <title> comes from feed_title too
       expect(document.query_selector("title").text).must_equal "#{text} \u2014 Jordan Brock"
     end
 
@@ -219,8 +219,8 @@ class TestSite < Bridgetown::Test
     it "notes and links pages list exactly the posts of their type" do
       %w[note link].each do |type|
         html get "/#{type}s/"
-        expected = posts_of(type).map(&:relative_url).sort
-        expect(document.query_selector_all(".archive li a").map { _1["href"] }.sort).must_equal expected
+        expected = posts_of(type).map { PostUrl.for(_1) }
+        expect(document.query_selector_all(".archive li a").map { _1["href"] }).must_equal expected
         expect(document.query_selector(".archive ul")).must_be_nil if expected.empty?
       end
     end
@@ -229,10 +229,11 @@ class TestSite < Bridgetown::Test
       photos = posts_of("photo").tap { skip("no photo posts") if _1.empty? }
       html get "/photos/"
       links = document.query_selector_all(".photo-grid a")
-      expect(links.map { _1["href"] }.sort).must_equal photos.map(&:relative_url).sort
+      expect(links.map { _1["href"] }).must_equal photos.map { PostUrl.for(_1) }
       links.each do |a|
         img = a.query_selector("picture img")
         expect(img["loading"]).must_equal "lazy"
+        expect(img["alt"].to_s.strip).wont_be_empty
         expect(img["sizes"]).must_match(/13rem/)
       end
     end
@@ -249,7 +250,7 @@ class TestSite < Bridgetown::Test
       by_tag = site.collections.posts.resources.flat_map { |post| Array(post.data.tags).map { [_1.to_s.downcase.strip, post] } }
                    .group_by(&:first).transform_values { _1.map(&:last) }
       by_tag.each do |tag, posts|
-        path = "/tags/#{Bridgetown::Utils.slugify(tag)}/"
+        path = "/tags/#{Bridgetown::Utils.slugify(tag, mode: site.config.slugify_mode)}/"
         if posts.size >= TagPages::MIN_POSTS
           html get path
           expect(document.query_selector_all(".stream > *").size).must_equal posts.size, path
@@ -263,18 +264,30 @@ class TestSite < Bridgetown::Test
 
     it "post meta links only tags that have a page" do
       Bridgetown::Current.site = site
+      TagPages.prune!(site) # normally a pre_render hook; the test site is not rendered
       post = site.collections.posts.resources.first
-      stub = Struct.new(:site, :relative_url, :date, :data).new(site, "/x/", post.date, Struct.new(:tags).new([" Rails ", "never-used", "!!!"]))
+      stub = Struct.new(:site, :relative_url, :date, :data).new(site, "/x/", post.date, Struct.new(:tags, :permalink).new([" Rails ", "never-used", "!!!"], nil))
       html = PostMeta.new(resource: stub, show_type: false).render_in(Bridgetown::ERBView.new(post))
       expect(html.scan(%r{href="/tags/[^"]*"})).must_equal [%(href="/tags/rails/")]
       expect(html).must_include "#never-used"
       expect(html).must_include "#!!!"
     end
 
-    it "sitemap lists the static pages" do
+    it "sitemap lists the static pages, the tag pages and each post at its linked URL" do
       doc = REXML::Document.new(File.read(File.expand_path("../output/sitemap.xml", __dir__)))
       locs = REXML::XPath.match(doc, "//loc").map(&:text)
-      %w[/ /archive.html /notes/ /links/ /photos/ /about/].each { expect(locs).must_include "#{site.config.url}#{_1}" }
+      tag_pages = Dir[File.expand_path("../output/tags/*/index.html", __dir__)].map { "/tags/#{File.basename(File.dirname(_1))}/" }
+      expect(tag_pages).wont_be_empty
+      paths = %w[/ /archive.html /notes/ /links/ /photos/ /about/] + tag_pages + site.collections.posts.resources.map { PostUrl.for(_1) }
+      expect(locs.sort).must_equal paths.map { "#{site.config.url}#{_1}" }.sort
+    end
+
+    it "pages carry a canonical link" do
+      { "/2023/06/05/new-job.html" => "/2023/06/05/new-job.html", "/archive.html" => "/archive.html",
+        "/tags/rails/" => "/tags/rails/", "/" => "/" }.each do |path, canonical|
+        html get path
+        expect(document.query_selector("link[rel=canonical]")["href"]).must_equal "https://jordanbrock.com#{canonical}", path
+      end
     end
 
     it "masthead nav links resolve" do

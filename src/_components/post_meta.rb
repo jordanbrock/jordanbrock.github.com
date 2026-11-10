@@ -10,6 +10,7 @@ class PostMeta < Bridgetown::Component
 
   # [tag, href] pairs; href is nil for tags without a page.
   def tags
-    Array(@resource.data.tags).map(&:to_s).map { [_1, TagPages.href(@resource.site, _1)] }
+    pages = @resource.site.data.tag_pages || {}
+    Array(@resource.data.tags).map(&:to_s).map { [_1, pages[TagPages.term(_1)]] }
   end
 end

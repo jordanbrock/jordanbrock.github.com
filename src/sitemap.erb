@@ -7,7 +7,10 @@ template_engine: erb
   <% %w[/ /archive.html /notes/ /links/ /photos/ /about/].each do |path| %>
   <url><loc><%= site.config.url %><%= path %></loc><lastmod><%= site.time.xmlschema %></lastmod></url>
   <% end %>
+  <% (site.data.tag_pages || {}).values.sort.each do |path| %>
+  <url><loc><%= site.config.url %><%= path %></loc><lastmod><%= site.time.xmlschema %></lastmod></url>
+  <% end %>
   <% collections.posts.resources.each do |post| %>
-  <url><loc><%= site.config.url %><%= post.data.permalink || post.relative_url %></loc><lastmod><%= post.date.xmlschema %></lastmod></url>
+  <url><loc><%= site.config.url %><%= post_url(post) %></loc><lastmod><%= post.date.xmlschema %></lastmod></url>
   <% end %>
 </urlset>

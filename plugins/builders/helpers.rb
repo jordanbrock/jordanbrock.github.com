@@ -8,15 +8,28 @@ module Builders
         feed_title_for(resource)
       end
 
+      # Where a post is linked: its legacy .html permalink if it has one.
+      helper :post_url do |resource|
+        PostUrl.for(resource)
+      end
+
+      # Absolute URL for <link rel="canonical">. Pages need the permalink too:
+      # relative_url turns /archive.html into /archive.
+      helper :canonical_url do |resource|
+        site.config.url + PostUrl.for(resource)
+      end
+
       # <title> text: posts use feed_title, pages their own title.
       helper :page_title do |resource|
-        page = resource.respond_to?(:collection) && resource.collection.label == "posts" ? feed_title_for(resource) : resource.data.title
+        page = post?(resource) ? feed_title_for(resource) : resource.data.title
         parts = [page, "Jordan Brock"].compact.map(&:to_s).reject(&:empty?).uniq
         parts.map { CGI.escapeHTML(_1) }.join(" &mdash; ").html_safe
       end
     end
 
     private
+
+    def post?(resource) = resource.respond_to?(:collection) && resource.collection.label == "posts"
 
     def feed_title_for(resource)
       type = PostType.for_resource(resource)

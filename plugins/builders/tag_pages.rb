@@ -1,15 +1,11 @@
 module Builders
-  # The tag prototype makes a page for every tag; drop those for tags too
-  # rare (or unsluggable) to have one, after pagination has run.
+  # After the prototype and pagination generators have run, drop tag pages
+  # for rare or unsluggable tags and record the rest (rebuilt every build).
   class TagPages < SiteBuilder
     def build
       hook :site, :pre_render, :prune
     end
 
-    def prune(site)
-      site.generated_pages.reject! do |page|
-        page.data["prototype"].is_a?(Hash) && page.data.key?("tag") && !::TagPages.page?(site, page.data["tag"])
-      end
-    end
+    def prune(site) = ::TagPages.prune!(site)
   end
 end
