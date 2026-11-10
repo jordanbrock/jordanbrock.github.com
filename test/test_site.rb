@@ -168,6 +168,7 @@ class TestSite < Bridgetown::Test
     end
 
     it "never publishes originals" do
+      first_of("photo")
       photos = File.expand_path("../src/photos", __dir__)
       originals = Dir[File.join(photos, "**", "*")].select { File.file?(_1) }
       expect(originals).wont_be_empty
@@ -178,6 +179,7 @@ class TestSite < Bridgetown::Test
     end
 
     it "publishes only resized files under output/photos" do
+      first_of("photo")
       files = Dir[File.expand_path("../output/photos/**/*", __dir__)].select { File.file?(_1) }
       expect(files).wont_be_empty
       expect(files.reject { _1.match?(/-\d+\.(webp|jpg)\z/) || _1.end_with?("/photos/index.html") }).must_be_empty

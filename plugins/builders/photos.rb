@@ -21,14 +21,14 @@ module Builders
     # site.data wraps it in HashWithDotAccess (indifferent keys); readers use symbols.
     def process_photos
       processor.check_gps!
+      posts = site.collections.posts.resources.select { PostType.for_resource(_1) == "photo" }
+      PhotoProcessor.check_collisions!(posts.map { _1.data.image.to_s })
       registry = {}
-      site.collections.posts.resources.each do |post|
-        next unless PostType.for_resource(post) == "photo"
-
+      posts.each do |post|
         image = post.data.image.to_s
         registry[image] = processor.process(image, guard: false)
-      rescue PhotoProcessor::MissingError => e
-        raise PhotoProcessor::MissingError, "#{e.message} (in #{post.relative_path})"
+      rescue PhotoProcessor::Error, Vips::Error => e
+        raise PhotoProcessor::Error, "#{e.message.strip} (in #{post.relative_path})"
       end
       site.data.photos = registry
     end
