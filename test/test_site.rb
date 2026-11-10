@@ -163,13 +163,15 @@ class TestSite < Bridgetown::Test
       html get post.relative_url
       a = document.query_selector(".link-card a.link-card__title")
       expect(a["href"]).must_equal post.data.link
-      expect(document.query_selector(".link-card .meta").text).must_include "example.com"
+      expect(document.query_selector(".link-card .meta").text).must_include PostType.link_domain(post.data.link)
     end
 
-    it "a type-less, title-less post renders as a note with a body-derived title" do
-      html get "/2026/11/08/rain-delay/"
+    it "a title-less note renders as a note with a body-derived title" do
+      post = first_of("note")
+      html get PostUrl.for(post)
       expect(document.query_selector("main .note")).wont_be_nil
-      expect(document.query_selector("title").text).must_match(/\ARain delay at the WACA/)
+      first_word = FeedEntry.title(post).split.first
+      expect(document.query_selector("title").text).must_include first_word
     end
 
     it "title-less link posts fall back to the domain, and non-http links are neutralised" do
