@@ -2,9 +2,7 @@
 layout: post
 title: Walking
 permalink: /2003/03/09/walking/
-categories: 
-- Family
-- Travel
+tags: [family, travel]
 ---
 
  Close to the end of our first day in Budapest, and we're a little weary from a lot of walking, just sort of passing time until dinner. It's rainy out, and it seems that Budapest shuts down on a Sunday, so we'll just eat in the restaurant in the hotel. We ate there last night (I had a magnificent Wild Boar Stew with Gnocchi) and it's pretty good. And slightly cheaper than Australian prices, which is a welcome turn of events after the gougind prices in Sweden.

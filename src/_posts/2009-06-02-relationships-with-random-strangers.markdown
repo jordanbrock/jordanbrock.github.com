@@ -2,9 +2,7 @@
 layout: post
 title: Relationships with Random Strangers
 permalink: /2009/06/02/relationships-with-random-strangers/
-categories: 
-- Personal
-- Web
+tags: [personal, web]
 ---
 
 While it's difficult coming up with a term for the relationships that we have with people that we interact with online, but not in "meatspace", it's harder still coming up with how to describe your relationship with people that A) you've never met, and B) you've never really even interacted with.

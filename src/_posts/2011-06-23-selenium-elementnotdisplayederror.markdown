@@ -2,9 +2,7 @@
 layout: post
 title: Selenium "ElementNotDisplayedError"
 permalink: /2011/06/23/selenium-elementnotdisplayederror/
-categories: 
-- Development
-- Ruby On Rails
+tags: [development, rails]
 ---
 
 If you do integration/request testing of an AJAXified web application using Rspec, Capybara and Selenium there is a pretty good chance that you might have run into this error:

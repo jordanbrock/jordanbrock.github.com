@@ -2,8 +2,7 @@
 layout: post
 title: More Golden Buildings
 permalink: /2003/03/12/more-golden-buildings/
-categories: 
-- Travel
+tags: [travel]
 ---
 
  We are sitting (in a first class cabin that we can get into this time) on a train bound for Vienna (no Ultravox singalongs please). The Hungarian countryside is flying along around us, fairly grey and lifeless, just getting ready to burst into springly greenness. I think if we had been two weeks later we would have seen a completely different Europe.

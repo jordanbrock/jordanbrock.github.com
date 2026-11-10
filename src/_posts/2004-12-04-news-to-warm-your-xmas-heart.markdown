@@ -2,7 +2,6 @@
 layout: post
 title: News to warm your XMAS heart
 permalink: /2004/12/04/news-to-warm-your-xmas-heart/
-categories: []
 
 ---
 

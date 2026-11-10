@@ -2,14 +2,7 @@
 layout: post
 title: Lolcat Sandman
 permalink: /2008/09/06/lolcat-sandman/
-categories: 
-- Funny
-- lolcats
-- mashup
-- metallica
-- Music
-- video
-- Web
+tags: [funny, music, web]
 ---
 
  I happened across a <a href="http://jordanbrock.com/assets/2008/9/6/_looong__enter_sandman.jpg">screendump of a 4Chan thread</a> today that had lolcat pictures that matched up with the lyrics of Enter Sandman. Someone posted a comment saying that they'd love to see it with the soundtrack. So, I fired up iMovie and bingo: Lolcat Sandman.

@@ -2,8 +2,7 @@
 layout: post
 title: Can anyone say "X-Box 360"?
 permalink: /2008/01/08/can-anyone-say-x-box-360/
-categories: 
-- Web
+tags: [web]
 ---
 
  Xerox have revised their corporate design, which in current times means a new logo. With a new mission of course, that the obligatory new logo <a href="http://www.nytimes.com/2008/01/07/business/07cnd-adco.html">doesn't say &#8216;Copier'</a>

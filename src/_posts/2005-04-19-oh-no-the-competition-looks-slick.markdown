@@ -2,7 +2,6 @@
 layout: post
 title: Oh no, the competition looks slick
 permalink: /2005/04/19/oh-no-the-competition-looks-slick/
-categories: []
 
 ---
 

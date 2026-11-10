@@ -2,8 +2,7 @@
 layout: post
 title: Weiner Schnitzels and Beer
 permalink: /2003/03/14/weiner-schnitzels-and-beer/
-categories: 
-- Travel
+tags: [travel]
 ---
 
  Two fantastic, if very wind chilled and slightly expensive days in Vienna. After five days in Budapest, it was something of a relief to find ourselves in a city that, barring the language, at least resembled a western city (good shops, lots of advertising to make you feel at home etc etc). But as far as the appearance of the city goes, very little prepares you for Vienna.

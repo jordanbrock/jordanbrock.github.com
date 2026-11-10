@@ -2,9 +2,7 @@
 layout: post
 title: Boy George, Manly Men and Fjords
 permalink: /2003/02/23/boy-george-manly-men-and-fjords/
-categories: 
-- Family
-- Travel
+tags: [family, travel]
 ---
 
  Sitting in a cafe in the train station at Narvik, Norway and onto the radio pops Boy George singing "Do you really want to hurt me?". Well, given the type of manly man that walks and works around Narvik I would hazard a guess that if Boy George turned up he would know the answer to that question within about 2 minutes. A tough looking town.

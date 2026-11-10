@@ -2,11 +2,7 @@
 layout: post
 title: Quality Control
 permalink: /2007/02/12/quality-control/
-categories: 
-- Music
-- thepolice
-- Web
-- websites
+tags: [music, web]
 ---
 
 The Police have just announced a worldwide <strike>cynical money grab</strike> tour, and have launched a <a href="http://thepolicetour.com">website</a> to fill you in on all of the details. Unfortunately, whichever company they have tapped to produce the site seems to have just reskinned an old site, and haven't even managed to do a find/replace particularly well.

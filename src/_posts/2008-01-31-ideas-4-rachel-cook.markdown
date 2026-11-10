@@ -2,11 +2,7 @@
 layout: post
 title: Ideas 4 - Rachel Cook
 permalink: /2008/01/31/ideas-4-rachel-cook/
-categories: 
-- awia
-- ideas4
-- presentation
-- Web
+tags: [awia, web]
 ---
 
  Last night, <a href="http://www.webindustry.asn.au"><span class="caps">AWIA</span></a> (the Australian Web Industry Association) held one of our semi-regular "Ideas" nights, <a href="http://www.webindustry.asn.au/ideas4">Ideas 4</a> to be specific. Rachel Cook (<a href="http://minti.com">minti.com</a>) and Lisa Herrod(<a href="http://scenarioseven.com.au">Scenario Seven</a>) each gave fantastic presentations to a great crowd (about 85 people by my rough count).

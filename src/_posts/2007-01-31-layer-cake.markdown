@@ -2,9 +2,7 @@
 layout: post
 title: Layer Cake
 permalink: /2007/01/31/layer-cake/
-categories: 
-- Movies
-- review
+tags: [movies, review]
 ---
 
  8/10

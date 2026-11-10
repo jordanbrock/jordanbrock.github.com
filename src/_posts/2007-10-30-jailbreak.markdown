@@ -2,14 +2,7 @@
 layout: post
 title: Jailbreak
 permalink: /2007/10/30/jailbreak/
-categories: 
-- Apple
-- Gadgets
-- hack
-- ipodtouch
-- jailbreak
-- software
-- Tech
+tags: [apple, tech]
 ---
 
  Got an iPod Touch? Visit jailbreakme.com in Safari on your iPod, click on the button at the bottom, wait for a bit and then boom, you've got root access to your iPod and you can start installing apps all over the place.

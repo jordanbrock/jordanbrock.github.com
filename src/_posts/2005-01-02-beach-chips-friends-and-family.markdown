@@ -2,7 +2,6 @@
 layout: post
 title: Beach, Chips, Friends and Family
 permalink: /2005/01/02/beach-chips-friends-and-family/
-categories: []
 
 ---
 

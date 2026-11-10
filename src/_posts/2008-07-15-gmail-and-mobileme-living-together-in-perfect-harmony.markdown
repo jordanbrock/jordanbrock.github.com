@@ -2,11 +2,7 @@
 layout: post
 title: Gmail and MobileMe - Living Together in Perfect Harmony
 permalink: /2008/07/15/gmail-and-mobileme-living-together-in-perfect-harmony/
-categories: 
-- Apple
-- howto
-- Tech
-- Web
+tags: [apple, tech, web]
 ---
 ### _UPDATE_
 

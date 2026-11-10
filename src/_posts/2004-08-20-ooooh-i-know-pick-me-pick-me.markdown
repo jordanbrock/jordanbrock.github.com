@@ -2,7 +2,6 @@
 layout: post
 title: Ooooh! I know! Pick Me, Pick Me!
 permalink: /2004/08/20/ooooh-i-know-pick-me-pick-me/
-categories: []
 
 ---
 

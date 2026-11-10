@@ -2,10 +2,7 @@
 layout: post
 title: Special Valentines Day Message
 permalink: /2008/02/13/special-valentines-day-message/
-categories: 
-- Funny
-- valentine
-- w00t
+tags: [funny]
 ---
 
  <img src="http://jordanbrock.com/assets/2008/2/14/bitter-space.gif" alt="" />

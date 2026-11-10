@@ -2,12 +2,7 @@
 layout: post
 title: 16 years, 2 weeks and 1 day
 permalink: /2007/11/18/16-years-2-weeks-and-1-day/
-categories: 
-- caren
-- crowdedhouse
-- Family
-- Music
-- Personal
+tags: [family, music, personal]
 ---
 
  In what sometimes seems like another lifetime, I lived for about 18 months in Edinburgh, staying at a <a href="http://www.highstreethostel.com">youth hostel</a>. While the population at a youth hostel is mostly transient, there's more often than not a group of people who are using it as a base to live, while they save some money to fund the next portion of the trip. And through some weird timing mechanism, this population seems to move on in groups, so as one set of people leave, another group arrives.

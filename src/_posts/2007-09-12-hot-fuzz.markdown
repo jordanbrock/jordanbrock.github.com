@@ -2,9 +2,7 @@
 layout: post
 title: Hot Fuzz
 permalink: /2007/09/12/hot-fuzz/
-categories: 
-- Movies
-- review
+tags: [movies, review]
 ---
 
  8/10

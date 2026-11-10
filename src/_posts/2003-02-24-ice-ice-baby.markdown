@@ -2,9 +2,7 @@
 layout: post
 title: Ice, Ice Baby
 permalink: /2003/02/24/ice-ice-baby/
-categories: 
-- Family
-- Travel
+tags: [family, travel]
 ---
 
 After a 10 minute bus trip that cost $30, we finally made it to the Ice Hotel. A collection of small chalets/huts, surrounding the Ice Hotel proper, it is set on the shores of a lake, which of course is pretty much frozen solid. Well, to a depth of 1 metre at least. And it's easily 1Km wide and 5 Km long, so it's pretty impressive.

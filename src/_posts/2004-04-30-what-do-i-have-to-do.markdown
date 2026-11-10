@@ -2,8 +2,7 @@
 layout: post
 title: What do I have to do?
 permalink: /2004/04/30/what-do-i-have-to-do/
-categories: 
-- Web
+tags: [web]
 ---
 
  What do I have to do to get a gmail account? I tried blogger, creating a <a href="http://tamarabuchi.blogspot.com">dubious blog</a> with a series of completely dubious posts, logging in and logging out, visiting the site from clients computers and the like in a random attempt to make it appear that it was an "active" blog.

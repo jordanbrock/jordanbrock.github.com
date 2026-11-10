@@ -2,9 +2,7 @@
 layout: post
 title: Flying Dogs
 permalink: /2003/02/26/flying-dogs/
-categories: 
-- Family
-- Travel
+tags: [family, travel]
 ---
 
  After a horrid nights sleep, due to this flu that I had, we both decided that we couldn't face sleeping in the ice hotel tonight, and would far prefer to stay in our cosy little chalet. It's not the cold so much, but the fact that because the hotel is open to the public during the day, you can't go to your room until about 7 o'clock, which means you're stuck walking around for about 8 hours after checking out of the chalet. And of course, a cold snap hit today, and it's -10C. Not the weather for walking around with a flu.

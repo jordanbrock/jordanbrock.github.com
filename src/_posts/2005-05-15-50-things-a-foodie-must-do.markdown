@@ -2,7 +2,6 @@
 layout: post
 title: 50 Things a foodie must do
 permalink: /2005/05/15/50-things-a-foodie-must-do/
-categories: []
 
 ---
 

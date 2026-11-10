@@ -2,7 +2,6 @@
 layout: post
 title: Does he even listen to what he is saying?
 permalink: /2005/10/08/does-he-even-listen-to-what-he-is-saying/
-categories: []
 
 ---
 

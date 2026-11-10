@@ -2,10 +2,7 @@
 layout: post
 title: The Slow Decline of Internet Explorer and Slower Rise of Firefox
 permalink: /2008/09/11/the-slow-decline-of-internet-explorer-and-slower-rise-of-firefox/
-categories: 
-- Development
-- Tech
-- Web
+tags: [development, tech, web]
 ---
 
 For the past 8 years or so, <a href="http://www.fivesensescoffee.com.au/">5 Senses Coffee</a> has been both a client of <a href="http://spintech.com.au">mine</a>, and for the last 15 months, my employer. The public face of that work is the main website, which sells coffee, teas and other <a href="http://www.fivesensescoffee.com.au/shop/equipment/isomac-la-mondiale">wonderful items</a>. I'd like to think that the visitors to the website are a pretty good spread of the general population of the internet, not necessarily too technical/web based, and not too "Hey, what's this internet thing all about?"

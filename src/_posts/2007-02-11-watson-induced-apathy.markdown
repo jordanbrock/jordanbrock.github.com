@@ -2,10 +2,7 @@
 layout: post
 title: Watson induced apathy
 permalink: /2007/02/11/watson-induced-apathy/
-categories: 
-- australia
-- cricket
-- Sport
+tags: [cricket, sport]
 ---
 
  Is it wrong for me to want England to actually win the CB One Day Series if for no other reason than because Shane Watson is playing, and if we lose the series there is a chance (however remote) that he will never play for Australia again?

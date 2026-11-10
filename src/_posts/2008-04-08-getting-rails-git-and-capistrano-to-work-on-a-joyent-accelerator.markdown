@@ -2,17 +2,7 @@
 layout: post
 title: Getting Rails, Git and Capistrano to work on a Joyent Accelerator
 permalink: /2008/04/08/getting-rails-git-and-capistrano-to-work-on-a-joyent-accelerator/
-categories: 
-- accelerator
-- capistrano
-- Development
-- git
-- github
-- joyent
-- programming
-- Ruby On Rails
-- rubyonrails
-- Tech
+tags: [accelerator, development, git, joyent, rails, tech]
 ---
 
  After several days of repeatedly smashing my head into both a metaphorical and an all too real brick wall, I seem to have managed to get <a href="http://git.or.cz">git</a> and <a href="http://capify.org">capistrano</a> working happily together on my <a href="http://www.joyent.com/accelerator">Joyent Accelerator</a>. I'm also using <a href="http://github.org">github</a> for my git hosting, which threw up it's own little challenge mid-way through the entire process.

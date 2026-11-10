@@ -2,7 +2,6 @@
 layout: post
 title: Car Dealer
 permalink: /2006/02/22/car-dealer/
-categories: []
 
 ---
 

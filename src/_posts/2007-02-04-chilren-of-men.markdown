@@ -2,9 +2,7 @@
 layout: post
 title: Children of Men
 permalink: /2007/02/04/chilren-of-men/
-categories: 
-- Movies
-- review
+tags: [movies, review]
 ---
 
  9/10

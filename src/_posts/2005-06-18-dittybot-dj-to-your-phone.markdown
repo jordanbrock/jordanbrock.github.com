@@ -2,7 +2,6 @@
 layout: post
 title: "DittyBot: DJ to your phone"
 permalink: /2005/06/18/dittybot-dj-to-your-phone/
-categories: []
 
 ---
 

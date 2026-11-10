@@ -2,7 +2,6 @@
 layout: post
 title: Google is really pushing the video
 permalink: /2006/02/06/google-is-really-pushing-the-video/
-categories: []
 
 ---
 

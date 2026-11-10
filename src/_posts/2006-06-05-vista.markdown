@@ -2,7 +2,6 @@
 layout: post
 title: Vista
 permalink: /2006/06/05/vista/
-categories: []
 
 ---
 

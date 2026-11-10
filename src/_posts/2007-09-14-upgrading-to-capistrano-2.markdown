@@ -2,14 +2,7 @@
 layout: post
 title: Upgrading to Capistrano 2
 permalink: /2007/09/14/upgrading-to-capistrano-2/
-categories: 
-- capistrano
-- deploy
-- Development
-- Ruby On Rails
-- rubyonrails
-- snippets
-- Web
+tags: [development, rails, web]
 ---
 
  For no other reason than this is something I need to remember on other projects, here is a list of the changes I made when I uninstalled deprec and upgraded to <a href="http://capify.org">capistrano 2</a> for deployment.

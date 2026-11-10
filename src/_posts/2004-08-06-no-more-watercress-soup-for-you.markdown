@@ -2,7 +2,6 @@
 layout: post
 title: No more watercress soup for you!
 permalink: /2004/08/06/no-more-watercress-soup-for-you/
-categories: []
 
 ---
 

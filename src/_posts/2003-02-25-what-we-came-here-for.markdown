@@ -2,9 +2,7 @@
 layout: post
 title: What We Came Here For
 permalink: /2003/02/25/what-we-came-here-for/
-categories: 
-- Family
-- Travel
+tags: [family, travel]
 ---
 
  So the day has finally arrived. We didn't have any activities planned, other than the wedding itself, so it was a pretty quiet day until a quick flurry of activity towards the end.

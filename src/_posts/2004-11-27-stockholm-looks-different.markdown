@@ -2,7 +2,6 @@
 layout: post
 title: Stockholm Looks Different
 permalink: /2004/11/27/stockholm-looks-different/
-categories: []
 
 ---
 

@@ -2,10 +2,7 @@
 layout: post
 title: Vagrant + Chef (and OpenPhoto)
 permalink: /2012/04/17/vagrant-chef-and-openphoto/
-categories: 
-- Development
-- Tech
-- Web
+tags: [development, tech, web]
 ---
 
 I've spent the past couple of days playing with <a href="http://www.vagrantup.com" target="_blank">Vagrant </a>, which is an add-on for <a href="http://www.virtualbox.org" target="_blank">VirtualBox</a> that allows you to quickly build virtual machines, configured exactly how you want them, on a project by project basis. The advantage of this is that it lets you replicate your production environment (or as close to as is possible), which should hopefully reduce headaches when you deploy your updates. 

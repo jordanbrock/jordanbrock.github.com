@@ -2,7 +2,6 @@
 layout: post
 title: Slipping
 permalink: /2004/12/22/slipping/
-categories: []
 
 ---
 

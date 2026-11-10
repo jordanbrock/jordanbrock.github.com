@@ -2,7 +2,6 @@
 layout: post
 title: Google will tell you everything
 permalink: /2005/04/01/google-will-tell-you-everything/
-categories: []
 
 ---
 

@@ -2,7 +2,6 @@
 layout: post
 title: If it didn't happen to an Australian, it didn't happen
 permalink: /2005/01/18/if-it-didn-t-happen-to-an-australian-it-didn-t-happen/
-categories: []
 
 ---
 

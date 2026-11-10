@@ -2,9 +2,7 @@
 layout: post
 title: So what's it all about?
 permalink: /2004/04/30/so-what-s-it-all-about/
-categories: 
-- Family
-- Personal
+tags: [family, personal]
 ---
 
  This blog has been created by me for two real reasons. Firstly, I wanted to try TypePad out, considering I had heard so much about it. Secondly, Caren and I are going to have our first child in 3 months, and I wanted to have some mechanism of easily creating a blog to mark that occasion. Just like every other bastard on the intramanet.

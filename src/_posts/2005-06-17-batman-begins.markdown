@@ -2,7 +2,6 @@
 layout: post
 title: Batman Begins
 permalink: /2005/06/17/batman-begins/
-categories: []
 
 ---
 

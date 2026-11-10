@@ -2,7 +2,6 @@
 layout: post
 title: Hey! She's Here!
 permalink: /2004/07/28/hey-she-s-here/
-categories: []
 
 ---
 

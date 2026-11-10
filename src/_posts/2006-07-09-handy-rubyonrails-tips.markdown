@@ -2,9 +2,7 @@
 layout: post
 title: Handy RubyOnRails Tips
 permalink: /2006/07/09/handy-rubyonrails-tips/
-categories: 
-- rubyonrails
-- tips
+tags: [rails]
 ---
 
 <a href="http://www.rubyinside.com/19-rails-tricks-most-rails-coders-dont-know-131.html">19 Rails Tricks Most Rails Coders Don't Know</a>

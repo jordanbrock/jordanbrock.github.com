@@ -2,13 +2,7 @@
 layout: post
 title: "Edge of the Web: Ben Buchanan"
 permalink: /2008/10/12/edge-of-the-web-ben-buchanan/
-categories: 
-- awia
-- conference
-- Development
-- edgeoftheweb
-- Tech
-- Web
+tags: [awia, development, tech, web]
 ---
 
  Although it only seems like yesterday that I got back from Sydney and the wonderful <a href="http://south08.webdirections.org/">Web Directions South</a>, things are rapidly heating up for Perth's own Web Conference: <a href="http://www.edgeoftheweb.org.au">Edge of the Web</a>, taking place at the <a href="http://www.edgeoftheweb.org.au/venue/"><span class="caps">UWA</span> Club</a> on November 6 and 7, 2008 - <a href="http://www.edgeoftheweb.org.au/registration/">tickets available now!</a>.

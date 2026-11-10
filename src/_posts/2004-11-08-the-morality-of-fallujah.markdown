@@ -2,7 +2,6 @@
 layout: post
 title: The "Morality" of Fallujah
 permalink: /2004/11/08/the-morality-of-fallujah/
-categories: []
 
 ---
 

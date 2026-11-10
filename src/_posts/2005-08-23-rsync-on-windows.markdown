@@ -2,7 +2,6 @@
 layout: post
 title: rsync on Windows
 permalink: /2005/08/23/rsync-on-windows/
-categories: []
 
 ---
 

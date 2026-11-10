@@ -2,7 +2,6 @@
 layout: post
 title: Crash-o-rama
 permalink: /2006/06/04/crash-o-rama/
-categories: []
 
 ---
 

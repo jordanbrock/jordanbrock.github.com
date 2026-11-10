@@ -2,7 +2,6 @@
 layout: post
 title: Back it up (redux)
 permalink: /2005/08/15/back-it-up-redux/
-categories: []
 
 ---
 

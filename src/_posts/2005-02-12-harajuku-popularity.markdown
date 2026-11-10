@@ -2,7 +2,6 @@
 layout: post
 title: Harajuku Popularity
 permalink: /2005/02/12/harajuku-popularity/
-categories: []
 
 ---
 

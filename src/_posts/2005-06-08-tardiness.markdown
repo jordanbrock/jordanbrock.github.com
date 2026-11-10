@@ -2,7 +2,6 @@
 layout: post
 title: Tardiness
 permalink: /2005/06/08/tardiness/
-categories: []
 
 ---
 

@@ -2,10 +2,7 @@
 layout: post
 title: Tom Waits
 permalink: /2008/06/13/tom-waits/
-categories: 
-- interview
-- Music
-- tomwaits
+tags: [music]
 ---
 
  A <a href="http://www.independent.co.uk/arts-entertainment/music/features/tom-waits-a-conversation-with-himself-846164.html">great interview with Tom Waits</a> (by Tom Waits himself) that includes this bit of gold:

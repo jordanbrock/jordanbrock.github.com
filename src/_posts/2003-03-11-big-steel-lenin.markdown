@@ -2,8 +2,7 @@
 layout: post
 title: Big Steel Lenin
 permalink: /2003/03/11/big-steel-lenin/
-categories: 
-- Travel
+tags: [travel]
 ---
 
  Today started with a walk around the Buda Palace and Castle District. There's a photo on the site of the Palace, but in reality that's only about half of the whole thing. There's an entire town next to the Palace, made up of old buildings, churches, museums and fairly ugly buildings that went up during the communist times. It's quite a contrast to the huge and magnificent Palace, a collection of buildings on windy cobbled streets that open into a series of town squares.

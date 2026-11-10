@@ -2,7 +2,6 @@
 layout: post
 title: Ineffectual Jedis
 permalink: /2006/06/16/ineffectual-jedis/
-categories: []
 
 ---
 

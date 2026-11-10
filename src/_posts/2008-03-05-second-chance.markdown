@@ -2,9 +2,7 @@
 layout: post
 title: Second Chance
 permalink: /2008/03/05/second-chance/
-categories: 
-- liamfinn
-- Music
+tags: [music]
 ---
 
  I've noticed that as I grow older, it has, for whatever reason, become harder to become "inspired" (for want of a better phrase) by music. Sure, I love it, listen to it constantly and couldn't imagine life without it, but that real touchstone moment where my soul is moved by a performance or a song has become harder to find.

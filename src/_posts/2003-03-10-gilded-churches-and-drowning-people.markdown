@@ -2,8 +2,7 @@
 layout: post
 title: Gilded Churches and Drowning People
 permalink: /2003/03/10/gilded-churches-and-drowning-people/
-categories: 
-- Travel
+tags: [travel]
 ---
 
  Another day, more sore feet.

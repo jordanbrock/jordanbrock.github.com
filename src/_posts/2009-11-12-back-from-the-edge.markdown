@@ -2,9 +2,7 @@
 layout: post
 title: Back from the Edge
 permalink: /2009/11/12/back-from-the-edge/
-categories: 
-- Tech
-- Web
+tags: [tech, web]
 ---
 
 Last week, I was lucky enough to be involved with the <a href="http://www.edgeoftheweb.org.au">2009 Edge of the Web conference</a>, which was organised by <a href="http://www.webindustry.asn.au">AWIA</a> and <a href="http://www.redhorizonevents.com.au/">Red Horizon Events</a> here in Perth. We had speakers from around the world, around Australia and from Perth, who all gave great talks to an eager and attentive audience.

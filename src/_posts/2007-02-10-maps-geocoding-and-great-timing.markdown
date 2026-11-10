@@ -2,14 +2,7 @@
 layout: post
 title: Maps, Geocoding and Great Timing
 permalink: /2007/02/10/maps-geocoding-and-great-timing/
-categories: 
-- Development
-- geocoding
-- programming
-- ruby
-- Ruby On Rails
-- rubyonrails
-- Web
+tags: [development, rails, web]
 ---
 
 On one of the sites I've been working on for quite a while (<a href="http://www.schoolseek.com.au">SchoolSeek</a>) we've been wanting to add the ability for users to find out how far a school is from their current location. There are services that have been able to <a href="http://en.wikipedia.org/wiki/Geocode">geocode</a> addresses for a while, but they were either based in the US, or cost money. Not a lot of money, but free is always good.

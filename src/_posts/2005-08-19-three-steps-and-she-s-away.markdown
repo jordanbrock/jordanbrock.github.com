@@ -2,7 +2,6 @@
 layout: post
 title: Three steps and she's away
 permalink: /2005/08/19/three-steps-and-she-s-away/
-categories: []
 
 ---
 

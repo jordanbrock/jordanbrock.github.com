@@ -2,9 +2,7 @@
 layout: post
 title: CoffeeScript, bistro_car, homebrew, and passenger gotcha
 permalink: /2010/04/08/coffeescript-bistro_car-homebrew-and-passenger-gotcha/
-categories: 
-- Development
-- Ruby On Rails
+tags: [development, rails]
 ---
 
 File under "Things for me to remember when reinstalling stuff"

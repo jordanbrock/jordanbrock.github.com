@@ -2,12 +2,7 @@
 layout: post
 title: Channel 10 and Formula 1
 permalink: /2007/04/08/channel-10-and-formula-1/
-categories: 
-- formula1
-- oldmedia
-- racing
-- Sport
-- television
+tags: [sport]
 ---
 
 Several years ago, after enduring the woeful coverage of Formula 1 on Channel 9 with the twin wonders of Daryl Eastlake and Alan Jones, Channel 10 bought the broadcast rights and promised a new era of Formula 1 coverage. It sounded great, and I was looking forward to being able to watch races live (or close to live as they put it in the press release), and with improved coverage.

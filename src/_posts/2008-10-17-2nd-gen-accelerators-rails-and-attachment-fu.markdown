@@ -2,14 +2,7 @@
 layout: post
 title: 2nd Gen Accelerators, Rails and attachment_fu
 permalink: /2008/10/17/2nd-gen-accelerators-rails-and-attachment-fu/
-categories: 
-- accelerator
-- Development
-- joyent
-- rails
-- Ruby On Rails
-- rubyonrails
-- Tech
+tags: [accelerator, development, joyent, rails, tech]
 ---
 
 File this one under <span class="caps">WTF</span>.

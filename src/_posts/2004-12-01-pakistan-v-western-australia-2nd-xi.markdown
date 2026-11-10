@@ -2,7 +2,6 @@
 layout: post
 title: Pakistan v Western Australia 2nd XI
 permalink: /2004/12/01/pakistan-v-western-australia-2nd-xi/
-categories: []
 
 ---
 

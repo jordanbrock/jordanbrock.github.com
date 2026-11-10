@@ -2,12 +2,7 @@
 layout: post
 title: "Leopard: Mail.app gets gmail style searching"
 permalink: /2007/11/04/leopard-mail-app-gets-gmail-style-searching/
-categories: 
-- Apple
-- leopard
-- macosx
-- mail.app
-- tips
+tags: [apple]
 ---
 
  I'm going to jot down little tidbits I find while using Leopard, things that are good and things that are not so good.

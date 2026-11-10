@@ -2,7 +2,6 @@
 layout: post
 title: Easy comma delimited files
 permalink: /2006/01/18/easy-comma-delimited-files/
-categories: []
 
 ---
 

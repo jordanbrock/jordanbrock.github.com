@@ -2,7 +2,6 @@
 layout: post
 title: Contact
 permalink: /2007/02/17/contact/
-categories: []
 
 ---
 

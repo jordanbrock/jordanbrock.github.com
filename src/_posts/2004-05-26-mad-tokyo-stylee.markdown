@@ -2,8 +2,7 @@
 layout: post
 title: Mad Tokyo Stylee
 permalink: /2004/05/26/mad-tokyo-stylee/
-categories: 
-- Travel
+tags: [travel]
 ---
 
  So, here I am. Tokyo. Wow.

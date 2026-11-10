@@ -2,7 +2,6 @@
 layout: post
 title: Competition
 permalink: /2005/12/09/competition/
-categories: []
 
 ---
 

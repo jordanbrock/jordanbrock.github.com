@@ -2,7 +2,6 @@
 layout: post
 title: What the hell am I doing here?
 permalink: /2004/08/06/what-the-hell-am-i-doing-here/
-categories: []
 
 ---
 

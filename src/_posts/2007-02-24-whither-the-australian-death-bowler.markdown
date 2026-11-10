@@ -2,12 +2,7 @@
 layout: post
 title: Whither the Australian "death" bowler
 permalink: /2007/02/24/whither-the-australian-death-bowler/
-categories: 
-- advertising
-- cricket
-- Sport
-- statistics
-- worldcup
+tags: [cricket, sport]
 ---
 
 In the past year, Australia has gone from being able to strangle the opposition's scoring at the end of an innings, to being having one of the most expensive bowling attacks in the world. Now, <a href="http://content-aus.cricinfo.com/columns/content/story/281283.html">this article</a> doesn't attempt to show why, but it certainly makes for alarming reading.

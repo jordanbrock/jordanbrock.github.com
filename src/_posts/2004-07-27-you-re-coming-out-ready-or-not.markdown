@@ -2,7 +2,6 @@
 layout: post
 title: You're coming out, ready or not.
 permalink: /2004/07/27/you-re-coming-out-ready-or-not/
-categories: []
 
 ---
 

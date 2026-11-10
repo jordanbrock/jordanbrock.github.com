@@ -2,13 +2,7 @@
 layout: post
 title: Singapore - Little India
 permalink: /2009/01/10/singapore-little-india/
-categories: 
-- "2009"
-- Family
-- Food
-- littleindia
-- singapore
-- Travel
+tags: [family, food, travel]
 ---
 
 Thanks to the generosity of my rocking parents, we recently spent 10 days in Singapore, staying at <a href="http://www.thesentosa.com.au">The Sentosa Resort</a> on <a href="http://maps.google.com/maps?f=q&hl=en&geocode=&time=&date=&ttype=&q=sentosa+island">Sentosa Island</a>. While the idea of staying in Singapore for 10 days might not seem to be particularly relaxing, Sentosa is quite removed from all of the hustle of Singapore, and could be a tropical resort island anywhere. If you wanted to, you could quite happily spend all of your time on Sentosa, and not venture into the city at all.

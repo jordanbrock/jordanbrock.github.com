@@ -2,11 +2,7 @@
 layout: post
 title: Radiohead via Old Electronic Equipment
 permalink: /2008/06/06/radiohead-via-old-electronic-equipment/
-categories: 
-- computing
-- Music
-- radiohead
-- Tech
+tags: [music, tech]
 ---
 
  A couple of months ago, Radiohead held a contest to remix "Nude", a track from their "In Rainbows" album. It was a particularly difficult song to remix, due to the fact that it is in 6/8 time. James Houston decided to take a _completely_ different approach from everyone else, and rigged up an old ZX Spectrum, a scanner, a dot matrix printer and an array of hard drives to play the song. The result is just mind blowing.
