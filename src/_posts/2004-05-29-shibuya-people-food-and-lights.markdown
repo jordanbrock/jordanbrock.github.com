@@ -2,8 +2,7 @@
 layout: post
 title: "Shibuya: People, Food and Lights"
 permalink: /2004/05/29/shibuya-people-food-and-lights/
-categories: 
-- Travel
+tags: [travel]
 ---
 
  A day in the office, doing some of the stuff that I actually came up to Tokyo to do in the first place. The computer company delivered the server today, about 2 hours late, with four (!WTF?) guys coming along for the ride. They brought the box into the office, and then all stood around staring at each other and at me. I wasn't sure if I was committing some serious social faux pas, but eventually Habu-san came along and saved us. Apparently they were just waiting for someone to take the initiative and probably would have waited for 20 minutes if someone didn't tell them to set it up!

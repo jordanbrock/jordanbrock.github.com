@@ -2,7 +2,6 @@
 layout: post
 title: Bring on the Tonk
 permalink: /2005/01/17/bring-on-the-tonk/
-categories: []
 
 ---
 

@@ -2,9 +2,7 @@
 layout: post
 title: It's Cold Guinevere, Damn cold!
 permalink: /2003/02/22/it-s-cold-guinevere-damn-cold/
-categories: 
-- Family
-- Travel
+tags: [family, travel]
 ---
 
  After a long day walking around being dumbfounded by the attractive city of Stockholm, we made our way out to Stockholm Airport (courtesy of a $100 taxi ride thank you very much!!!). We got our seats on a very full plane (a truckload of Japanese tourists on an "Adventure Holiday" and a lot of Swedes going home for the weekend) for Kiruna, above the Artic Circle.

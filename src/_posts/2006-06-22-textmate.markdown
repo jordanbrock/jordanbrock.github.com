@@ -2,7 +2,6 @@
 layout: post
 title: TextMate
 permalink: /2006/06/22/textmate/
-categories: []
 
 ---
 

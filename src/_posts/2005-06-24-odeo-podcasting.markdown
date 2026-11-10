@@ -2,7 +2,6 @@
 layout: post
 title: Odeo - Podcasting
 permalink: /2005/06/24/odeo-podcasting/
-categories: []
 
 ---
 

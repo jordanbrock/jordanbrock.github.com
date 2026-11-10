@@ -2,9 +2,7 @@
 layout: post
 title: A positive memory from the Sydney Test
 permalink: /2008/01/10/a-positive-memory-from-the-sydney-test/
-categories: 
-- cricket
-- Sport
+tags: [cricket, sport]
 ---
 
  In all the noise, rancor and recrimination that comprises the fallout of the Sydney Test between India and Australia, it's very easy to forget the good things that happened.

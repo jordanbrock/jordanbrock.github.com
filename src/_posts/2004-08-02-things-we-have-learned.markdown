@@ -2,7 +2,6 @@
 layout: post
 title: Things we have learned
 permalink: /2004/08/02/things-we-have-learned/
-categories: []
 
 ---
 

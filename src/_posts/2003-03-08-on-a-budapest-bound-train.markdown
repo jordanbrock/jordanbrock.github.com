@@ -2,9 +2,7 @@
 layout: post
 title: On a Budapest Bound Train
 permalink: /2003/03/08/on-a-budapest-bound-train/
-categories: 
-- Family
-- Travel
+tags: [family, travel]
 ---
 
  I'm currently sitting in a cabin on a train bound for Budapest. I've just been woken up by Hungarian Border Police, and had my passport stamped. First stamps in 3 weeks. Caren's had a heap from all over the place, but no one seems to want to stamp mine.

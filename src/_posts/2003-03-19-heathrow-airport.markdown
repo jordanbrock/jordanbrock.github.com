@@ -2,8 +2,7 @@
 layout: post
 title: Heathrow Airport
 permalink: /2003/03/19/heathrow-airport/
-categories: 
-- Travel
+tags: [travel]
 ---
 
  Sigh.

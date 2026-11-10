@@ -2,13 +2,7 @@
 layout: post
 title: How to access US iTunes content on your Apple TV in Australia
 permalink: /2008/04/10/how-to-access-us-itunes-content-on-your-apple-tv-in-australia/
-categories: 
-- Apple
-- appletv
-- ebay
-- itunes
-- Tech
-- Web
+tags: [apple, tech, web]
 ---
 
  One of the frustrating things about being an Apple TV owner in Australia is that we are missing out on a fairly major component of the experience: namely renting movies and purchasing TV shows. It's possible to create a US iTunes account, but generally that's involved having a US based credit card, which of course, isn't the easiest thing to come by.

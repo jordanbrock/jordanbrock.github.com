@@ -7,34 +7,59 @@ on:
   workflow_dispatch:
   pull_request:
 
+# A newer push to a PR supersedes its running build; master builds always finish.
 concurrency:
-  group: pages
-  cancel-in-progress: false
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    # Pinned: the photo pipeline needs libvips >= 8.15 (24.04 ships 8.15).
+    runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v4
+
+      - name: Install libvips
+        run: sudo apt-get update && sudo apt-get install -y --no-install-recommends libvips42t64
 
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
           bundler-cache: true
 
+      # Outputs are also keyed on a pipeline fingerprint inside each manifest,
+      # so a stale restore just regenerates.
+      - name: Cache processed photos
+        uses: actions/cache@v4
+        with:
+          path: tmp/photos
+          key: photos-${{ hashFiles('src/photos/**') }}
+          restore-keys: photos-
+
+      - name: Test
+        run: bin/bridgetown test
+
       - name: Build
         env:
           BRIDGETOWN_ENV: production
         run: bin/bridgetown deploy
 
+      - name: Check legacy URLs
+        run: bin/bridgetown check:urls
+
       - name: Upload build artifact
+        if: github.ref == 'refs/heads/master' && github.event_name != 'pull_request'
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./output
 
   deploy:
     needs: build
-    if: github.event_name != 'pull_request'
+    if: github.ref == 'refs/heads/master' && github.event_name != 'pull_request'
+    # One Pages deploy at a time, never cancelled midway.
+    concurrency:
+      group: pages
+      cancel-in-progress: false
     permissions:
       pages: write
       id-token: write

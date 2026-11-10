@@ -2,7 +2,6 @@
 layout: post
 title: Less than 2 days!
 permalink: /2005/01/05/less-than-2-days/
-categories: []
 
 ---
 

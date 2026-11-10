@@ -2,7 +2,6 @@
 layout: post
 title: Biblio
 permalink: /2006/01/12/biblio/
-categories: []
 
 ---
 

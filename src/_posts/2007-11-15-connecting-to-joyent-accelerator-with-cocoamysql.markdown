@@ -2,17 +2,7 @@
 layout: post
 title: Connecting to Joyent Accelerator with CocoaMySQL
 permalink: /2007/11/15/connecting-to-joyent-accelerator-with-cocoamysql/
-categories: 
-- accelerator
-- cocoamysql
-- Development
-- hosting
-- joyent
-- mysql
-- Ruby On Rails
-- ssh
-- tunnels
-- Web
+tags: [accelerator, development, joyent, rails, web]
 ---
 
  First things first: What's an accelerator? And why would you care about connecting to it with CocoaMySQL?

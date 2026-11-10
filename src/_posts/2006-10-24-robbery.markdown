@@ -2,12 +2,7 @@
 layout: post
 title: Robbery
 permalink: /2006/10/24/robbery/
-categories: 
-- Apple
-- computers
-- highwayrobbery
-- mac
-- us
+tags: [apple]
 ---
 
  In preparation for having to be able to work while in the US in December (we're going for xmas and such ... a plane trip with a 5 week old and a 2.25 year old ... mmmm, fun), and I priced out a MacBook Pro. It came to <span class="caps">AUD</span>$4613, which is a little pricey, but hey, it's a sweet machine.

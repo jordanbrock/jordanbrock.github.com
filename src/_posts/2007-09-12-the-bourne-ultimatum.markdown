@@ -2,9 +2,7 @@
 layout: post
 title: The Bourne Ultimatum
 permalink: /2007/09/12/the-bourne-ultimatum/
-categories: 
-- Movies
-- review
+tags: [movies, review]
 ---
 
  8.5/10

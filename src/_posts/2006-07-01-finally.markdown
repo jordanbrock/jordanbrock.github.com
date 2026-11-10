@@ -2,7 +2,6 @@
 layout: post
 title: Finally!
 permalink: /2006/07/01/finally/
-categories: []
 
 ---
 

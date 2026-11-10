@@ -2,7 +2,6 @@
 layout: post
 title: One month on!
 permalink: /2004/08/27/one-month-on/
-categories: []
 
 ---
 

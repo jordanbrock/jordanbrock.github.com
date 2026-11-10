@@ -2,9 +2,7 @@
 layout: post
 title: Stockholm and the missing ugly people
 permalink: /2003/02/22/stockholm-and-the-missing-ugly-people/
-categories: 
-- Family
-- Travel
+tags: [family, travel]
 ---
 
  So, we were wandering around relatively aimlessly today, when it slowly began to dawn on us that there was something wrong with the crowds of people in Stockholm. It took us a while, but then we realised what was bugging us. There are no ugly people in this city. Not one. Well, maybe one now that I'm here, but otherwise not a skerrick of ugliness to be found.

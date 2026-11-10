@@ -2,8 +2,7 @@
 layout: post
 title: The Power of the Collective
 permalink: /2004/05/30/the-power-of-the-collective/
-categories: 
-- Travel
+tags: [travel]
 ---
 
  So Saturday was Shoma's (one of my nephews) School Sports Day. Most interesting.

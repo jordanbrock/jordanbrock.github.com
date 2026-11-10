@@ -1,0 +1,3 @@
+<div class="meta">
+  <a href="<%= PostUrl.for(@resource) %>"><time datetime="<%= date.strftime("%Y-%m-%d") %>"><%= date.strftime("%-d %b %Y") %></time></a><% if show_type? %> &middot; <span class="type"><%= type %></span><% end %><% tags.each do |tag, href| %> &middot; <% if href %><a href="<%= href %>">#<%= tag %></a><% else %>#<%= tag %><% end %><% end %>
+</div>

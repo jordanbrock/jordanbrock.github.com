@@ -1,0 +1,104 @@
+@font-face { font-family: "Fraunces"; src: url("/fonts/fraunces-400-normal.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Fraunces"; src: url("/fonts/fraunces-600-normal.woff2") format("woff2"); font-weight: 600; font-display: swap; }
+@font-face { font-family: "Newsreader"; src: url("/fonts/newsreader-400-normal.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Newsreader"; src: url("/fonts/newsreader-500-normal.woff2") format("woff2"); font-weight: 500; font-display: swap; }
+@font-face { font-family: "Newsreader"; src: url("/fonts/newsreader-400-italic.woff2") format("woff2"); font-weight: 400; font-style: italic; font-display: swap; }
+
+:root {
+  --paper: #FBF8F3; --ink: #262321; --muted: #6F665C; --ink-2: #5C534B;
+  --card: #F2E9DF; --accent: #A2522F; --rule: #E3D9CC;
+  --serif: "Newsreader", Georgia, serif;
+  --display: "Fraunces", Georgia, serif;
+  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  --mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+  --measure: 34rem; --bleed: 56rem;
+  color-scheme: light dark;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --paper: #1C1A18; --ink: #ECE6DD; --muted: #958B7F; --ink-2: #BDB3A7;
+          --card: #2A2522; --accent: #E08A66; --rule: #3A3430; }
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body { margin: 0; background: var(--paper); color: var(--ink);
+       font: 400 1.0625rem/1.6 var(--serif); }
+a { color: inherit; text-decoration-color: var(--accent); text-underline-offset: 0.15em; }
+a:hover { color: var(--accent); }
+img, video { max-width: 100%; height: auto; }
+iframe, embed { max-width: 100%; }
+strong, b { font-weight: 500; }
+.prose, .link-card, .meta, .article__title { overflow-wrap: anywhere; }
+pre { overflow-x: auto; max-width: 100%; }
+pre, code { font-family: var(--mono); font-size: 0.875em; }
+pre code { font-size: inherit; }
+table { display: block; overflow-x: auto; }
+
+.wrap { max-width: var(--bleed); margin: 0 auto; padding: 0 1.25rem; }
+.masthead { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline;
+            gap: 0.25rem 1.5rem; border-bottom: 2px solid var(--ink);
+            padding: 2rem 0 0.5rem; margin-bottom: 2.5rem; }
+.masthead__name { font: 600 clamp(1.6rem, 5vw, 1.9rem)/1.1 var(--display); letter-spacing: -0.02em; text-decoration: none; }
+.masthead nav { font: 0.8125rem var(--sans); color: var(--ink-2); display: flex; gap: 1rem; }
+.masthead nav a { text-decoration: none; }
+
+.stream > * + * { margin-top: 2.75rem; }
+.col { max-width: var(--measure); }
+.meta { font: 0.75rem/1.4 var(--sans); color: var(--muted); }
+.meta a { text-decoration: none; }
+.meta .type { color: var(--accent); }
+
+.article__title { font: 600 1.5rem/1.15 var(--display); margin: 0.15rem 0 0.4rem; }
+.article__title a { text-decoration: none; }
+.prose > :first-child { margin-top: 0; }
+.prose p, .prose ul, .prose ol, .prose blockquote { margin: 0 0 1em; }
+.prose h2, .prose h3 { font-family: var(--display); font-weight: 600; line-height: 1.2; }
+.prose figure { margin: 1em 0; }
+.prose blockquote { border-left: 2px solid var(--rule); padding-left: 1rem; color: var(--ink-2); }
+.more { font: 0.8125rem var(--sans); color: var(--accent); }
+
+.link-card { background: var(--card); border-radius: 8px; padding: 0.8rem 0.9rem; }
+.link-card .meta { color: var(--accent); margin-bottom: 0.15rem; }
+.link-card__title { font-size: 1.0625rem; font-weight: 500; }
+.link-card__body { font-size: 0.9375rem; line-height: 1.55; color: var(--ink-2); margin-top: 0.25rem; }
+.link-card__body > :last-child { margin-bottom: 0; }
+
+.note .prose > :last-child { margin-bottom: 0.15rem; }
+
+/* Portrait shots are capped to the viewport; the figure shrinks to the image
+   so the caption stays aligned with its left edge. */
+.photo figure { margin: 0 auto; width: fit-content; max-width: 100%; }
+.photo img { display: block; width: auto; max-width: 100%; max-height: 85vh; height: auto; }
+.photo figcaption { font: 0.8125rem/1.5 var(--sans); color: var(--ink-2); margin-top: 0.5rem; }
+
+.pagination { display: flex; justify-content: space-between; font: 0.8125rem var(--sans);
+              color: var(--muted); border-top: 1px solid var(--rule); padding-top: 1rem; margin-top: 3rem; }
+
+/* Tag pages: the same gap under the h1 as the archive's first year. */
+.article__title + .stream { margin-top: 2rem; }
+
+.archive h2 { font: 600 1.25rem var(--display); margin: 2rem 0 0.5rem; }
+.archive > p { margin: 1rem 0; }
+.archive ul { list-style: none; padding: 0; margin: 0; }
+.archive li { display: grid; grid-template-columns: 4.5rem minmax(0, 1fr); gap: 0.75rem; padding: 0.3rem 0;
+              border-bottom: 1px solid var(--rule); }
+
+/* Fixed column counts so the Picture sizes in src/photos.erb stay exact. */
+.photo-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.5rem; }
+@media (min-width: 36rem) { .photo-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+.photo-grid img { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; }
+
+.site-footer { font: 0.75rem var(--sans); color: var(--muted); border-top: 1px solid var(--rule);
+               margin-top: 4rem; padding: 1.25rem 0 3rem; }
+
+/* Rouge */
+div.highlight { background: var(--card); padding: 0.75rem 1rem; border-radius: 6px; overflow-x: auto;
+             font-size: 0.875rem; line-height: 1.5; }
+/* Same gap after a code block as after a paragraph (1em of body text). */
+div.highlight, pre { margin: 0 0 1.0625rem; }
+pre.highlight { margin: 0; padding: 0; background: none; }
+.highlight .c, .highlight .c1, .highlight .cm { color: var(--muted); font-style: italic; }
+.highlight .k, .highlight .kd, .highlight .kn { color: var(--accent); }
+.highlight .s, .highlight .s1, .highlight .s2 { color: #4A6A2A; }
+@media (prefers-color-scheme: dark) { .highlight .s, .highlight .s1, .highlight .s2 { color: #A9C77F; } }
+.highlight .nf, .highlight .nc { font-weight: 500; }

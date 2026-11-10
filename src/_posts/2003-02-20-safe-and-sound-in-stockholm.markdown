@@ -2,9 +2,7 @@
 layout: post
 title: Safe and Sound in Stockholm
 permalink: /2003/02/20/safe-and-sound-in-stockholm/
-categories: 
-- Family
-- Travel
+tags: [family, travel]
 ---
 
 Well, after a monumental collection of flights, changes and coffees in British Airways Business Lounges, we have arrived in Stockholm. Damn it's cold.

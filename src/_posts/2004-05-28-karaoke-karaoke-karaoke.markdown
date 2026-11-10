@@ -2,8 +2,7 @@
 layout: post
 title: Karaoke! Karaoke! Karaoke!
 permalink: /2004/05/28/karaoke-karaoke-karaoke/
-categories: 
-- Travel
+tags: [travel]
 ---
 
  So, it's finally happened, and on only my first full day in Japan. Karaoke!

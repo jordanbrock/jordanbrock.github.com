@@ -2,13 +2,7 @@
 layout: post
 title: Ideas 4 - Lisa Herrod
 permalink: /2008/02/05/ideas-4-lisa-herrod/
-categories: 
-- awia
-- Development
-- ideas4
-- presentation
-- Tech
-- Web
+tags: [awia, development, tech, web]
 ---
 
  Here's the second video from <a href="http://webindustry.asn.au/ideas4">Ideas 4</a> from last week. In this one, <a href="http://scenariogirl.com">Lisa Herrod</a> from <a href="http://scenarioseven.com.au">Scenario Seven</a> gives her "Usability is More Than Skin Deep" presentation.

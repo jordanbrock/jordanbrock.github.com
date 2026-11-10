@@ -2,14 +2,7 @@
 layout: post
 title: Web Directions South 08
 permalink: /2008/10/02/web-directions-south-08/
-categories:
-- conference
-- Development
-- Tech
-- Travel
-- trips
-- Web
-- webdirections
+tags: [development, tech, travel, web]
 ---
 
  So, thanks to the fine people at <a href="http://www.fivesensescoffee.com.au">5 Senses Coffee</a>, I trundled over to Sydney for <a href="http://south08.webdirections.org">Web Directions South 08</a>.

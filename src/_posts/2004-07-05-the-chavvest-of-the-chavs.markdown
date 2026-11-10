@@ -2,7 +2,6 @@
 layout: post
 title: The Chavvest of the Chavs
 permalink: /2004/07/05/the-chavvest-of-the-chavs/
-categories: []
 
 ---
 

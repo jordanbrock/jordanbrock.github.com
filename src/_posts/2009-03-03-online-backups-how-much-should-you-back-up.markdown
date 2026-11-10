@@ -2,12 +2,7 @@
 layout: post
 title: "Online backups: How much should you back up?"
 permalink: /2009/03/03/online-backups-how-much-should-you-back-up/
-categories: 
-- backups
-- Development
-- onlinestorage
-- Tech
-- Web
+tags: [development, tech, web]
 ---
 
  Over the past few months, I have been slowly putting together a backup system that uses both local and online storage systems to provide a level of security and peace of mind.

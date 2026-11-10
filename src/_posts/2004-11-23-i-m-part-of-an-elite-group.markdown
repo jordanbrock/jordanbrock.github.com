@@ -2,7 +2,6 @@
 layout: post
 title: I'm part of an elite group
 permalink: /2004/11/23/i-m-part-of-an-elite-group/
-categories: []
 
 ---
 

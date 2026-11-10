@@ -2,14 +2,7 @@
 layout: post
 title: Using git to sync configurations between two computers
 permalink: /2009/04/13/using-git-to-sync-configurations-between-two-computers/
-categories: 
-- Development
-- git
-- github
-- macosx
-- source control
-- Tech
-- zsh
+tags: [development, git, tech]
 ---
 
 I have two machines that I use for my development work: a 24" iMac and a MacBook Air (It is so choice. If you have the means, I highly recommend picking one up. _Bonus points for quote identification_). Naturally, doing any work spread over two machines leads to all sorts of problems: Inconsistencies in development platform, files, data, code and just the general configuration of the machine. Thankfully, there exists a number of solutions to these problems.

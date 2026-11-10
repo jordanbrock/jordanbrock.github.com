@@ -2,7 +2,6 @@
 layout: post
 title: I can see what you're doing
 permalink: /2004/08/14/i-can-see-what-you-re-doing/
-categories: []
 
 ---
 

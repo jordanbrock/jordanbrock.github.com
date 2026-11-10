@@ -2,7 +2,6 @@
 layout: post
 title: WikiPedia takes over
 permalink: /2005/01/02/wikipedia-takes-over/
-categories: []
 
 ---
 

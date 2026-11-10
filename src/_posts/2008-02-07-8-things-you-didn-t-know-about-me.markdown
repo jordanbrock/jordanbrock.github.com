@@ -2,12 +2,7 @@
 layout: post
 title: 8 Things You Didn't Know About Me
 permalink: /2008/02/07/8-things-you-didn-t-know-about-me/
-categories: 
-- annoying
-- boring
-- killjoy
-- Personal
-- sourgrapes
+tags: [personal]
 ---
 
  Having been "tagged" by <a href="http://www.milesburke.com.au/blog/2008/02/06/8-things-you-didn’t-know-about-me/">Miles Burke</a> and <a href="http://didcoe.id.au/archives/8-things-you-didnt-know-about-me-and-probably-couldnt-give-a-shit-about">Matt Didcoe</a>, the onus is upon me to compile a list of things that most people don't know about me. So, here it is:

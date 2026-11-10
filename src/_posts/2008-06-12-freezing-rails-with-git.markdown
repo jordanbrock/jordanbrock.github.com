@@ -2,13 +2,7 @@
 layout: post
 title: Freezing Rails with Git
 permalink: /2008/06/12/freezing-rails-with-git/
-categories: 
-- Development
-- git
-- rails
-- Ruby On Rails
-- rubyonrails
-- Web
+tags: [development, git, rails, web]
 ---
 
  Now that the Ruby On Rails team has moved the codebase over to <a href="http://github.com">github</a>, some of the standard rake tasks aren't working the way that they used to. When it was on <span class="caps">SVN</span>, it was possible to type

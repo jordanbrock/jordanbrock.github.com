@@ -2,10 +2,7 @@
 layout: post
 title: iCal Day is No More
 permalink: /2007/11/01/ical-day-is-no-more/
-categories: 
-- Apple
-- ical
-- wtf
+tags: [apple]
 ---
 
  File under mostly nerdy:

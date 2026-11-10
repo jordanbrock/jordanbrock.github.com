@@ -2,7 +2,6 @@
 layout: post
 title: Getting Underway with Ruby On Rails
 permalink: /2005/06/26/getting-underway-with-ruby-on-rails/
-categories: []
 
 ---
 

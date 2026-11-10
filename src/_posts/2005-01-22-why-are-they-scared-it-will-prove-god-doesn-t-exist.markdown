@@ -2,7 +2,6 @@
 layout: post
 title: Why, are they scared it will prove God doesn't exist?
 permalink: /2005/01/22/why-are-they-scared-it-will-prove-god-doesn-t-exist/
-categories: []
 
 ---
 

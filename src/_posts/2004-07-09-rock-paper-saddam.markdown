@@ -2,7 +2,6 @@
 layout: post
 title: Rock Paper Saddam
 permalink: /2004/07/09/rock-paper-saddam/
-categories: []
 
 ---
 

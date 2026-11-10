@@ -2,11 +2,7 @@
 layout: post
 title: If only this were true
 permalink: /2006/11/15/if-only-this-were-true/
-categories:
-- cricket
-- phil
-- puracup
-- westernaustralia
+tags: [cricket]
 ---
 
 In the light of Western Australia's <a href="http://content-aus.cricinfo.com/australia/engine/match/251605.html">woeful performance in the Pura Cup</a> game against Queensland (that was still meant to be going on), <span class="caps">I IM</span>'d Phil and said:

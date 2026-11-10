@@ -2,7 +2,6 @@
 layout: post
 title: Age
 permalink: /2006/02/09/age/
-categories: []
 
 ---
 

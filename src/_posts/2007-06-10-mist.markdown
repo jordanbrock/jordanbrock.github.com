@@ -2,13 +2,7 @@
 layout: post
 title: Mist
 permalink: /2007/06/10/mist/
-categories: 
-- Apple
-- iphone
-- n95
-- nokia
-- Personal
-- phone
+tags: [apple, personal]
 ---
 
 <div style="float: right; margin-left: 10px; margin-bottom: 10px;">

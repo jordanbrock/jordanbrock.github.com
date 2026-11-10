@@ -2,9 +2,7 @@
 layout: post
 title: The Departed
 permalink: /2007/01/12/the-departed/
-categories: 
-- Movies
-- review
+tags: [movies, review]
 ---
 
  9/10

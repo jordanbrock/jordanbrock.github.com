@@ -2,11 +2,7 @@
 layout: post
 title: But I'm not installing ANYTHING!
 permalink: /2008/06/13/but-i-m-not-installing-anything/
-categories: 
-- adobe
-- installer
-- Tech
-- wtf
+tags: [tech]
 ---
 
  Nice one Adobe.

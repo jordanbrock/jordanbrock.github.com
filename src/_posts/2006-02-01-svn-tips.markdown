@@ -2,7 +2,6 @@
 layout: post
 title: SVN Tips
 permalink: /2006/02/01/svn-tips/
-categories: []
 
 ---
 

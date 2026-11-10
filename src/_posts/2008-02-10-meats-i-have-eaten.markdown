@@ -2,11 +2,7 @@
 layout: post
 title: Meats I have eaten
 permalink: /2008/02/10/meats-i-have-eaten/
-categories: 
-- Food
-- lists
-- meats
-- Personal
+tags: [food, personal]
 ---
 
  Just to be contrarian (<a href="http://jordanbrock.com/2008/2/7/8-things-you-didn-t-know-about-me">see my last post</a>), here is a list of meats that I have eaten.

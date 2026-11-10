@@ -2,8 +2,7 @@
 layout: post
 title: Sunday Breakfast
 permalink: /2007/02/11/sunday-breakfast/
-categories: 
-- Food
+tags: [food]
 ---
 
  I was waiting for a backup to finish running last night, so I was just wasting time catching up on some feed reading, and saw a post about <a href="http://www.deliciousdays.com/archives/2007/02/10/someone-has-nibbled-at-my-bread-web-bites/">making English Muffins</a> from what is one of the best food blogs there is: <a href="http://www.deliciousdays.com">Delicious Days</a>.

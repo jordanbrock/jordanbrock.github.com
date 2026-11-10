@@ -2,8 +2,7 @@
 layout: post
 title: Prague, Like Disneyland but without the rides
 permalink: /2003/03/16/prague-like-disneyland-but-without-the-rides/
-categories: 
-- Travel
+tags: [travel]
 ---
 
  A magnificent day in Prague, both weatherwise and travellingwise. It was the first day of our trip that the sun came out with enough strength to make us want to actually sit down and feel the warmth. Of course, we still had our thermal underwear on, and it probably never got above 7 degrees, but it still felt wonderful.

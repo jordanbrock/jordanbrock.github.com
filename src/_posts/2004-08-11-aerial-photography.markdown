@@ -2,7 +2,6 @@
 layout: post
 title: Aerial Photography
 permalink: /2004/08/11/aerial-photography/
-categories: []
 
 ---
 

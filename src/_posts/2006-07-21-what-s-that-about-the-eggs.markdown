@@ -2,8 +2,7 @@
 layout: post
 title: What's that about the eggs?
 permalink: /2006/07/21/what-s-that-about-the-eggs/
-categories: 
-- Movies
+tags: [movies]
 ---
 
  In an unintentional, but happy set of circumstances I ended up watching a couple of Natalie Portman (OMG <span class="caps">SO HOTT</span>!) movies over the past couple of days: *Closer* and *V For Vendetta*.

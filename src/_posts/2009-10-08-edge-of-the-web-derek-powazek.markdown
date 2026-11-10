@@ -2,8 +2,6 @@
 layout: post
 title: Edge of the Web - Derek Powazek
 permalink: /2009/10/08/edge-of-the-web-derek-powazek/
-categories: 
-- "1"
 ---
 
 <a href="http://powazek.com/">Derek Powazek</a> is presenting the opening keynote at the upcoming edition of the <a href="http://www.edgeoftheweb.org.au/">Edge of the Web conference in Perth</a> on November 4-6, 2009. He will be talking on the <a href="http://www.edgeoftheweb.org.au/program/derek-powazek-wisdom-of-community/">"Wisdom of Community"</a>.

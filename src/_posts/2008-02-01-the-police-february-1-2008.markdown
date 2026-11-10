@@ -2,10 +2,7 @@
 layout: post
 title: The Police - February 1, 2008
 permalink: /2008/02/01/the-police-february-1-2008/
-categories: 
-- concert
-- Music
-- thepolice
+tags: [music]
 ---
 
  I've been waiting about 24 years to see The Police. I'm going to write a longer post about the whole event later, but I just wanted to get a song by song, blow by blow account down.

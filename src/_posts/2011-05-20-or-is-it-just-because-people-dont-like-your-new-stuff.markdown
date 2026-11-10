@@ -2,10 +2,7 @@
 layout: post
 title: Or is it just because people don't like your new stuff?
 permalink: /2011/05/20/or-is-it-just-because-people-dont-like-your-new-stuff/
-categories: 
-- Music
-- Tech
-- Web
+tags: [music, tech, web]
 ---
 
 A quote from

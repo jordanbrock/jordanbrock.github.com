@@ -2,10 +2,7 @@
 layout: post
 title: Smallest possible expenditure of intelligence
 permalink: /2006/07/11/smallest-possible-expenditure-of-intelligence/
-categories: 
-- Development
-- intelligence
-- users
+tags: [development]
 ---
 
 <a href="http://www.veen.com/jeff/archives/000901.html">Intellectual Bargain Shopping, by Jeffrey Veen</a>

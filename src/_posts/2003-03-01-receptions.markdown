@@ -2,9 +2,7 @@
 layout: post
 title: Receptions
 permalink: /2003/03/01/receptions/
-categories: 
-- Family
-- Travel
+tags: [family, travel]
 ---
 
  After a days travelling from Stockholm to London to Philadelphia, we woke in Caren's sister, Carol's house. A magnificent 100 year old stone house, with more than enough rooms for the five children who normally live here. Of course, the entire Deem clan was here for what we had thought was a small family dinner, but what turned into a full on reception.

@@ -2,9 +2,7 @@
 layout: post
 title: So Damn Cool
 permalink: /2004/06/09/so-damn-cool/
-categories: 
-- Apple
-- Tech
+tags: [apple, tech]
 ---
 
  <a href="http://www.apple.com/airportexpress/">This</a> is possibly one of the coolest things that I have ever seen! (In a totally nerdly manner of course. I mean, how else could you get excited about wireless plug.)

@@ -1,0 +1,18 @@
+---
+layout: default
+title: Jordan Brock
+paginate:
+  collection: posts
+  per_page: 10
+  permalink: /page:num/
+---
+<div class="stream">
+  <% paginator.resources.each do |post| %>
+    <%= render PostEntry.new(resource: post) %>
+  <% end %>
+</div>
+<nav class="pagination col">
+  <span><% if paginator.next_page %><a href="<%= paginator.next_page_path %>">&larr; Older</a><% end %></span>
+  <span>Page <%= paginator.page %> of <%= paginator.total_pages %></span>
+  <span><% if paginator.previous_page %><a href="<%= paginator.previous_page_path %>">Newer &rarr;</a><% end %></span>
+</nav>

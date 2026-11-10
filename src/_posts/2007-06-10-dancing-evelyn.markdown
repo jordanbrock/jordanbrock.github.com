@@ -2,11 +2,7 @@
 layout: post
 title: Dancing Evelyn
 permalink: /2007/06/10/dancing-evelyn/
-categories: 
-- cameraphone
-- evelyn
-- Family
-- n95
+tags: [evelyn, family]
 ---
 
  More <span class="caps">N95</span> action. I was testing out the video, and Evelyn insisted on being the subject. Cute dancing.

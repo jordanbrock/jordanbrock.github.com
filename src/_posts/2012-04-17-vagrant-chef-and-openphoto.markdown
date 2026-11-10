@@ -2,10 +2,7 @@
 layout: post
 title: Vagrant + Chef (and OpenPhoto)
 permalink: /2012/04/17/vagrant-chef-and-openphoto/
-categories: 
-- Development
-- Tech
-- Web
+tags: [development, tech, web]
 ---
 
 I've spent the past couple of days playing with <a href="http://www.vagrantup.com" target="_blank">Vagrant </a>, which is an add-on for <a href="http://www.virtualbox.org" target="_blank">VirtualBox</a> that allows you to quickly build virtual machines, configured exactly how you want them, on a project by project basis. The advantage of this is that it lets you replicate your production environment (or as close to as is possible), which should hopefully reduce headaches when you deploy your updates. 
@@ -16,29 +13,29 @@ Vagrant VM's are portable, which means that all of your team members can have ex
 
 How does it work? Well, first of all, you need the <a href="https://www.virtualbox.org/wiki/Downloads">latest version of VirtualBox</a>, and the vagrant gem. I installed it into my system gems, but there's no reason it couldn't be in your Gemfile if you're working on a ruby project.
 
-{% highlight bash %}
+```bash
 gem install vagrant
-{% endhighlight %}
+```
 
 Once it's all setup (read the <a href="http://vagrantup.com/docs/getting-started/index.html" target="_blank">full instructions</a> for some additional steps), you need to initialise your directory:
 
-{% highlight bash %}
+```bash
 vagrant init
-{% endhighlight%}
+```
 
 This creates a file called "Vagrantfile" which configures your VM's for each project. The most basic file would look like this:
 
-{% highlight ruby %}
+```ruby
 Vagrant::Config.run do |config|
   config.vm.box = "lucid32"
 end
-{% endhighlight %}
+```
 
 This tells vagrant to start up a VM using an Ubuntu image. It will boot the VM, and then set a port redirect up so that you can SSH into the VM with the following:
 
-{% highlight bash %}
+```bash
 vagrant ssh
-{% endhighlight %}
+```
 
 That's all very handy, but of course, you're going to want your machine to have some software configured. Enter Chef, stage left.
 
@@ -54,21 +51,21 @@ Once that was complete, you need to install Ruby. Here's a <a href="http://boris
 
 Then I installed the chef gem
 
-{% highlight bash %}
+```bash
 gem install chef
-{% endhighlight %}
+```
 
 to get chef-client and chef-solo on the VM. _(Note: I'm only dealing with chef-solo in this post. chef-server adds a layer of difficulty that isn't necessary at this stage.)_
 
 Once you have your base VM setup, you need to package it up for Vagrant, so it can load it up in VirtualBox as needed. 
 
-{% highlight bash %}
+```bash
 mkdir ~/Vagrant && cd ~/Vagrant
 
 vagrant package --base vagrant-oneiric package.box
 
 vagrant box add vagrant-oneiric package.box 
-{% endhighlight %}
+```
 
 At this point, you should have a base VM ready for configuring with Chef.
 
@@ -78,13 +75,13 @@ Vagrant is built to work with provisioning software such as Chef (and <a href="h
 
 To add recipes to your VM you just add the following to your Vagrantfile:
 
-{% highlight ruby %}
+```ruby
 chef.add_recipe("mysql::server")
-{% endhighlight %}
+```
 
 Chef allows for configuration settings, such as passwords and installation directories, to be passed through to recipes. Vagrant supports this as well:
 
-{% highlight ruby %}
+```ruby
 config.vm.provision :chef_solo do |chef|
   chef.json = {
     :mysql => {
@@ -93,7 +90,7 @@ config.vm.provision :chef_solo do |chef|
   }
   chef.add_recipe("mysql::server")
 end
-{% endhighlight %}
+```
 
 ### OpenPhoto
 
@@ -103,7 +100,7 @@ Being open source, anyone can contribute to the system, and as with most open so
 
 So, if you want to do the same, here's my Vagrantfile for my OpenPhoto directory, which is a git clone of my fork of the <a href="https://github.com/openphoto/frontend">OpenPhoto repository</a> on github. It should hopefully allow you to get up and running if you've done everything outlined above.
 
-{% highlight ruby %}
+```ruby
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
@@ -144,27 +141,27 @@ Vagrant::Config.run do |config|
 
   config.vm.forward_port 80, 8080
 end
-{% endhighlight %}
+```
 
 Run 
 
-{% highlight bash %}
+```bash
 vagrant up
-{% endhighlight %}
+```
 
 and that will build your new VM using the base image, and then configure all of the required software. It might take a little while :)
 
 One of the great things about Vagrant is that you can quickly share folders with your VM, which means I can edit files in my repository on my Mac, which are shared onto the VM. This is accomplished with this line:
 
-{% highlight ruby %}
+```ruby
 config.vm.share_folder "openphoto", "/var/www/openphoto", "/path/to/openphoto/frontend", :owner => "www-data", :group => "vagrant"
-{% endhighlight %}
+```
 
 #### Apache
 
 You'll also need to configure Apache to use this directory. Here's my config file:
 
-{% highlight apache %}
+```apache
 <VirtualHost *:80>
   DocumentRoot /var/www/openphoto/src/html
 
@@ -205,13 +202,13 @@ You'll also need to configure Apache to use this directory. Here's my config fil
   Header set Cache-Control "must-revalidate"
   FileETag MTime Size
 </VirtualHost>
-{% endhighlight %}
+```
 
 You can then add a port forwarding rule to provide easy access to the Apache server running on the VM, like so:
 
-{% highlight ruby %}
+```ruby
 config.vm.forward_port 80, 8080
-{% endhighlight %}
+```
 
 Then, fire up "http://localhost:8080" in your browser, and you should be looking at your OpenPhoto install!
 

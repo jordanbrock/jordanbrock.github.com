@@ -2,7 +2,6 @@
 layout: post
 title: Highway to the Delivery Zone
 permalink: /2004/07/10/highway-to-the-delivery-zone/
-categories: []
 
 ---
 

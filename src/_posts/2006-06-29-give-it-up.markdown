@@ -2,7 +2,6 @@
 layout: post
 title: Give It Up
 permalink: /2006/06/29/give-it-up/
-categories: []
 
 ---
 

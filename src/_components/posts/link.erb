@@ -1,0 +1,8 @@
+<article class="link col">
+  <div class="link-card">
+    <div class="meta">Link &middot; <%= domain %></div>
+    <a class="link-card__title" href="<%= url %>"><%= title %> &#8599;</a>
+    <div class="link-card__body prose"><%= @resource.content %></div>
+  </div>
+  <%= render PostMeta.new(resource: @resource, show_type: false) %>
+</article>

@@ -2,12 +2,7 @@
 layout: post
 title: Perth Sites in the Webby's
 permalink: /2007/04/10/perth-sites-in-the-webby-s/
-categories: 
-- community
-- perth
-- Web
-- webbys
-- websites
+tags: [web]
 ---
 
  The <a href="http://www.perthfestival.com.au/">Perth International Arts Festival</a> website, done by the clever starfish at, um, <a href="http://cleverstarfish.com">Clever Starfish</a> has received a nomination for <a href="http://www.webbyawards.com/webbys/current.php#webby_entry_events">Best Events Website</a>. They are up against some big names, including the <span class="caps">BBC</span>, Mercedes Benz and Lollapalooza, so this is great news. Congrats to <a href="http://goatlady.wordpress.com">Kay</a> and team.

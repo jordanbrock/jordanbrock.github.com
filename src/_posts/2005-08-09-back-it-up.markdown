@@ -2,7 +2,6 @@
 layout: post
 title: Back it up
 permalink: /2005/08/09/back-it-up/
-categories: []
 
 ---
 

@@ -2,7 +2,6 @@
 layout: post
 title: Unplanned
 permalink: /2006/02/04/unplanned/
-categories: []
 
 ---
 

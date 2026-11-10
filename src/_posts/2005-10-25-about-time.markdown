@@ -2,7 +2,6 @@
 layout: post
 title: About Time!
 permalink: /2005/10/25/about-time/
-categories: []
 
 ---
 

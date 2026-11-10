@@ -2,8 +2,7 @@
 layout: post
 title: One Year
 permalink: /2005/07/28/one-year/
-categories: 
-- evelyn
+tags: [evelyn]
 ---
 
  So, as of yesterday, we have been parents for 1 year. And I'm sure it's been said many times before, but wow, what a year. It's all been pretty much fantastic, and we have a wonderful little girl.

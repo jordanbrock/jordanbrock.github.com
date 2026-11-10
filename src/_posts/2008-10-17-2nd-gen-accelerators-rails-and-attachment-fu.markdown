@@ -2,14 +2,7 @@
 layout: post
 title: 2nd Gen Accelerators, Rails and attachment_fu
 permalink: /2008/10/17/2nd-gen-accelerators-rails-and-attachment-fu/
-categories: 
-- accelerator
-- Development
-- joyent
-- rails
-- Ruby On Rails
-- rubyonrails
-- Tech
+tags: [accelerator, development, joyent, rails, tech]
 ---
 
 File this one under <span class="caps">WTF</span>.
@@ -18,17 +11,17 @@ I've been working on an updated version of the <a href="http://www.soilquality.o
 
 I opened up the log files and saw this error:
 
-{% highlight bash %}
+```bash
 ** Daemonized, any open files are closed.  Look at /tmp/soilquality-mongrel.8200.pid and log/mongrel.8200.log for info.
 ** Starting Mongrel listening at 127.0.0.1:8200
 ** Define INLINEDIR or HOME in your environment and try again
-{% endhighlight %}
+```
 
 Wonderfully descriptive I know, but something I'd never run into before. So, fire the the google and it turns out it's a common error, with a common fix: just put
 
-{% highlight ruby %}
+```ruby
 ENV['INLINEDIR'] = RAILS_ROOT + "/tmp"
-{% endhighlight %}
+```
 
 into your config/environment.rb file, make sure the directory exists and that it's writeable by the mongrel, restart, and away you go.
 
@@ -40,15 +33,15 @@ It turned out to be the ImageScience image processor, or more specifically the w
 
 And the fix? Basically, strip ImageScience out of attachment_fu. Remove
 
-{% highlight ruby %}
+```ruby
 vendor/plugins/attachment_fu/lib/technoweenie/attachment_fu/processors/image_science_processor.rb
-{% endhighlight %}
+```
 
 and remove "ImageScience" from this line
 
-{% highlight ruby %}
+```ruby
 default_processors = %w(ImageScience Rmagick MiniMagick Gd2 CoreImage)
-{% endhighlight %}
+```
 
 in this file
 <pre>vendor/plugins/attachment_fu/lib/technoweenie/attachment_fu/attachment_fu.rb</pre>

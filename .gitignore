@@ -41,3 +41,9 @@ yarn-debug.log*
 !/tmp/pids/
 !/tmp/pids/.keep
 /tasks/
+
+# The global gitignore ignores "tags" (ctags); this is the tag page prototype
+!/src/tags/
+
+# Local Claude Code config
+/.claude/

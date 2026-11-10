@@ -2,7 +2,6 @@
 layout: post
 title: Changing
 permalink: /2004/06/16/changing/
-categories: []
 
 ---
 

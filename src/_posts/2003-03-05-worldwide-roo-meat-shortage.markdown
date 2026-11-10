@@ -2,9 +2,7 @@
 layout: post
 title: Worldwide Roo Meat Shortage
 permalink: /2003/03/05/worldwide-roo-meat-shortage/
-categories: 
-- Family
-- Travel
+tags: [family, travel]
 ---
 
  After mooching off Carol and Marc for almost a week, we decided that it was about time we did something. So, I decided to cook Kangaroo. After reassuring some horrified children that it was quite ok and that they wouldn't die, I managed to find a butcher on the web that said that they sold it (along with Turtle .. I have the address if anyone is interested.) Carol said that it was in the Market District, and that we could do some more shopping in the area. That sounded pretty damn good to me, so off we went.

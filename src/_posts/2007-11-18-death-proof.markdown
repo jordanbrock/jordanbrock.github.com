@@ -2,8 +2,7 @@
 layout: post
 title: Death Proof
 permalink: /2007/11/18/death-proof/
-categories: 
-- Movies
+tags: [movies]
 ---
 
  8/10

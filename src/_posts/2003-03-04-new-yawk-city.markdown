@@ -2,9 +2,7 @@
 layout: post
 title: New Yawk City
 permalink: /2003/03/04/new-yawk-city/
-categories: 
-- Family
-- Travel
+tags: [family, travel]
 ---
 
  This is kind of an amalgamation of days for this entry, because we've done some stuff, but have also done an enormous amount of sitting around, drinking tea and coffee and eating food cooked by other people. Pretty much what you're supposed to do on holiday.

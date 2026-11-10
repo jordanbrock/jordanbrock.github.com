@@ -2,7 +2,6 @@
 layout: post
 title: Mario
 permalink: /2006/06/12/mario/
-categories: []
 
 ---
 

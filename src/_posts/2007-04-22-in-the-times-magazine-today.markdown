@@ -2,8 +2,7 @@
 layout: post
 title: In The Times Magazine today
 permalink: /2007/04/22/in-the-times-magazine-today/
-categories: 
-- Web
+tags: [web]
 ---
 
 <div style="float: right; margin-left: 10px; margin-bottom: 10px;">

@@ -2,9 +2,7 @@
 layout: post
 title: Watson induced humble pie
 permalink: /2007/03/25/watson-induced-humble-pie/
-categories: 
-- cricket
-- Sport
+tags: [cricket, sport]
 ---
 
 As much as <a href="http://jordanbrock.com/2007/2/11/watson-induced-apathy">it pains me to say it</a>, <a href="http://content-aus.cricinfo.com/wc2007/content/current/story/287132.html">Watson's throw</a> was simply brilliant. Fast, hard and accurate. Totally game changing.

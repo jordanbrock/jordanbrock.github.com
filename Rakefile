@@ -16,6 +16,14 @@ task :test do
   Bridgetown::Commands::Build.start
 end
 
+require "minitest/test_task"
+Minitest::TestTask.create(:test) do |t| # adds onto the test task: build first, then run tests
+  t.libs << "test" << "plugins"
+  t.warning = false
+end
+
+Dir.glob("lib/tasks/*.rake").each { |r| load r }
+
 desc "Runs the clean command"
 task :clean do
   Bridgetown::Commands::Clean.start

@@ -2,7 +2,6 @@
 layout: post
 title: 11 Months Old
 permalink: /2005/06/28/11-months-old/
-categories: []
 
 ---
 

@@ -2,7 +2,6 @@
 layout: post
 title: Fly me to the Moon! Don't spare the horses.
 permalink: /2004/07/24/fly-me-to-the-moon-don-t-spare-the-horses/
-categories: []
 
 ---
 

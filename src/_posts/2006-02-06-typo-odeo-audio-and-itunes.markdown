@@ -2,7 +2,6 @@
 layout: post
 title: Typo, Odeo, Audio and iTunes
 permalink: /2006/02/06/typo-odeo-audio-and-itunes/
-categories: []
 
 ---
 
