@@ -143,11 +143,26 @@ class TestSite < Bridgetown::Test
   end
 
   describe "post types on the home page" do
+    it "album helpers pick the cover, a strip of up to four, and the hidden count" do
+      stub = lambda do |n|
+        photos = (1..n).map { { "image" => "2026/a#{_1}.jpg", "alt" => "A#{_1}" } }
+        Struct.new(:model, :relative_path).new(Struct.new(:attributes).new({ "photos" => photos }), "_posts/x.md")
+      end
+      one = Posts::Album.new(resource: stub.call(1), mode: :summary)
+      expect(one.cover[:index]).must_equal 1
+      expect(one.strip).must_equal []
+      expect(one.more).must_equal 0
+      seven = Posts::Album.new(resource: stub.call(7), mode: :summary)
+      expect(seven.strip.map { _1[:index] }).must_equal [2, 3, 4, 5]
+      expect(seven.more).must_equal 2
+      expect(Posts::Album.new(resource: stub.call(5), mode: :summary).more).must_equal 0
+    end
+
     it "renders each type with its own class" do
       html get "/"
       classes = document.query_selector_all(".stream > *").map { _1["class"] }
       expect(classes).wont_be_empty
-      expect(classes.all? { _1 =~ /\b(article|note|link|photo)\b/ }).must_equal true
+      expect(classes.all? { _1 =~ /\b(article|note|link|photo|album)\b/ }).must_equal true
     end
 
     it "articles in the stream show a summary and keep-reading link" do

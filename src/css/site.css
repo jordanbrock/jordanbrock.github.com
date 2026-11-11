@@ -66,10 +66,19 @@ table { display: block; overflow-x: auto; }
 .note .prose > :last-child { margin-bottom: 0.15rem; }
 
 /* Portrait shots are capped to the viewport; the figure shrinks to the image
-   so the caption stays aligned with its left edge. */
-.photo figure { margin: 0 auto; width: fit-content; max-width: 100%; }
-.photo img { display: block; width: auto; max-width: 100%; max-height: 85vh; height: auto; }
-.photo figcaption { font: 0.8125rem/1.5 var(--sans); color: var(--ink-2); margin-top: 0.5rem; }
+   so the caption stays aligned with its left edge. Album photos and covers
+   follow the same rules. */
+.photo figure, .album figure, .album__cover { display: block; margin: 0 auto; width: fit-content; max-width: 100%; }
+.photo img, .album figure img, .album__cover img { display: block; width: auto; max-width: 100%; max-height: 85vh; height: auto; }
+.photo figcaption, .album figcaption { font: 0.8125rem/1.5 var(--sans); color: var(--ink-2); margin-top: 0.5rem; }
+
+.album .col { margin-bottom: 1rem; }
+.album figure + figure { margin-top: 2.5rem; }
+.album__strip { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.5rem; margin-top: 0.5rem; }
+.album__strip a { position: relative; display: block; }
+.album__strip img { display: block; width: 100%; aspect-ratio: 1; object-fit: cover; }
+.album__more { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+               background: rgb(0 0 0 / 0.5); color: #fff; font: 500 1.25rem var(--sans); }
 
 .pagination { display: flex; justify-content: space-between; font: 0.8125rem var(--sans);
               color: var(--muted); border-top: 1px solid var(--rule); padding-top: 1rem; margin-top: 3rem; }
