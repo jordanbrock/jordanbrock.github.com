@@ -30,9 +30,11 @@ module Builders
       end
 
       # Entry body for the feed: link posts lead with the external link,
-      # photo posts with their 960px JPEG.
+      # photo posts with their 960px JPEG; albums follow the intro with
+      # every photo and caption.
       helper :feed_body do |resource|
-        FeedEntry.lead(resource, photos: site.data.photos, base_url: site.config.url) + resource.content.to_s
+        opts = { photos: site.data.photos, base_url: site.config.url }
+        FeedEntry.lead(resource, **opts) + resource.content.to_s + FeedEntry.trail(resource, **opts)
       end
 
       # <title> text: posts use feed_title, pages their own title, then the

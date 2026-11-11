@@ -4,12 +4,13 @@ require "cgi"
 # photo alt text, and the HTML that leads its Atom entry. Plain functions of the resource, so they can be
 # unit-tested with stubs; Builders::Helpers wraps them for templates.
 module FeedEntry
-  # The post's title; notes and photos have none, so the first 8 words of the
-  # body, or "Photo, 7 Nov" when the body is empty. Plain text, not escaped.
+  # The post's title; notes, photos and untitled albums have none, so the first
+  # 8 words of the body, or "Photo, 7 Nov" / "Album, 7 Nov" when the body is
+  # empty. Plain text, not escaped.
   def self.title(resource)
     type = PostType.for_resource(resource)
     # data.title is slug-derived for untitled posts, so read the real front matter
-    title = %w[article link].include?(type) ? PostType.title(resource) : ""
+    title = %w[article link album].include?(type) ? PostType.title(resource) : ""
     title = PostType.link_domain(resource.data.link) if title.empty? && type == "link"
     return title unless title.empty?
 
@@ -42,6 +43,19 @@ module FeedEntry
     else
       ""
     end
+  end
+
+  # HTML after the body: an album's photos, each as its 960px JPEG (absolute,
+  # from base_url) followed by its caption. Empty for other types.
+  def self.trail(resource, photos:, base_url:)
+    return "" unless PostType.for_resource(resource) == "album"
+
+    PostPhotos.for(resource).map do |entry|
+      info = PhotoProcessor.lookup!(photos, entry[:image], post: source(resource))
+      src = base_url.to_s + PhotoProcessor.jpeg_path(info)
+      img = %(<p><img src="#{CGI.escapeHTML(src)}" alt="#{CGI.escapeHTML(entry[:alt])}"></p>)
+      entry[:caption] ? img + %(<p>#{CGI.escapeHTML(entry[:caption])}</p>) : img
+    end.join
   end
 
   def self.source(resource) = (resource.relative_path.to_s if resource.respond_to?(:relative_path))
