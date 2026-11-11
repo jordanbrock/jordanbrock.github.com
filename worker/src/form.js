@@ -30,7 +30,9 @@ export async function parseForm(form) {
     content: str("content"),
     url: str("url"),
     title: str("title"),
-    tags: str("tags").split(",").map((t) => t.trim()).filter(Boolean),
+    // "#Photography #tech" and "photography, tech" both give the site's
+    // lowercase, single-word tags.
+    tags: [...new Set(str("tags").split(/[\s,]+/).map((t) => t.replace(/^#+/, "").toLowerCase()).filter(Boolean))],
     photos,
   };
 }
