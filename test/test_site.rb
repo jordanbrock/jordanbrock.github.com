@@ -252,6 +252,19 @@ class TestSite < Bridgetown::Test
       expect(img["loading"]).must_equal "lazy"
     end
 
+    it "stream photos link to their post for the lightbox; the photo page has no link" do
+      post = first_of("photo")
+      html get "/"
+      link = document.query_selector(".stream .photo figure > a.lightbox")
+      expect(link["href"]).must_equal PostUrl.for(post) # the home page's first photo is the newest
+      expect(link.query_selector("picture img")).wont_be_nil
+      expect(document.query_selector("script[src='/js/lightbox.js'][defer]")).wont_be_nil
+      expect(File.file?(File.expand_path("../output/js/lightbox.js", __dir__))).must_equal true
+
+      html get post.relative_url
+      expect(document.query_selector(".photo a.lightbox")).must_be_nil
+    end
+
     it "registers processed photos under the post's image path" do
       post = first_of("photo")
       info = site.data.photos[post.data.image]
