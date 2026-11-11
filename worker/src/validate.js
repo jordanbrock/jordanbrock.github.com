@@ -41,6 +41,13 @@ export function validate(input) {
       if (unsafeJpeg(photo.bytes)) fail(`Photo ${n} has camera data (EXIF or XMP) or isn't a clean JPEG. Choose it again on the posting page.`);
     });
   }
+
+  const previewImage = input.preview?.bytes;
+  if (previewImage) {
+    if (previewImage.length > MAX_PHOTO_BYTES) fail("The preview image is over 10 MB.");
+    if (!isJpeg(previewImage)) fail("The preview image isn't a JPEG.");
+    if (unsafeJpeg(previewImage)) fail("The preview image has metadata or isn't a clean JPEG. Look up the preview again.");
+  }
 }
 
 export const isJpeg = (b) => b.length > 3 && b[0] === 0xff && b[1] === 0xd8 && b[2] === 0xff;

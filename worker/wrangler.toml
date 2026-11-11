@@ -8,8 +8,9 @@ preview_urls = false # no public preview URLs for versions either
 routes = [{ pattern = "post.jordanbrock.com", custom_domain = true }]
 
 # The posting page (public/) is served as static assets. Anything that isn't a
-# file, i.e. POST /posts, reaches the Worker. Cloudflare Access guards the
-# whole hostname; the Worker also checks the Access token itself.
+# file, i.e. POST /posts, GET /preview and GET /preview/image, reaches the
+# Worker. Cloudflare Access guards the whole hostname; the Worker also checks
+# the Access token itself.
 [assets]
 directory = "./public"
 

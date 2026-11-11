@@ -1,9 +1,10 @@
 require "fileutils"
 
 module Builders
-  # Resizes the images of photo and album posts before render (so templates
-  # know their sizes) and copies the results into output/photos after write. Originals in
-  # src/photos are excluded from the build and never published.
+  # Resizes the images of photo and album posts, and link posts' previews,
+  # before render (so templates know their sizes) and copies the results into
+  # output/photos after write. Originals in src/photos are excluded from the
+  # build and never published.
   class Photos < SiteBuilder
     def build
       generator :process_photos
@@ -22,7 +23,8 @@ module Builders
     # An image used by several posts is processed once.
     def process_photos
       processor.check_gps!
-      entries = PostPhotos.tiles(site.collections.posts.resources)
+      posts = site.collections.posts.resources
+      entries = PostPhotos.tiles(posts) + PostPhotos.previews(posts)
       PhotoProcessor.check_collisions!(entries.map { |_post, entry| entry[:image] })
       registry = {}
       entries.each do |post, entry|

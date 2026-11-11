@@ -40,8 +40,8 @@ function fakeGitHub(taken = []) {
   return { exists: vi.fn(async (p) => taken.includes(p)), commit: vi.fn(async () => "sha") };
 }
 
-const run = async (req, { github = fakeGitHub(), envOverrides = {} } = {}) => {
-  const res = await handle(await req, { ...env, ...envOverrides }, { keySet: keys.keySet, github, now });
+const run = async (req, { github = fakeGitHub(), envOverrides = {}, fetchImpl } = {}) => {
+  const res = await handle(await req, { ...env, ...envOverrides }, { keySet: keys.keySet, github, now, fetch: fetchImpl });
   return { res, body: res.headers.get("Content-Type")?.includes("json") ? await res.json() : await res.text(), github };
 };
 
@@ -210,11 +210,78 @@ describe("POST /posts", () => {
       error.mockRestore();
     }
   });
+
+  it("commits a link's preview image with the post and checks its name is free", async () => {
+    const fields = { kind: "link", url: "https://example.com/s", title: "A story", content: "", preview_title: "Long", preview_image: new File([jpeg], "preview.jpg") };
+    const { res, github } = await run(request({ token: await keys.sign(), fields }));
+    expect(res.status).toBe(201);
+    const [files, , , opts] = github.commit.mock.calls[0];
+    expect(files.map((f) => f.path)).toEqual(["src/_posts/2026-11-11-a-story.md", "src/photos/2026/a-story-preview.jpg"]);
+    expect(opts.mustBeNew).toEqual(["src/_posts/2026-11-11-a-story.md", "src/photos/2026/a-story-preview.jpg"]);
+    expect(github.exists).toHaveBeenCalledWith("src/photos/2026/a-story-preview.jpg");
+  });
 });
 
 describe("other routes", () => {
   it("only accepts POST /posts", async () => {
     expect((await run(request({ path: "/other" }))).res.status).toBe(404);
     expect((await run(request({ method: "GET" }))).res.status).toBe(405);
+  });
+});
+
+describe("GET /preview", () => {
+  const get = (path, token) => request({ method: "GET", path, token });
+  const html = async () => new Response('<meta property="og:title" content="Story"><meta property="og:image" content="/c.png">', { headers: { "Content-Type": "text/html" } });
+
+  it("returns the page's preview", async () => {
+    const fetchImpl = vi.fn(html);
+    const { res, body } = await run(get(`/preview?url=${encodeURIComponent("https://example.com/s")}`, await keys.sign()), { fetchImpl });
+    expect(res.status).toBe(200);
+    expect(body).toEqual({ title: "Story", description: "", site: "", image: "https://example.com/c.png" });
+    expect(fetchImpl.mock.calls[0][0]).toBe("https://example.com/s");
+  });
+
+  it("needs a signed-in user", async () => {
+    const fetchImpl = vi.fn(html);
+    const { res } = await run(get("/preview?url=https%3A%2F%2Fexample.com%2F"), { fetchImpl });
+    expect(res.status).toBe(401);
+    expect(fetchImpl).not.toHaveBeenCalled();
+  });
+
+  it("maps preview errors to their status", async () => {
+    const { res, body } = await run(get("/preview?url=http%3A%2F%2Flocalhost%2F", await keys.sign()), { fetchImpl: vi.fn() });
+    expect(res.status).toBe(422);
+    expect(body.error).toMatch(/public/);
+  });
+
+  it("refuses cross-site requests but allows same-origin and direct ones", async () => {
+    const withSite = async (site) => {
+      const req = await get("/preview?url=https%3A%2F%2Fexample.com%2Fs", await keys.sign());
+      req.headers.set("Sec-Fetch-Site", site);
+      return run(req, { fetchImpl: vi.fn(html) });
+    };
+    const blocked = await withSite("cross-site");
+    expect(blocked.res.status).toBe(403);
+    expect(blocked.body.error).toBe("Previews must come from the posting page.");
+    expect((await withSite("same-site")).res.status).toBe(403);
+    expect((await withSite("same-origin")).res.status).toBe(200);
+    expect((await withSite("none")).res.status).toBe(200);
+  });
+
+  it("only answers GET", async () => {
+    const { res } = await run(request({ path: "/preview?url=x", token: await keys.sign() }));
+    expect(res.status).toBe(405);
+  });
+
+  it("proxies the image with a sniffed type and no caching", async () => {
+    const png = new Uint8Array([0x89, 0x50, 0x4e, 0x47, 1, 2, 3, 4, 5, 6, 7, 8]);
+    const fetchImpl = vi.fn(async () => new Response(png, { headers: { "Content-Type": "text/html" } }));
+    const req = await get(`/preview/image?url=${encodeURIComponent("https://example.com/c.png")}`, await keys.sign());
+    const res = await handle(req, env, { keySet: keys.keySet, fetch: fetchImpl });
+    expect(res.status).toBe(200);
+    expect(res.headers.get("Content-Type")).toBe("image/png");
+    expect(res.headers.get("Cache-Control")).toBe("no-store");
+    expect(res.headers.get("X-Content-Type-Options")).toBe("nosniff");
+    expect(new Uint8Array(await res.arrayBuffer())).toEqual(png);
   });
 });

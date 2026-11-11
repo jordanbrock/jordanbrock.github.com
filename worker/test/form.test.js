@@ -15,7 +15,7 @@ describe("parseForm", () => {
     form.append("alt", "Two");
     form.append("caption", "");
     expect(await parseForm(form)).toEqual({
-      kind: "photos", content: "", url: "", title: "T", tags: ["birds", "perth"],
+      kind: "photos", content: "", url: "", title: "T", tags: ["birds", "perth"], preview: null,
       photos: [
         { bytes: new Uint8Array([1]), alt: "One", caption: "First" },
         { bytes: new Uint8Array([2]), alt: "Two", caption: "" },
@@ -64,5 +64,51 @@ describe("parseForm", () => {
     } finally {
       read.mockRestore();
     }
+  });
+
+  it("reads a link's preview, with its image", async () => {
+    const form = new FormData();
+    form.append("kind", "link");
+    form.append("url", "https://example.com/");
+    form.append("preview_title", "Story");
+    form.append("preview_description", "About it");
+    form.append("preview_site", "Example");
+    form.append("preview_image", new File([new Uint8Array([9, 8])], "preview.jpg"));
+    expect((await parseForm(form)).preview).toEqual({ title: "Story", description: "About it", site: "Example", bytes: new Uint8Array([9, 8]) });
+  });
+
+  it("gives a link without a preview empty preview fields", async () => {
+    const form = new FormData();
+    form.append("kind", "link");
+    form.append("url", "https://example.com/");
+    expect((await parseForm(form)).preview).toEqual({ title: "", description: "", site: "", bytes: null });
+  });
+
+  it("treats an empty preview file as no preview image", async () => {
+    for (const kind of ["link", "note"]) {
+      const form = new FormData();
+      form.append("kind", kind);
+      form.append("preview_image", new File([], ""));
+      const input = await parseForm(form);
+      expect(input.preview?.bytes ?? null).toBeNull();
+    }
+  });
+
+  it("refuses a preview image on photos", async () => {
+    const form = new FormData();
+    form.append("kind", "photos");
+    form.append("preview_image", new File([new Uint8Array([1])], "p.jpg"));
+    await expect(parseForm(form)).rejects.toThrow("Only links can have a preview image.");
+  });
+
+  it("refuses a preview image on anything but a link, or one that isn't a file", async () => {
+    const note = new FormData();
+    note.append("kind", "note");
+    note.append("preview_image", new File([new Uint8Array([1])], "p.jpg"));
+    await expect(parseForm(note)).rejects.toThrow("Only links can have a preview image.");
+    const text = new FormData();
+    text.append("kind", "link");
+    text.append("preview_image", "oops");
+    await expect(parseForm(text)).rejects.toThrow("The preview image didn't upload as a file.");
   });
 });

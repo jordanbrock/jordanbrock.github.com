@@ -27,6 +27,22 @@
           <input name="url" type="url" inputmode="url" autocomplete="off" autocapitalize="none">
         </label>
 
+        <div data-for="link">
+          <div id="preview" class="preview" hidden>
+            <img id="preview-image" alt="" hidden>
+            <div class="preview__text">
+              <p id="preview-site" class="hint"></p>
+              <p id="preview-title" class="preview__title"></p>
+              <p id="preview-description" class="preview__description"></p>
+              <div class="preview__tools">
+                <button type="button" id="preview-use-title">Use title</button>
+                <label class="check" hidden><input type="checkbox" id="preview-include" checked> Include image</label>
+              </div>
+            </div>
+          </div>
+          <p id="preview-status" class="hint" aria-live="polite"></p>
+        </div>
+
         <div data-for="photos">
           <label class="pick">Choose photos
             <input id="picker" type="file" accept="image/*" multiple>

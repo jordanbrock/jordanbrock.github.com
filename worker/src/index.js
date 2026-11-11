@@ -1,10 +1,12 @@
 // The posting Worker. The page itself is a static asset (public/); this
-// handles POST /posts: check Access, read and validate the form, pick a free
-// file name, and commit the post and its photos in one commit.
+// handles POST /posts (check Access, read and validate the form, pick a free
+// file name, commit the post and its photos in one commit) and the
+// link-preview lookups GET /preview and GET /preview/image.
 import { AccessConfigError, verifyAccess } from "./access.js";
 import { parseForm } from "./form.js";
 import { GitHubError, SlugTakenError, github as makeGitHub } from "./github.js";
 import { buildPost } from "./post.js";
+import { PreviewError, fetchPreview, fetchPreviewImage } from "./preview.js";
 import { MAX_POST_BYTES, TOO_BIG, ValidationError, validate } from "./validate.js";
 
 // The Workers Free plan allows 50 subrequests per request. Worst case:
@@ -18,9 +20,45 @@ export default {
   fetch: (request, env) => handle(request, env),
 };
 
-// deps lets tests pass a key set, a fake GitHub and a fixed clock.
+// A Response refusing the request, or null when Access lets it through.
+async function denied(request, env, deps) {
+  try {
+    await verifyAccess(request, env, deps.keySet);
+    return null;
+  } catch (e) {
+    console.warn("access:", e.message); // AccessError messages never contain the token
+    if (e instanceof AccessConfigError) return json({ error: "Posting isn't set up properly. Check the Worker's Access settings." }, 503);
+    return json({ error: "You're not signed in. Reload the page to sign in again." }, 401);
+  }
+}
+
+// GET /preview?url= (the page's sharing tags as JSON) and GET
+// /preview/image?url= (its image, served from this origin so the page can
+// re-encode it on a canvas). Read-only, so no Origin check: browsers don't
+// send Origin on same-origin GETs.
+async function preview(request, env, deps, url) {
+  if (request.method !== "GET") return json({ error: "Use GET." }, 405);
+  const site = request.headers.get("Sec-Fetch-Site");
+  if (site && site !== "same-origin" && site !== "none") return json({ error: "Previews must come from the posting page." }, 403);
+  const refusal = await denied(request, env, deps);
+  if (refusal) return refusal;
+  const target = url.searchParams.get("url");
+  const fetchImpl = deps.fetch ?? fetch;
+  try {
+    if (url.pathname === "/preview") return json(await fetchPreview(target, fetchImpl), 200);
+    const { bytes, type } = await fetchPreviewImage(target, fetchImpl);
+    return new Response(bytes, { headers: { "Content-Type": type, "Cache-Control": "no-store", "X-Content-Type-Options": "nosniff" } });
+  } catch (e) {
+    if (e instanceof PreviewError) return json({ error: e.message }, e.status);
+    console.error("preview:", e);
+    return json({ error: "Something went wrong finding the preview." }, 500);
+  }
+}
+
+// deps lets tests pass a key set, a fake GitHub, a fake fetch and a fixed clock.
 export async function handle(request, env, deps = {}) {
   const url = new URL(request.url);
+  if (url.pathname === "/preview" || url.pathname === "/preview/image") return preview(request, env, deps, url);
   if (url.pathname !== "/posts") return new Response("Not found", { status: 404 });
   if (request.method !== "POST") return json({ error: "Use POST." }, 405);
   if (request.headers.get("Origin") !== url.origin) {
@@ -28,13 +66,8 @@ export async function handle(request, env, deps = {}) {
     return json({ error: "Posts must come from the posting page." }, 403);
   }
 
-  try {
-    await verifyAccess(request, env, deps.keySet);
-  } catch (e) {
-    console.warn("access:", e.message); // AccessError messages never contain the token
-    if (e instanceof AccessConfigError) return json({ error: "Posting isn't set up properly. Check the Worker's Access settings." }, 503);
-    return json({ error: "You're not signed in. Reload the page to sign in again." }, 401);
-  }
+  const refusal = await denied(request, env, deps);
+  if (refusal) return refusal;
 
   // Refuse an oversized body before reading it when its size is known. Without
   // a Content-Length (the edge may drop it), the runtime's body cap and the

@@ -45,6 +45,12 @@ function frontMatter(fields) {
         lines.push(`  - image: ${quote(photo.image)}`, `    alt: ${quote(photo.alt)}`);
         if (photo.caption) lines.push(`    caption: ${quote(photo.caption)}`);
       }
+    // A nested mapping: only `preview` is one.
+    } else if (value && typeof value === "object" && !Array.isArray(value)) {
+      const entries = Object.entries(value).filter(([, v]) => v !== undefined && v !== "");
+      if (entries.length === 0) continue;
+      lines.push(`${key}:`);
+      for (const [k, v] of entries) lines.push(`  ${k}: ${quote(v)}`);
     } else if (Array.isArray(value)) {
       lines.push(`${key}: [${value.map(quote).join(", ")}]`);
     } else {
@@ -82,6 +88,13 @@ export function buildPost(input, now, n = 1) {
   }
   if (n > 1) slug += `-${n}`;
 
+  // A link's preview, nested so the site still sees a link (a top-level
+  // image would make it a photo post). Its image sits with the year's photos.
+  const previewImage = input.kind === "link" && input.preview?.bytes ? `${year}/${slug}-preview.jpg` : undefined;
+  if (input.kind === "link" && input.preview) {
+    fields.preview = { title: line(input.preview.title), description: line(input.preview.description), site: line(input.preview.site), image: previewImage };
+  }
+
   const photos = input.kind === "photos" ? input.photos.map((p, i) => ({
     image: single ? `${year}/${slug}.jpg` : `${year}/${slug}/${String(i + 1).padStart(2, "0")}.jpg`,
     alt: line(p.alt),
@@ -97,6 +110,8 @@ export function buildPost(input, now, n = 1) {
     path: `src/_posts/${date}-${slug}.md`,
     url: `${SITE}/${date.replaceAll("-", "/")}/${slug}/`,
     markdown: frontMatter(fields) + (body ? `${body}\n` : ""),
-    photos: photos.map((p) => ({ path: `src/photos/${p.image}`, bytes: p.bytes })),
+    photos: previewImage
+      ? [{ path: `src/photos/${previewImage}`, bytes: input.preview.bytes }]
+      : photos.map((p) => ({ path: `src/photos/${p.image}`, bytes: p.bytes })),
   };
 }

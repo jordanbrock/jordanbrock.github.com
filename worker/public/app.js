@@ -1,7 +1,8 @@
 // The posting page: tabs, preparing photos in the browser, and sending the
 // post to /posts. Photos are resized to at most MAX_WIDTH and re-encoded as
-// JPEG on a canvas, which drops all their metadata (including GPS).
-import { stripMetadata } from "./jpeg.js";
+// JPEG by encode.js, which drops all their metadata (including GPS).
+import { toJpeg } from "./encode.js";
+import { setupPreview } from "./preview.js";
 
 const MAX_WIDTH = 2400; // the widest size the site makes
 const MAX_PHOTOS = 25; // the server's cap: MAX_PHOTOS in src/validate.js
@@ -18,6 +19,8 @@ const picker = document.querySelector("#picker");
 const status = document.querySelector("#status");
 let photos = []; // [{ blob, url, alt, caption }] in post order
 let preparing = false;
+let skipPreviewFor = null; // the link whose loading preview the next press of Post leaves out
+const preview = setupPreview(form);
 
 const kind = () => form.elements.kind.value;
 
@@ -37,30 +40,6 @@ function render() {
   }
   form.querySelector("[data-content]").hidden = k === "photos" && photos.length === 1;
   document.querySelector("#content-label").textContent = CONTENT_LABELS[k];
-}
-
-async function toJpeg(file) {
-  const src = URL.createObjectURL(file);
-  const canvas = document.createElement("canvas");
-  try {
-    const img = new Image();
-    img.src = src;
-    await img.decode(); // browsers apply the EXIF orientation when decoding
-    const scale = Math.min(1, MAX_WIDTH / img.naturalWidth);
-    canvas.width = Math.round(img.naturalWidth * scale);
-    canvas.height = Math.round(img.naturalHeight * scale);
-    const ctx = canvas.getContext("2d");
-    if (!ctx) throw new Error("This browser couldn't make a canvas to resize the photo.");
-    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-    const blob = await new Promise((resolve) => canvas.toBlob(resolve, "image/jpeg", 0.9));
-    if (!blob) throw new Error("encode failed");
-    // Some encoders may still write EXIF or other metadata, which the Worker refuses.
-    const bytes = stripMetadata(new Uint8Array(await blob.arrayBuffer()));
-    return new Blob([bytes], { type: "image/jpeg" });
-  } finally {
-    URL.revokeObjectURL(src);
-    canvas.width = canvas.height = 0; // iOS holds canvas memory until it's shrunk
-  }
 }
 
 function field(label, ariaLabel, value, onInput) {
@@ -139,7 +118,7 @@ picker.addEventListener("change", async () => {
   try {
     for (const file of files) {
       try {
-        const blob = await toJpeg(file);
+        const blob = await toJpeg(file, MAX_WIDTH);
         if (blob.size > MAX_PHOTO_BYTES) {
           tooBig.push(`${file.name} is too big after resizing.`);
           continue;
@@ -162,6 +141,7 @@ picker.addEventListener("change", async () => {
 function reset() {
   const k = kind();
   form.reset();
+  preview.clear();
   photos.forEach((p) => URL.revokeObjectURL(p.url));
   photos = [];
   renderPhotos();
@@ -176,6 +156,16 @@ form.addEventListener("submit", async (event) => {
     status.textContent = "Still preparing photos\u2026";
     return;
   }
+  if (kind() === "link" && preview.busy()) {
+    const url = form.elements.url.value.trim();
+    if (skipPreviewFor !== url) {
+      skipPreviewFor = url;
+      status.textContent = "Still loading the preview\u2026 Press Post again to post without it.";
+      return;
+    }
+    preview.clear();
+  }
+  skipPreviewFor = null;
 
   // Built from each control's value (not new FormData(form)), so it works
   // while the fieldset is disabled. A field the page is hiding sends "".
@@ -200,6 +190,7 @@ form.addEventListener("submit", async (event) => {
       data.append("caption", p.caption);
     });
   }
+  if (kind() === "link") preview.appendTo(data);
 
   fields.disabled = true;
   status.textContent = "Posting\u2026";
@@ -234,4 +225,5 @@ const params = new URLSearchParams(location.search);
 form.elements.url.value = params.get("url") ?? "";
 form.elements.title.value = params.get("title") ?? "";
 setKind(KINDS.includes(params.get("tab")) ? params.get("tab") : "note");
+if (form.elements.url.value) preview.load(form.elements.url.value.trim());
 if (location.search) history.replaceState(null, "", location.pathname);

@@ -122,6 +122,45 @@ describe("buildPost", () => {
     expect(post.markdown.endsWith("---\nDusk.\n\nLong day.\n")).toBe(true);
     expect(post.slug).toBe("dusk-long-day");
   });
+
+  it("nests a link's preview and writes its image next to the year's photos", () => {
+    const bytes = new Uint8Array([1]);
+    const post = buildPost(input({
+      kind: "link", url: "https://example.com/s", title: "A story",
+      preview: { title: "A story: long", description: "Says \"hi\"", site: "Example", bytes },
+    }), now);
+    expect(post.markdown).toBe([
+      "---",
+      'date: "2026-11-11 14:03:09 +0800"',
+      'template_engine: "none"',
+      'title: "A story"',
+      'link: "https://example.com/s"',
+      "preview:",
+      '  title: "A story: long"',
+      '  description: "Says \\"hi\\""',
+      '  site: "Example"',
+      '  image: "2026/a-story-preview.jpg"',
+      "---",
+      "",
+    ].join("\n"));
+    expect(post.photos).toEqual([{ path: "src/photos/2026/a-story-preview.jpg", bytes }]);
+  });
+
+  it("flattens newlines and control characters in preview text", () => {
+    const post = buildPost(input({
+      kind: "link", url: "https://example.com/s", title: "A story",
+      preview: { title: "A\nB\u0001C", description: "", site: "", bytes: null },
+    }), now);
+    expect(post.markdown).toContain('preview:\n  title: "A B C"\n');
+  });
+
+  it("leaves out an empty preview, and the image when there isn't one", () => {
+    const base = { kind: "link", url: "https://example.com/s", title: "A story" };
+    expect(buildPost(input({ ...base, preview: { title: "", description: "", site: "", bytes: null } }), now).markdown).not.toContain("preview");
+    const textOnly = buildPost(input({ ...base, preview: { title: "T", description: "", site: "", bytes: null } }), now);
+    expect(textOnly.markdown).toContain('preview:\n  title: "T"\n---');
+    expect(textOnly.photos).toEqual([]);
+  });
 });
 
 describe("slugify limits", () => {

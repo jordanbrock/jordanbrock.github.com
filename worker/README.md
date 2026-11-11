@@ -5,6 +5,7 @@
 - The page (`public/`) is a static asset of this Cloudflare Worker.
 - `POST /posts` (`src/index.js`) checks the Cloudflare Access token, validates the post against the site's rules, and commits the Markdown file and photos to master in one commit through the GitHub API. If the name is taken it adds `-2`, `-3`; if master moves mid-commit it retries once.
 - Photos are resized to 2400px wide and re-encoded as JPEG in the browser, which removes GPS and all other metadata. The Worker refuses any JPEG with metadata other than JFIF, ICC colour or Adobe segments. The repo is public, so this is the only GPS check before a photo is published.
+- Link posts include the linked page's sharing preview (its Open Graph tags). The page asks `GET /preview` for the tags and `GET /preview/image` for the image, which the Worker fetches (public http(s) only, 5 s, 1 MB of HTML, 5 MB images) and serves from its own origin. The page re-encodes the image like a photo, at most 1200px wide, and it's committed as `src/photos/YYYY/<slug>-preview.jpg`.
 - Limits: 25 photos and 40 MB per post, 10 MB per photo.
 - The Worker only checks for the exact `.md` and `.jpg` names it writes (or an album's folder). A hand-added file with the same name but another extension, such as `2026/heron.png` next to a posted `2026/heron.jpg`, would clash in the build.
 

@@ -188,7 +188,10 @@ class TestSite < Bridgetown::Test
       html get post.relative_url
       a = document.query_selector(".link-card a.link-card__title")
       expect(a["href"]).must_equal post.data.link
-      expect(document.query_selector(".link-card .meta").text).must_include PostType.link_domain(post.data.link)
+      expected = PostType.front_matter(post).dig("preview", "site").to_s.strip
+      expected = PostType.link_domain(post.data.link) if expected.empty?
+      expect(expected).wont_be_empty
+      expect(document.query_selector(".link-card .meta").text).must_include expected
     end
 
     it "a title-less note renders as a note with a body-derived title" do
@@ -211,6 +214,59 @@ class TestSite < Bridgetown::Test
       bad = Posts::Link.new(resource: stub.call("javascript:alert(1)"), mode: :full)
       expect(bad.url).must_equal "#"
       expect(bad.domain).must_equal PostType.link_domain("javascript:alert(1)") # matches feed_title, not "#"
+    end
+
+    it "link previews: the card reads image, description and site name, and ignores a bad preview" do
+      stub = lambda do |attrs|
+        model = Struct.new(:attributes).new(attrs)
+        data = Struct.new(:link).new(attrs["link"])
+        Struct.new(:model, :data).new(model, data)
+      end
+      link = Posts::Link.new(resource: stub.call({ "link" => "https://www.example.com/x", "preview" => { "image" => " 2026/x-preview.jpg ", "description" => " About x ", "site" => "Example" } }), mode: :full)
+      expect(link.preview_image).must_equal "2026/x-preview.jpg"
+      expect(link.preview_description).must_equal "About x"
+      expect(link.source).must_equal "Example"
+      plain = Posts::Link.new(resource: stub.call({ "link" => "https://www.example.com/x" }), mode: :full)
+      expect(plain.preview_image).must_be_nil
+      expect(plain.preview_description).must_equal ""
+      expect(plain.source).must_equal "example.com"
+      bad = Posts::Link.new(resource: stub.call({ "link" => "https://www.example.com/x", "preview" => "oops" }), mode: :full)
+      expect(bad.preview_image).must_be_nil
+    end
+
+    it "link posts with a preview image show it in the card" do
+      post = site.collections.posts.resources.find { |p| PostType.for_resource(p) == "link" && PostType.front_matter(p)["preview"].respond_to?(:to_hash) && PostType.front_matter(p)["preview"]["image"] }
+      skip "no link posts with a preview image" unless post
+      html get post.relative_url
+      expect(document.query_selector(".link-card__image picture img")).wont_be_nil
+      expect(document.query_selector(".link-card__image img")["alt"]).must_equal ""
+    end
+
+    describe "rendering the link card" do
+      def render_card(preview)
+        post = first_of("link")
+        c = Posts::Link.new(resource: post, mode: :full)
+        c.define_singleton_method(:preview) { preview } if preview
+        Bridgetown::Current.site = site
+        Nokolexbor::Document.parse(c.render_in(Bridgetown::ERBView.new(post)))
+      end
+
+      it "shows the image as decorative, the site name, and escapes the description" do
+        key = site.data.photos&.keys&.first or skip("no processed photos")
+        doc = render_card({ "image" => key, "description" => "<b>x</b>", "site" => "Ex" })
+        expect(doc.query_selector('a.link-card__image[tabindex="-1"][aria-hidden="true"] picture img[alt=""]')).wont_be_nil
+        expect(doc.query_selector(".meta").text).must_include "Ex"
+        p = doc.query_selector("p.link-card__description")
+        expect(p.text).must_equal "<b>x</b>"
+        expect(p.query_selector("b")).must_be_nil
+      end
+
+      it "without a preview shows no image or description, and the domain" do
+        doc = render_card(nil)
+        expect(doc.query_selector(".link-card__image")).must_be_nil
+        expect(doc.query_selector(".link-card__description")).must_be_nil
+        expect(doc.query_selector(".meta").text).must_include PostType.link_domain(first_of("link").data.link)
+      end
     end
 
     it "photo captions join paragraphs with a space and add no separator" do

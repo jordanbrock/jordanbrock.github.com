@@ -97,4 +97,22 @@ class TestPostPhotos < Minitest::Test
     assert_equal %w[2026/a.jpg 2026/b.jpg 2026/p.jpg], tiles.map { _2[:image] }
     assert_equal [new_album, new_album, old_photo], tiles.map(&:first)
   end
+
+  def test_previews_lists_link_posts_with_a_preview_image
+    with = Post.new({ "link" => "https://example.com/a", "preview" => { "image" => " 2026/a-preview.jpg ", "title" => "A" } })
+    without = Post.new({ "link" => "https://example.com/b", "preview" => { "title" => "B" } }, path: "_posts/2026-11-07-b.md")
+    plain = Post.new({ "link" => "https://example.com/c" }, path: "_posts/2026-11-07-c.md")
+    photo = Post.new({ "image" => "2026/p.jpg", "alt" => "P", "preview" => { "image" => "2026/x.jpg" } }, path: "_posts/2026-11-07-p.md")
+    assert_equal [[with, { image: "2026/a-preview.jpg", alt: "", caption: nil, index: nil }]], PostPhotos.previews([with, without, plain, photo])
+  end
+
+  def test_previews_ignores_a_preview_that_isnt_a_mapping
+    post = Post.new({ "link" => "https://example.com/a", "preview" => "oops" })
+    assert_equal [], PostPhotos.previews([post])
+  end
+
+  def test_preview_images_are_not_tiles
+    post = Post.new({ "link" => "https://example.com/a", "preview" => { "image" => "2026/a-preview.jpg" } })
+    assert_equal [], PostPhotos.tiles([post])
+  end
 end
