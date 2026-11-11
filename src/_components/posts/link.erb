@@ -1,7 +1,14 @@
 <article class="link col">
   <div class="link-card">
-    <div class="meta">Link &middot; <%= domain %></div>
+    <% if preview_image %>
+      <%# The title below is the link's text, so the image is decorative and skipped by keyboards and screen readers. %>
+      <a class="link-card__image" href="<%= url %>" tabindex="-1" aria-hidden="true"><%= render Picture.new(image: preview_image, alt: "", sizes: image_sizes) %></a>
+    <% end %>
+    <div class="meta">Link &middot; <%= source %></div>
     <a class="link-card__title" href="<%= url %>"><%= title %> &#8599;</a>
+    <% unless preview_description.empty? %>
+      <p class="link-card__description"><%= preview_description %></p>
+    <% end %>
     <div class="link-card__body prose"><%= @resource.content %></div>
   </div>
   <%= render PostMeta.new(resource: @resource, show_type: false) %>

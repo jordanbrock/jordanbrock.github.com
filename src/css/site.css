@@ -62,6 +62,9 @@ table { display: block; overflow-x: auto; }
 .link-card__title { font-size: 1.0625rem; font-weight: 500; }
 .link-card__body { font-size: 0.9375rem; line-height: 1.55; color: var(--ink-2); margin-top: 0.25rem; }
 .link-card__body > :last-child { margin-bottom: 0; }
+.link-card__image { display: block; margin: -0.8rem -0.9rem 0.7rem; }
+.link-card__image img { display: block; width: 100%; aspect-ratio: 1.91 / 1; object-fit: cover; border-radius: 8px 8px 0 0; }
+.link-card__description { font-size: 0.9375rem; line-height: 1.5; color: var(--muted); margin: 0.2rem 0 0; }
 
 .note .prose > :last-child { margin-bottom: 0.15rem; }
 

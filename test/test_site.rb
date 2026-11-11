@@ -188,7 +188,7 @@ class TestSite < Bridgetown::Test
       html get post.relative_url
       a = document.query_selector(".link-card a.link-card__title")
       expect(a["href"]).must_equal post.data.link
-      expect(document.query_selector(".link-card .meta").text).must_include PostType.link_domain(post.data.link)
+      expect(document.query_selector(".link-card .meta").text).must_include Posts::Link.new(resource: post, mode: :full).source
     end
 
     it "a title-less note renders as a note with a body-derived title" do
@@ -211,6 +211,32 @@ class TestSite < Bridgetown::Test
       bad = Posts::Link.new(resource: stub.call("javascript:alert(1)"), mode: :full)
       expect(bad.url).must_equal "#"
       expect(bad.domain).must_equal PostType.link_domain("javascript:alert(1)") # matches feed_title, not "#"
+    end
+
+    it "link previews: the card reads image, description and site name, and ignores a bad preview" do
+      stub = lambda do |attrs|
+        model = Struct.new(:attributes).new(attrs)
+        data = Struct.new(:link).new(attrs["link"])
+        Struct.new(:model, :data).new(model, data)
+      end
+      link = Posts::Link.new(resource: stub.call({ "link" => "https://www.example.com/x", "preview" => { "image" => " 2026/x-preview.jpg ", "description" => " About x ", "site" => "Example" } }), mode: :full)
+      expect(link.preview_image).must_equal "2026/x-preview.jpg"
+      expect(link.preview_description).must_equal "About x"
+      expect(link.source).must_equal "Example"
+      plain = Posts::Link.new(resource: stub.call({ "link" => "https://www.example.com/x" }), mode: :full)
+      expect(plain.preview_image).must_be_nil
+      expect(plain.preview_description).must_equal ""
+      expect(plain.source).must_equal "example.com"
+      bad = Posts::Link.new(resource: stub.call({ "link" => "https://www.example.com/x", "preview" => "oops" }), mode: :full)
+      expect(bad.preview_image).must_be_nil
+    end
+
+    it "link posts with a preview image show it in the card" do
+      post = site.collections.posts.resources.find { |p| PostType.for_resource(p) == "link" && PostType.front_matter(p)["preview"].respond_to?(:to_hash) && PostType.front_matter(p)["preview"]["image"] }
+      skip "no link posts with a preview image" unless post
+      html get post.relative_url
+      expect(document.query_selector(".link-card__image picture img")).wont_be_nil
+      expect(document.query_selector(".link-card__image img")["alt"]).must_equal ""
     end
 
     it "photo captions join paragraphs with a space and add no separator" do
