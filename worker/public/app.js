@@ -19,6 +19,7 @@ const picker = document.querySelector("#picker");
 const status = document.querySelector("#status");
 let photos = []; // [{ blob, url, alt, caption }] in post order
 let preparing = false;
+let skipPreviewFor = null; // the link whose loading preview the next press of Post leaves out
 const preview = setupPreview(form);
 
 const kind = () => form.elements.kind.value;
@@ -156,9 +157,15 @@ form.addEventListener("submit", async (event) => {
     return;
   }
   if (kind() === "link" && preview.busy()) {
-    status.textContent = "Still loading the preview\u2026";
-    return;
+    const url = form.elements.url.value.trim();
+    if (skipPreviewFor !== url) {
+      skipPreviewFor = url;
+      status.textContent = "Still loading the preview\u2026 Press Post again to post without it.";
+      return;
+    }
+    preview.clear();
   }
+  skipPreviewFor = null;
 
   // Built from each control's value (not new FormData(form)), so it works
   // while the fieldset is disabled. A field the page is hiding sends "".
