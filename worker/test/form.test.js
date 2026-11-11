@@ -84,6 +84,23 @@ describe("parseForm", () => {
     expect((await parseForm(form)).preview).toEqual({ title: "", description: "", site: "", bytes: null });
   });
 
+  it("treats an empty preview file as no preview image", async () => {
+    for (const kind of ["link", "note"]) {
+      const form = new FormData();
+      form.append("kind", kind);
+      form.append("preview_image", new File([], ""));
+      const input = await parseForm(form);
+      expect(input.preview?.bytes ?? null).toBeNull();
+    }
+  });
+
+  it("refuses a preview image on photos", async () => {
+    const form = new FormData();
+    form.append("kind", "photos");
+    form.append("preview_image", new File([new Uint8Array([1])], "p.jpg"));
+    await expect(parseForm(form)).rejects.toThrow("Only links can have a preview image.");
+  });
+
   it("refuses a preview image on anything but a link, or one that isn't a file", async () => {
     const note = new FormData();
     note.append("kind", "note");

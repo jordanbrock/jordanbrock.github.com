@@ -146,6 +146,14 @@ describe("buildPost", () => {
     expect(post.photos).toEqual([{ path: "src/photos/2026/a-story-preview.jpg", bytes }]);
   });
 
+  it("flattens newlines and control characters in preview text", () => {
+    const post = buildPost(input({
+      kind: "link", url: "https://example.com/s", title: "A story",
+      preview: { title: "A\nB\u0001C", description: "", site: "", bytes: null },
+    }), now);
+    expect(post.markdown).toContain('preview:\n  title: "A B C"\n');
+  });
+
   it("leaves out an empty preview, and the image when there isn't one", () => {
     const base = { kind: "link", url: "https://example.com/s", title: "A story" };
     expect(buildPost(input({ ...base, preview: { title: "", description: "", site: "", bytes: null } }), now).markdown).not.toContain("preview");

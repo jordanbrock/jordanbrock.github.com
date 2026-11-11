@@ -45,6 +45,7 @@ function frontMatter(fields) {
         lines.push(`  - image: ${quote(photo.image)}`, `    alt: ${quote(photo.alt)}`);
         if (photo.caption) lines.push(`    caption: ${quote(photo.caption)}`);
       }
+    // A nested mapping: only `preview` is one.
     } else if (value && typeof value === "object" && !Array.isArray(value)) {
       const entries = Object.entries(value).filter(([, v]) => v !== undefined && v !== "");
       if (entries.length === 0) continue;

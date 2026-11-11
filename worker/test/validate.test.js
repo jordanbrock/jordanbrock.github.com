@@ -59,6 +59,11 @@ describe("validate", () => {
     fails({ kind: "photos", photos: [photo({ bytes: withExif })] }, "Photo 1 has camera data (EXIF or XMP) or isn't a clean JPEG. Choose it again on the posting page.");
   });
 
+  it("refuses a preview image over 10 MB", () => {
+    const big = new Uint8Array(MAX_PHOTO_BYTES + 1); big.set([0xff, 0xd8, 0xff]);
+    fails({ kind: "link", url: "https://example.com/", preview: { title: "", description: "", site: "", bytes: big } }, "The preview image is over 10 MB.");
+  });
+
   it("checks a link's preview image like a photo", () => {
     const link = (bytes) => input({ kind: "link", url: "https://example.com/", preview: { title: "", description: "", site: "", bytes } });
     expect(() => validate(link(null))).not.toThrow();
