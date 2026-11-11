@@ -1,7 +1,7 @@
 import { beforeAll, describe, expect, it } from "vitest";
-import { errors } from "jose";
+import { SignJWT, errors, generateKeyPair } from "jose";
 import { AccessConfigError, AccessError, verifyAccess } from "../src/access.js";
-import { EMAIL, TEAM, env, makeKeys } from "./keys.js";
+import { AUD, EMAIL, TEAM, env, makeKeys } from "./keys.js";
 
 let keys;
 beforeAll(async () => { keys = await makeKeys(); });
@@ -49,6 +49,15 @@ describe("verifyAccess", () => {
     const result = verifyAccess(req(token), { ...env, ACCESS_TEAM_DOMAIN: "not a url" }, keys.keySet);
     await expect(result).rejects.toThrow("Access is not configured");
     await expect(result).rejects.toBeInstanceOf(AccessConfigError);
+  });
+
+  it("refuses a token signed by a key that isn't in the key set as a sign-in problem", async () => {
+    const { privateKey } = await generateKeyPair("RS256");
+    const token = await new SignJWT({ email: EMAIL }).setProtectedHeader({ alg: "RS256", kid: "k2" })
+      .setIssuer(TEAM).setAudience(AUD).setIssuedAt().setExpirationTime("1h").sign(privateKey);
+    const error = await verifyAccess(req(token), env, keys.keySet).catch((e) => e);
+    expect(error).toBeInstanceOf(AccessError);
+    expect(error).not.toBeInstanceOf(AccessConfigError);
   });
 
   it("treats a failed key fetch as a setup problem, not a sign-in problem", async () => {

@@ -115,6 +115,30 @@ describe("commit details", () => {
     expect(calls.filter((c) => c.key.includes("/contents/")).every((c) => c.search === "?ref=parent")).toBe(true);
   });
 
+  it("re-checks mustBeNew paths at the new parent when master moved", async () => {
+    let refs = 0;
+    let patches = 0;
+    const base = fakeGitHub({
+      "GET /repos/o/r/git/ref/heads/master": () => ({ object: { sha: ++refs === 1 ? "sha1" : "sha2" } }),
+      "GET /repos/o/r/git/commits/sha1": () => ({ tree: { sha: "tree1" } }),
+      "GET /repos/o/r/git/commits/sha2": () => ({ tree: { sha: "tree2" } }),
+      "PATCH /repos/o/r/git/refs/heads/master": () => (++patches === 1 ? new Response("{}", { status: 422 }) : {}),
+    });
+    const path = "/repos/o/r/contents/src/_posts/a.md";
+    const fetchImpl = (url, init) => {
+      const u = new URL(url);
+      if (u.pathname === path && u.search === "?ref=sha2") {
+        base.calls.push({ key: `GET ${path}`, search: u.search });
+        return Promise.resolve(Response.json({}));
+      }
+      return base.fetchImpl(url, init);
+    };
+    const result = github(env, fetchImpl).commit([{ path: "src/_posts/a.md", content: "x" }], "m", author, { mustBeNew: ["src/_posts/a.md"] });
+    await expect(result).rejects.toBeInstanceOf(SlugTakenError);
+    expect(base.calls.filter((c) => c.key === `GET ${path}`).map((c) => c.search)).toEqual(["?ref=sha1", "?ref=sha2"]);
+    expect(patches).toBe(1);
+  });
+
   it("throws a GitHubError when a mustBeNew check fails some other way", async () => {
     const { fetchImpl } = fakeGitHub({ "GET /repos/o/r/contents/x": () => new Response("{}", { status: 500 }) });
     await expect(github(env, fetchImpl).commit([{ path: "x", content: "x" }], "m", author, { mustBeNew: ["x"] })).rejects.toThrow(new GitHubError("GitHub lookup failed (500)", 500));
