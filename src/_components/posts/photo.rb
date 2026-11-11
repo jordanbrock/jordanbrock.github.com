@@ -10,6 +10,8 @@ module Posts
     # The body without its <p> tags; paragraphs are joined with a space.
     def caption_html = @resource.content.to_s.gsub(%r{</p>\s*<p>}, " ").gsub(%r{</?p>}, "").strip.html_safe
 
-    def eager? = @mode == :full # on its own page the photo is above the fold; lazy everywhere else
+    def full? = @mode == :full
+    def eager? = full? # on its own page the photo is above the fold; lazy everywhere else
+    def url = PostUrl.for(@resource)
   end
 end

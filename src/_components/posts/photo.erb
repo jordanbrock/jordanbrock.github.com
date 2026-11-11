@@ -1,6 +1,11 @@
 <article class="photo">
   <figure>
-    <%= render Picture.new(image: image, alt: alt, eager: eager?) %>
+    <% if full? %>
+      <%= render Picture.new(image: image, alt: alt, eager: eager?) %>
+    <% else %>
+      <%# Opens the whole photo in a lightbox (src/js/lightbox.js); without JavaScript, goes to the post. %>
+      <a class="lightbox" href="<%= url %>" aria-haspopup="dialog"><%= render Picture.new(image: image, alt: alt) %></a>
+    <% end %>
     <figcaption><%= caption_html %><%= render PostMeta.new(resource: @resource, show_type: false) %></figcaption>
   </figure>
 </article>
