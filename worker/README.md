@@ -13,10 +13,11 @@
 Do these in order, so the page is never reachable without Access.
 
 1. **GitHub token.** In GitHub, go to Settings > Developer settings > Fine-grained tokens. Create a token for `jordanbrock/jordanbrock.github.com` only, with **Contents: Read and write**, and an expiry you're happy with.
-2. **Cloudflare Access.** In Zero Trust, go to Access > Applications > Add > Self-hosted.
+2. **Cloudflare Access.** In Zero Trust, go to Access controls > Applications > Add an application > Self-hosted. (If this is your first visit, Zero Trust asks you to pick a team name first.)
    - Application domain: `post.jordanbrock.com`.
    - Policy: Allow, with Include set to Emails and your address.
-   - Copy the application's **AUD tag**, and note your team domain (`https://<team>.cloudflareaccess.com`).
+   - After saving, edit the application and copy the **Application Audience (AUD) Tag** from **Additional settings**.
+   - Your team domain is under Zero Trust > Settings > Team name and domain. Use it with `https://` in front: `https://<team>.cloudflareaccess.com`.
 3. **Secrets.** Run each of these in `worker/` and paste the value when asked:
 
    ```bash
