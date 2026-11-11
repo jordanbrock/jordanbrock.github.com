@@ -1,8 +1,9 @@
 require "minitest/autorun"
-require "yaml"
+require "bridgetown"
 require_relative "../plugins/post_type"
 require_relative "../plugins/feed_entry"
 require_relative "../plugins/post_photos"
+require_relative "../plugins/photo_processor"
 
 # The posting Worker (worker/) writes posts like these fixtures; its Vitest
 # suite keeps them identical to its output. This checks the site reads each
@@ -10,23 +11,48 @@ require_relative "../plugins/post_photos"
 class TestWorkerPosts < Minitest::Test
   DIR = File.expand_path("../worker/test/fixtures", __dir__)
 
+  NOW = Time.utc(2026, 11, 11, 6, 3, 9) # what the fixtures were built at
+
   # Just enough of a resource for PostType, PostPhotos and FeedEntry.
   Post = Struct.new(:attrs, :content) do
     def model = Struct.new(:attributes).new(attrs)
     def data = Struct.new(:image, :alt, :link).new(attrs["image"], attrs["alt"], attrs["link"])
     def relative_path = "_posts/fixture.md"
-    def date = Time.utc(2026, 11, 11)
+    def date = Bridgetown::Utils.parse_date(attrs["date"])
   end
 
+  # Read with Bridgetown's own front matter loader, as the site does.
   def fixture(name)
-    _, yaml, body = File.read(File.join(DIR, "#{name}.md")).split(/^---\n/, 3)
-    Post.new(YAML.safe_load(yaml) || {}, body.to_s)
+    result = Bridgetown::FrontMatter::Loaders::YAML.new(nil).read(File.read(File.join(DIR, "#{name}.md"), encoding: "UTF-8"))
+    Post.new(result.front_matter.transform_keys(&:to_s), result.content)
   end
 
   def test_every_fixture_has_a_perth_date
-    %w[note link photo album].each do |name|
-      assert_equal "2026-11-11 14:03:09 +0800", fixture(name).attrs["date"], name
+    %w[note link photo album awkward].each do |name|
+      assert_equal NOW, fixture(name).date.utc, name
     end
+  end
+
+  def test_photo_paths_are_valid
+    %w[photo album awkward].each do |name|
+      PostPhotos.for(fixture(name)).each { PhotoProcessor.validate!(_1[:image]) }
+    end
+  end
+
+  def test_awkward_values_stay_strings
+    post = fixture("awkward")
+    assert_equal "album", PostType.for_resource(post)
+    assert_equal 'No: really, "yes" # not a comment', post.attrs["title"]
+    assert_equal ["null", "on"], post.attrs["tags"]
+    assert_equal [String, String], post.attrs["tags"].map(&:class)
+    photos = post.attrs["photos"]
+    assert_equal ["yes", "no"], photos.map { _1["alt"] }
+    assert_kind_of String, photos[0]["alt"]
+    assert_equal "2026-01-01", photos[0]["caption"]
+    assert_kind_of String, photos[0]["caption"]
+    assert_includes post.content.lines.map(&:chomp), "---"
+    assert_includes post.content, "Caf\u00e9 \u00fcber \u{1F426}"
+    assert_includes post.content, "After the rule."
   end
 
   def test_note
