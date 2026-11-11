@@ -2,6 +2,7 @@
 // post to /posts. Photos are resized to at most MAX_WIDTH and re-encoded as
 // JPEG by encode.js, which drops all their metadata (including GPS).
 import { toJpeg } from "./encode.js";
+import { setupPreview } from "./preview.js";
 
 const MAX_WIDTH = 2400; // the widest size the site makes
 const MAX_PHOTOS = 25; // the server's cap: MAX_PHOTOS in src/validate.js
@@ -18,6 +19,7 @@ const picker = document.querySelector("#picker");
 const status = document.querySelector("#status");
 let photos = []; // [{ blob, url, alt, caption }] in post order
 let preparing = false;
+const preview = setupPreview(form);
 
 const kind = () => form.elements.kind.value;
 
@@ -138,6 +140,7 @@ picker.addEventListener("change", async () => {
 function reset() {
   const k = kind();
   form.reset();
+  preview.clear();
   photos.forEach((p) => URL.revokeObjectURL(p.url));
   photos = [];
   renderPhotos();
@@ -150,6 +153,10 @@ form.addEventListener("submit", async (event) => {
   event.preventDefault();
   if (preparing) {
     status.textContent = "Still preparing photos\u2026";
+    return;
+  }
+  if (kind() === "link" && preview.busy()) {
+    status.textContent = "Still loading the preview\u2026";
     return;
   }
 
@@ -176,6 +183,7 @@ form.addEventListener("submit", async (event) => {
       data.append("caption", p.caption);
     });
   }
+  if (kind() === "link") preview.appendTo(data);
 
   fields.disabled = true;
   status.textContent = "Posting\u2026";
@@ -210,4 +218,5 @@ const params = new URLSearchParams(location.search);
 form.elements.url.value = params.get("url") ?? "";
 form.elements.title.value = params.get("title") ?? "";
 setKind(KINDS.includes(params.get("tab")) ? params.get("tab") : "note");
+if (form.elements.url.value) preview.load(form.elements.url.value.trim());
 if (location.search) history.replaceState(null, "", location.pathname);

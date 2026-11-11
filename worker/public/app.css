@@ -35,3 +35,15 @@ button:disabled { opacity: 0.4; cursor: default; }
 #submit { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 600; padding: 0.75rem; }
 #status { margin: 0; min-height: 1.5em; overflow-wrap: anywhere; }
 #status a { color: var(--accent); }
+
+.preview { display: grid; gap: 0.6rem; background: var(--card); border-radius: 8px; overflow: hidden; }
+.preview img { display: block; width: 100%; aspect-ratio: 1.91 / 1; object-fit: cover; }
+.preview__text { padding: 0 0.9rem 0.8rem; display: grid; gap: 0.25rem; min-width: 0; overflow-wrap: anywhere; }
+.preview img[hidden] + .preview__text { padding-top: 0.8rem; }
+.preview__title { font-weight: 600; margin: 0; }
+.preview__description { margin: 0; opacity: 0.8; }
+.preview__tools { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; margin-top: 0.3rem; }
+.check { display: flex; gap: 0.4rem; align-items: center; }
+.check input { width: auto; margin: 0; padding: 0; }
+#preview-site, #preview-status { margin: 0; }
+#preview-site:empty, #preview-description:empty, #preview-status:empty { display: none; }
