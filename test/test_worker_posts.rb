@@ -27,10 +27,22 @@ class TestWorkerPosts < Minitest::Test
     Post.new(result.front_matter.transform_keys(&:to_s), result.content)
   end
 
-  ALL = %w[note link photo album awkward].freeze
+  ALL = %w[note link link-preview photo album awkward].freeze
 
   # The site's template_engine is "erb", which Bridgetown runs on every post
   # whose front matter doesn't name another engine. Posted bodies must not run.
+  def test_link_with_preview
+    post = fixture("link-preview")
+    assert_equal "link", PostType.for_resource(post)
+    preview = post.attrs["preview"]
+    assert_equal 'A story: "the long version"', preview["title"]
+    assert_equal "What happened & why", preview["description"]
+    assert_equal "Example News", preview["site"]
+    PhotoProcessor.validate!(preview["image"])
+    assert_equal [], PostPhotos.for(post), "preview images stay off the Photos page"
+    assert_equal [[post, { image: "2026/a-story-preview.jpg", alt: "", caption: nil, index: nil }]], PostPhotos.previews([post])
+  end
+
   def test_every_fixture_turns_off_erb
     config = Bridgetown::Configuration.new("template_engine" => "erb")
     erb = Bridgetown::Converters::ERBTemplates.new(config)

@@ -1,6 +1,7 @@
 # The photos a post shows, as entries { image:, alt:, caption:, index: }:
 # one for a photo post (index nil), one per listed photo for an album
 # (index from 1, alt falling back to the caption), none for other types.
+# (link posts' preview images come from previews, not for).
 # Plain functions of the resource, so they can be unit-tested with stubs.
 module PostPhotos
   def self.for(resource)
@@ -17,6 +18,20 @@ module PostPhotos
   # [post, entry] pairs for every photo, newest post first, album order within.
   def self.tiles(resources)
     PostType.posts(resources).flat_map { |post| self.for(post).map { [post, _1] } }
+  end
+
+  # [post, entry] pairs for link posts' preview images (front matter
+  # preview: { image: }), newest first. Processed like photos, but not tiles:
+  # they never appear on the Photos page. alt is empty: the card's title is
+  # the link text.
+  def self.previews(resources)
+    PostType.posts(resources, "link").filter_map do |post|
+      preview = PostType.front_matter(post)["preview"]
+      next unless preview.respond_to?(:to_hash)
+
+      image = preview.to_hash.transform_keys(&:to_s)["image"].to_s.strip
+      [post, { image:, alt: "", caption: nil, index: nil }] unless image.empty?
+    end
   end
 
   # Fragment linking to an album photo on its post's page.
