@@ -51,3 +51,4 @@ yarn-debug.log*
 # Posting Worker: local secrets and Wrangler state
 /worker/.dev.vars
 /worker/.wrangler/
+/worker/.vitest/
