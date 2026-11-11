@@ -210,6 +210,16 @@ describe("POST /posts", () => {
       error.mockRestore();
     }
   });
+
+  it("commits a link's preview image with the post and checks its name is free", async () => {
+    const fields = { kind: "link", url: "https://example.com/s", title: "A story", content: "", preview_title: "Long", preview_image: new File([jpeg], "preview.jpg") };
+    const { res, github } = await run(request({ token: await keys.sign(), fields }));
+    expect(res.status).toBe(201);
+    const [files, , , opts] = github.commit.mock.calls[0];
+    expect(files.map((f) => f.path)).toEqual(["src/_posts/2026-11-11-a-story.md", "src/photos/2026/a-story-preview.jpg"]);
+    expect(opts.mustBeNew).toEqual(["src/_posts/2026-11-11-a-story.md", "src/photos/2026/a-story-preview.jpg"]);
+    expect(github.exists).toHaveBeenCalledWith("src/photos/2026/a-story-preview.jpg");
+  });
 });
 
 describe("other routes", () => {

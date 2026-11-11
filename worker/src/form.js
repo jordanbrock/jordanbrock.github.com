@@ -1,6 +1,6 @@
 // Reads the posting page's multipart form into posting input. Photos arrive
 // as repeated photo/alt/caption fields, in post order.
-import { ValidationError, checkPhotoBudget } from "./validate.js";
+import { MAX_PHOTO_BYTES, ValidationError, checkPhotoBudget } from "./validate.js";
 
 export async function parseForm(form) {
   const str = (key) => String(form.get(key) ?? "");
@@ -25,6 +25,19 @@ export async function parseForm(form) {
     photos.push({ bytes, alt: alts[i] ?? "", caption: captions[i] ?? "" });
   }
 
+  // A link's preview image, re-encoded by the page like a photo.
+  const previewFile = form.get("preview_image");
+  form.delete("preview_image");
+  if (previewFile !== null && kind !== "link") throw new ValidationError("Only links can have a preview image.");
+  if (typeof previewFile === "string") throw new ValidationError("The preview image didn't upload as a file.");
+  if (previewFile && previewFile.size > MAX_PHOTO_BYTES) throw new ValidationError("The preview image is over 10 MB.");
+  const preview = kind === "link" ? {
+    title: str("preview_title"),
+    description: str("preview_description"),
+    site: str("preview_site"),
+    bytes: previewFile ? new Uint8Array(await previewFile.arrayBuffer()) : null,
+  } : null;
+
   return {
     kind,
     content: str("content"),
@@ -33,6 +46,7 @@ export async function parseForm(form) {
     // "#Photography #tech" and "photography, tech" both give the site's
     // lowercase, single-word tags.
     tags: [...new Set(str("tags").split(/[\s,]+/).map((t) => t.replace(/^#+/, "").toLowerCase()).filter(Boolean))],
+    preview,
     photos,
   };
 }

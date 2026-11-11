@@ -58,6 +58,14 @@ describe("validate", () => {
     fails({ kind: "photos", photos: [photo({ bytes: png })] }, "Photo 1 isn't a JPEG.");
     fails({ kind: "photos", photos: [photo({ bytes: withExif })] }, "Photo 1 has camera data (EXIF or XMP) or isn't a clean JPEG. Choose it again on the posting page.");
   });
+
+  it("checks a link's preview image like a photo", () => {
+    const link = (bytes) => input({ kind: "link", url: "https://example.com/", preview: { title: "", description: "", site: "", bytes } });
+    expect(() => validate(link(null))).not.toThrow();
+    expect(() => validate(link(clean))).not.toThrow();
+    expect(() => validate(link(new Uint8Array([1, 2, 3, 4])))).toThrow("The preview image isn't a JPEG.");
+    expect(() => validate(link(withExif))).toThrow("The preview image has metadata or isn't a clean JPEG. Look up the preview again.");
+  });
 });
 
 describe("JPEG checks", () => {
