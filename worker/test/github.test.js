@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { BLOB_CONCURRENCY, GitHubError, github, toBase64 } from "../src/github.js";
+import { BLOB_CONCURRENCY, GitHubError, SlugTakenError, github, toBase64 } from "../src/github.js";
 import { env } from "./keys.js";
 
 // A fake api.github.com: routes are keyed "METHOD /path"; every call is recorded.
@@ -96,6 +96,28 @@ describe("commit details", () => {
     const files = Array.from({ length: 8 }, (_, i) => ({ path: `p${i}`, content: `c${i}` }));
     await expect(github(env, fetchImpl).commit(files, "m", author)).rejects.toThrow("GitHub blob failed (500)");
     expect(calls.filter((c) => c.key.endsWith("/blobs")).length).toBeLessThan(8);
+  });
+
+  it("checks mustBeNew paths at the exact parent commit before committing", async () => {
+    const { fetchImpl, calls } = fakeGitHub();
+    await expect(github(env, fetchImpl).commit([{ path: "src/_posts/a b.md", content: "x" }], "m", author, { mustBeNew: ["src/_posts/a b.md"] })).resolves.toBe("new");
+    const check = calls.find((c) => c.key === "GET /repos/o/r/contents/src/_posts/a%20b.md");
+    expect(check.search).toBe("?ref=parent");
+  });
+
+  it("refuses with SlugTakenError when a mustBeNew path exists at the parent, without moving the branch", async () => {
+    const { fetchImpl, calls } = fakeGitHub({ "GET /repos/o/r/contents/src/photos/2026/lake": () => [{ name: "01-frogmouth.jpg" }] });
+    const result = github(env, fetchImpl).commit([{ path: "a", content: "x" }], "m", author, { mustBeNew: ["src/_posts/a.md", "src/photos/2026/lake"] });
+    await expect(result).rejects.toBeInstanceOf(SlugTakenError);
+    await expect(result).rejects.toBeInstanceOf(GitHubError);
+    await expect(result).rejects.toMatchObject({ status: 409 });
+    expect(calls.some((c) => c.key.startsWith("PATCH "))).toBe(false);
+    expect(calls.filter((c) => c.key.includes("/contents/")).every((c) => c.search === "?ref=parent")).toBe(true);
+  });
+
+  it("throws a GitHubError when a mustBeNew check fails some other way", async () => {
+    const { fetchImpl } = fakeGitHub({ "GET /repos/o/r/contents/x": () => new Response("{}", { status: 500 }) });
+    await expect(github(env, fetchImpl).commit([{ path: "x", content: "x" }], "m", author, { mustBeNew: ["x"] })).rejects.toThrow(new GitHubError("GitHub lookup failed (500)", 500));
   });
 
   it("does not mutate the caller's files", async () => {

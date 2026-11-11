@@ -8,6 +8,14 @@ export class GitHubError extends Error {
   }
 }
 
+// A path the post needs is already on the branch: someone else just took the name.
+export class SlugTakenError extends GitHubError {
+  constructor(path) {
+    super(`${path} already exists`, 409);
+    this.path = path;
+  }
+}
+
 export function toBase64(bytes) {
   if (typeof bytes.toBase64 === "function") return bytes.toBase64();
   let binary = "";
@@ -55,7 +63,10 @@ export function github(env, fetchImpl = fetch) {
   }
 
   // files: [{ path, content: string | Uint8Array }]. Resolves to the new commit's sha.
-  async function commit(files, message, author) {
+  // mustBeNew: paths that must not exist at the commit's parent. They're
+  // checked there, after the blobs upload, because a tree entry would silently
+  // replace an existing file; throws SlugTakenError if one exists.
+  async function commit(files, message, author, { mustBeNew = [] } = {}) {
     // Local copies; the caller's objects are left alone.
     const pending = files.map((file) => ({
       path: file.path,
@@ -81,6 +92,13 @@ export function github(env, fetchImpl = fetch) {
 
     for (let attempt = 1; ; attempt++) {
       const ref = await ok(await api("GET", `/git/ref/heads/${encodePath(branch)}`), "branch lookup");
+      for (const path of mustBeNew) {
+        const res = await api("GET", `/contents/${encodePath(path)}?ref=${encodeURIComponent(ref.object.sha)}`);
+        if (res.status === 404) { await res.body?.cancel(); continue; }
+        if (!res.ok) throw await failure(res, "lookup");
+        await res.body?.cancel();
+        throw new SlugTakenError(path);
+      }
       const parent = await ok(await api("GET", `/git/commits/${ref.object.sha}`), "commit lookup");
       const newTree = await ok(await api("POST", "/git/trees", { base_tree: parent.tree.sha, tree }), "tree");
       const created = await ok(await api("POST", "/git/commits", {

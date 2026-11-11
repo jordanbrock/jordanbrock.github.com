@@ -37,7 +37,9 @@ describe("validate", () => {
   });
 
   it("needs at least one photo, and not too many", () => {
+    expect(MAX_PHOTOS).toBe(25); // keeps a post inside the Workers Free plan's 50 subrequests
     fails({ kind: "photos" }, "Add at least one photo.");
+    fails({ kind: "photos", photos: Array.from({ length: 26 }, () => photo()) }, "At most 25 photos per post.");
     fails({ kind: "photos", photos: Array.from({ length: MAX_PHOTOS + 1 }, () => photo()) }, `At most ${MAX_PHOTOS} photos per post.`);
   });
 

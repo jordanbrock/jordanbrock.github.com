@@ -1,5 +1,6 @@
 import { beforeAll, describe, expect, it } from "vitest";
-import { AccessError, verifyAccess } from "../src/access.js";
+import { errors } from "jose";
+import { AccessConfigError, AccessError, verifyAccess } from "../src/access.js";
 import { EMAIL, TEAM, env, makeKeys } from "./keys.js";
 
 let keys;
@@ -25,13 +26,17 @@ describe("verifyAccess", () => {
       await keys.sign({ exp: null }),
       "not.a.jwt",
     ]) {
-      await expect(verifyAccess(req(token), env, keys.keySet)).rejects.toBeInstanceOf(AccessError);
+      const error = await verifyAccess(req(token), env, keys.keySet).catch((e) => e);
+      expect(error).toBeInstanceOf(AccessError);
+      expect(error).not.toBeInstanceOf(AccessConfigError); // a bad token is a sign-in problem
     }
   });
 
   it("fails closed when Access isn't configured", async () => {
     const token = await keys.sign();
-    await expect(verifyAccess(req(token), { ...env, ACCESS_AUD: "" }, keys.keySet)).rejects.toThrow("Access is not configured");
+    const result = verifyAccess(req(token), { ...env, ACCESS_AUD: "" }, keys.keySet);
+    await expect(result).rejects.toThrow("Access is not configured");
+    await expect(result).rejects.toBeInstanceOf(AccessConfigError);
   });
 
   it("accepts a team domain written with a trailing slash", async () => {
@@ -41,7 +46,17 @@ describe("verifyAccess", () => {
 
   it("fails closed when the team domain isn't a URL", async () => {
     const token = await keys.sign();
-    await expect(verifyAccess(req(token), { ...env, ACCESS_TEAM_DOMAIN: "not a url" }, keys.keySet)).rejects.toThrow("Access is not configured");
+    const result = verifyAccess(req(token), { ...env, ACCESS_TEAM_DOMAIN: "not a url" }, keys.keySet);
+    await expect(result).rejects.toThrow("Access is not configured");
+    await expect(result).rejects.toBeInstanceOf(AccessConfigError);
+  });
+
+  it("treats a failed key fetch as a setup problem, not a sign-in problem", async () => {
+    const token = await keys.sign();
+    for (const failure of [new errors.JWKSTimeout(), new errors.JOSEError("Expected 200 OK from the JSON Web Key Set HTTP response"), new TypeError("fetch failed")]) {
+      const keySet = async () => { throw failure; };
+      await expect(verifyAccess(req(token), env, keySet)).rejects.toBeInstanceOf(AccessConfigError);
+    }
   });
 
   it("skips the check only for localhost with DEV_SKIP_ACCESS", async () => {

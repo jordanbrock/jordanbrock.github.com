@@ -4,10 +4,19 @@
 
 export class ValidationError extends Error {}
 
-export const MAX_PHOTOS = 30;
+export const MAX_PHOTOS = 25; // keeps the worst case inside 50 subrequests (see index.js)
 export const MAX_PHOTO_BYTES = 10 * 1024 * 1024;
 export const MAX_POST_BYTES = 40 * 1024 * 1024; // Workers have 128 MB of memory; the bodies are held, then copied
 const KINDS = ["note", "link", "photos"];
+
+export const TOO_MANY_PHOTOS = `At most ${MAX_PHOTOS} photos per post.`;
+export const TOO_BIG = "These photos add up to more than 40 MB. Post them in two goes.";
+
+// Shared with form.js, which checks before reading the photos' bytes.
+export function checkPhotoBudget(count, totalBytes) {
+  if (count > MAX_PHOTOS) throw new ValidationError(TOO_MANY_PHOTOS);
+  if (totalBytes > MAX_POST_BYTES) throw new ValidationError(TOO_BIG);
+}
 
 export function validate(input) {
   const fail = (message) => { throw new ValidationError(message); };
@@ -23,9 +32,7 @@ export function validate(input) {
 
   if (input.kind === "photos") {
     if (input.photos.length === 0) fail("Add at least one photo.");
-    if (input.photos.length > MAX_PHOTOS) fail(`At most ${MAX_PHOTOS} photos per post.`);
-    const total = input.photos.reduce((sum, photo) => sum + photo.bytes.length, 0);
-    if (total > MAX_POST_BYTES) fail("These photos add up to more than 40 MB. Post them in two goes.");
+    checkPhotoBudget(input.photos.length, input.photos.reduce((sum, photo) => sum + photo.bytes.length, 0));
     input.photos.forEach((photo, i) => {
       const n = i + 1;
       if (!photo.alt.trim()) fail(`Photo ${n} needs alt text.`);

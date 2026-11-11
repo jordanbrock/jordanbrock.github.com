@@ -1,4 +1,5 @@
 import { beforeAll, describe, expect, it, vi } from "vitest";
+import { GitHubError, SlugTakenError } from "../src/github.js";
 import { handle } from "../src/index.js";
 import { env, makeKeys } from "./keys.js";
 
@@ -47,6 +48,7 @@ describe("POST /posts", () => {
       [{ path: "src/_posts/2026-11-11-hello-there.md", content: '---\ndate: "2026-11-11 14:03:09 +0800"\n---\nHello there\n' }],
       "Post: hello-there",
       { name: "Author", email: "author@example.com" },
+      { mustBeNew: ["src/_posts/2026-11-11-hello-there.md"] },
     );
   });
 
@@ -60,6 +62,15 @@ describe("POST /posts", () => {
     const [files] = github.commit.mock.calls[0];
     expect(files.map((f) => f.path)).toEqual(["src/_posts/2026-11-11-lake.md", "src/photos/2026/lake/01.jpg", "src/photos/2026/lake/02.jpg"]);
     expect(files[1].content).toEqual(jpeg);
+    expect(github.commit.mock.calls[0][3]).toEqual({ mustBeNew: ["src/_posts/2026-11-11-lake.md", "src/photos/2026/lake"] });
+  });
+
+  it("asks for a new post when the name is taken while committing", async () => {
+    const github = fakeGitHub();
+    github.commit.mockRejectedValue(new SlugTakenError("src/_posts/2026-11-11-hello-there.md"));
+    const { res, body } = await run(request({ token: await keys.sign() }), { github });
+    expect(res.status).toBe(409);
+    expect(body).toEqual({ error: "Another post just took this name. Post again." });
   });
 
   it("picks the next free slug when the post or its photos already exist", async () => {
@@ -80,13 +91,13 @@ describe("POST /posts", () => {
     expect(photoTaken.exists).toHaveBeenCalledWith("src/photos/2026/sunset.jpg");
   });
 
-  it("gives up after five taken slugs", async () => {
-    const taken = ["hello-there", "hello-there-2", "hello-there-3", "hello-there-4", "hello-there-5"].map((s) => `src/_posts/2026-11-11-${s}.md`);
+  it("gives up after three taken slugs", async () => {
+    const taken = ["hello-there", "hello-there-2", "hello-there-3"].map((s) => `src/_posts/2026-11-11-${s}.md`);
     const github = fakeGitHub(taken);
     const { res, body } = await run(request({ token: await keys.sign() }), { github });
     expect(res.status).toBe(409);
     expect(body).toEqual({ error: "Couldn't find a free file name for this post." });
-    expect(github.exists).toHaveBeenCalledTimes(5);
+    expect(github.exists).toHaveBeenCalledTimes(3);
     expect(github.commit).not.toHaveBeenCalled();
   });
 
@@ -109,14 +120,56 @@ describe("POST /posts", () => {
     }
   });
 
-  it("refuses posts from another origin", async () => {
-    const { res } = await run(request({ token: await keys.sign(), origin: "https://evil.example" }));
-    expect(res.status).toBe(403);
+  it("treats missing Access settings as a setup problem", async () => {
+    const { res, body, github } = await run(request({ token: await keys.sign() }), { envOverrides: { ACCESS_AUD: "" } });
+    expect(res.status).toBe(503);
+    expect(body).toEqual({ error: "Posting isn't set up properly. Check the Worker's Access settings." });
+    expect(github.exists).not.toHaveBeenCalled();
+  });
+
+  it("refuses posts from another origin, and logs it", async () => {
+    const warn = vi.spyOn(console, "warn").mockImplementation(() => {});
+    try {
+      const { res } = await run(request({ token: await keys.sign(), origin: "https://evil.example" }));
+      expect(res.status).toBe(403);
+      expect(warn).toHaveBeenCalledWith("origin:", "https://evil.example");
+    } finally {
+      warn.mockRestore();
+    }
+  });
+
+  it("refuses an oversized body before reading it", async () => {
+    const formData = vi.fn();
+    const req = {
+      url: `${ORIGIN}/posts`, method: "POST", formData,
+      headers: new Headers({ Origin: ORIGIN, "Cf-Access-Jwt-Assertion": await keys.sign(), "Content-Length": String(42 * 1024 * 1024) }),
+    };
+    const { res, body } = await run(req);
+    expect(res.status).toBe(413);
+    expect(body).toEqual({ error: "These photos add up to more than 40 MB. Post them in two goes." });
+    expect(formData).not.toHaveBeenCalled();
+  });
+
+  it("refuses a body that isn't a form", async () => {
+    const req = new Request(`${ORIGIN}/posts`, {
+      method: "POST", body: JSON.stringify({ kind: "note" }),
+      headers: { Origin: ORIGIN, "Cf-Access-Jwt-Assertion": await keys.sign(), "Content-Type": "application/json" },
+    });
+    const { res, body } = await run(req);
+    expect(res.status).toBe(400);
+    expect(body).toEqual({ error: "That didn't arrive as a form. Reload the page and try again." });
+  });
+
+  it("refuses a note with a photo", async () => {
+    const { res, body } = await run(request({ token: await keys.sign(), photos: [{}] }));
+    expect(res.status).toBe(422);
+    expect(body).toEqual({ error: "Notes and links can't have photos." });
   });
 
   it("returns the post without committing in DRY_RUN", async () => {
     const { res, body, github } = await run(request({ token: await keys.sign() }), { envOverrides: { DRY_RUN: "1" } });
     expect(res.status).toBe(200);
+    expect(body.dryRun).toBe(true);
     expect(body.markdown).toContain("Hello there");
     expect(body.files).toEqual(["src/_posts/2026-11-11-hello-there.md"]);
     expect(github.commit).not.toHaveBeenCalled();
@@ -124,10 +177,31 @@ describe("POST /posts", () => {
 
   it("reports a GitHub failure as a bad gateway", async () => {
     const github = fakeGitHub();
-    github.commit.mockRejectedValue(new Error("GitHub tree failed (500)"));
+    github.commit.mockRejectedValue(new GitHubError("GitHub tree failed (500)", 500));
     const { res, body } = await run(request({ token: await keys.sign() }), { github });
     expect(res.status).toBe(502);
     expect(body.error).toBe("Couldn't save the post: GitHub tree failed (500)");
+
+    const offline = fakeGitHub();
+    offline.exists.mockRejectedValue(new TypeError("fetch failed"));
+    const { res: res2, body: body2 } = await run(request({ token: await keys.sign() }), { github: offline });
+    expect(res2.status).toBe(502);
+    expect(body2.error).toBe("Couldn't save the post: fetch failed");
+  });
+
+  it("reports other failures as a server error, and logs them", async () => {
+    const error = vi.spyOn(console, "error").mockImplementation(() => {});
+    try {
+      const github = fakeGitHub();
+      const bug = new RangeError("oops");
+      github.commit.mockRejectedValue(bug);
+      const { res, body } = await run(request({ token: await keys.sign() }), { github });
+      expect(res.status).toBe(500);
+      expect(body).toEqual({ error: "Something went wrong saving the post." });
+      expect(error).toHaveBeenCalledWith("post:", bug);
+    } finally {
+      error.mockRestore();
+    }
   });
 });
 
