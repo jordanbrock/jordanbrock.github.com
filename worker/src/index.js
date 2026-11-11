@@ -36,7 +36,11 @@ export async function handle(request, env, deps = {}) {
     return json({ error: "You're not signed in. Reload the page to sign in again." }, 401);
   }
 
-  if (Number(request.headers.get("Content-Length")) > MAX_POST_BYTES + FORM_OVERHEAD) return json({ error: TOO_BIG }, 413);
+  // Browsers send a Content-Length with a form; without one the size can't be
+  // checked before the body is read.
+  const length = request.headers.get("Content-Length");
+  if (length === null) return json({ error: "Length required." }, 411);
+  if (Number(length) > MAX_POST_BYTES + FORM_OVERHEAD) return json({ error: TOO_BIG }, 413);
 
   let form;
   try {
@@ -73,7 +77,7 @@ export async function handle(request, env, deps = {}) {
     return json({ url: post.url, path: post.path }, 201);
   } catch (e) {
     if (e instanceof SlugTakenError) return json({ error: "Another post just took this name. Post again." }, 409);
-    if (e instanceof GitHubError || e instanceof TypeError) return json({ error: `Couldn't save the post: ${e.message}` }, 502);
+    if (e instanceof GitHubError) return json({ error: `Couldn't save the post: ${e.message}` }, 502);
     console.error("post:", e);
     return json({ error: "Something went wrong saving the post." }, 500);
   }

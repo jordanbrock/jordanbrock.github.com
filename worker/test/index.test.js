@@ -16,7 +16,9 @@ const jpeg = new Uint8Array([
 let keys;
 beforeAll(async () => { keys = await makeKeys(); });
 
-function request({ token, fields = {}, photos = [], origin = ORIGIN, method = "POST", path = "/posts" } = {}) {
+// Resolves to a request like a browser sends, with a Content-Length (a
+// Request built from FormData only gets one when it's sent).
+async function request({ token, fields = {}, photos = [], origin = ORIGIN, method = "POST", path = "/posts", length = true } = {}) {
   const headers = { Origin: origin };
   if (token) headers["Cf-Access-Jwt-Assertion"] = token;
   if (method === "GET") return new Request(`${ORIGIN}${path}`, { headers });
@@ -27,7 +29,11 @@ function request({ token, fields = {}, photos = [], origin = ORIGIN, method = "P
     form.append("alt", p.alt ?? "Alt");
     form.append("caption", p.caption ?? "");
   }
-  return new Request(`${ORIGIN}${path}`, { method, body: form, headers });
+  const encoded = new Request(`${ORIGIN}${path}`, { method, body: form });
+  const body = await encoded.arrayBuffer();
+  headers["Content-Type"] = encoded.headers.get("Content-Type");
+  if (length) headers["Content-Length"] = String(body.byteLength);
+  return new Request(`${ORIGIN}${path}`, { method, body, headers });
 }
 
 function fakeGitHub(taken = []) {
@@ -35,7 +41,7 @@ function fakeGitHub(taken = []) {
 }
 
 const run = async (req, { github = fakeGitHub(), envOverrides = {} } = {}) => {
-  const res = await handle(req, { ...env, ...envOverrides }, { keySet: keys.keySet, github, now });
+  const res = await handle(await req, { ...env, ...envOverrides }, { keySet: keys.keySet, github, now });
   return { res, body: res.headers.get("Content-Type")?.includes("json") ? await res.json() : await res.text(), github };
 };
 
@@ -153,11 +159,18 @@ describe("POST /posts", () => {
   it("refuses a body that isn't a form", async () => {
     const req = new Request(`${ORIGIN}/posts`, {
       method: "POST", body: JSON.stringify({ kind: "note" }),
-      headers: { Origin: ORIGIN, "Cf-Access-Jwt-Assertion": await keys.sign(), "Content-Type": "application/json" },
+      headers: { Origin: ORIGIN, "Cf-Access-Jwt-Assertion": await keys.sign(), "Content-Type": "application/json", "Content-Length": "16" },
     });
     const { res, body } = await run(req);
     expect(res.status).toBe(400);
     expect(body).toEqual({ error: "That didn't arrive as a form. Reload the page and try again." });
+  });
+
+  it("asks for a length when there's no Content-Length", async () => {
+    const { res, body, github } = await run(request({ token: await keys.sign(), length: false }));
+    expect(res.status).toBe(411);
+    expect(body).toEqual({ error: "Length required." });
+    expect(github.exists).not.toHaveBeenCalled();
   });
 
   it("refuses a note with a photo", async () => {
@@ -181,19 +194,13 @@ describe("POST /posts", () => {
     const { res, body } = await run(request({ token: await keys.sign() }), { github });
     expect(res.status).toBe(502);
     expect(body.error).toBe("Couldn't save the post: GitHub tree failed (500)");
-
-    const offline = fakeGitHub();
-    offline.exists.mockRejectedValue(new TypeError("fetch failed"));
-    const { res: res2, body: body2 } = await run(request({ token: await keys.sign() }), { github: offline });
-    expect(res2.status).toBe(502);
-    expect(body2.error).toBe("Couldn't save the post: fetch failed");
   });
 
   it("reports other failures as a server error, and logs them", async () => {
     const error = vi.spyOn(console, "error").mockImplementation(() => {});
     try {
       const github = fakeGitHub();
-      const bug = new RangeError("oops");
+      const bug = new TypeError("x is not a function"); // a bug, not a network failure (github.js wraps those)
       github.commit.mockRejectedValue(bug);
       const { res, body } = await run(request({ token: await keys.sign() }), { github });
       expect(res.status).toBe(500);

@@ -4,6 +4,7 @@ compatibility_date = "2026-11-01"
 # Top-level keys must come before the first [table], or TOML puts them inside it.
 # No public workers.dev URL: only the Access-protected custom domain.
 workers_dev = false
+preview_urls = false # no public preview URLs for versions either
 routes = [{ pattern = "post.jordanbrock.com", custom_domain = true }]
 
 # The posting page (public/) is served as static assets. Anything that isn't a

@@ -144,6 +144,15 @@ describe("commit details", () => {
     await expect(github(env, fetchImpl).commit([{ path: "x", content: "x" }], "m", author, { mustBeNew: ["x"] })).rejects.toThrow(new GitHubError("GitHub lookup failed (500)", 500));
   });
 
+  it("reports a network failure as a GitHubError", async () => {
+    const offline = async () => { throw new TypeError("fetch failed"); };
+    const gh = github(env, offline);
+    for (const call of [gh.exists("x"), gh.commit([{ path: "a", content: "x" }], "m", author)]) {
+      await expect(call).rejects.toBeInstanceOf(GitHubError);
+      await expect(call).rejects.toThrow("Couldn't reach GitHub: fetch failed");
+    }
+  });
+
   it("does not mutate the caller's files", async () => {
     const files = [{ path: "a", content: new Uint8Array([1]) }];
     await github(env, fakeGitHub().fetchImpl).commit(files, "m", author);

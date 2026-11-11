@@ -30,6 +30,8 @@ const encodePath = (path) => path.split("/").map(encodeURIComponent).join("/");
 export function github(env, fetchImpl = fetch) {
   const branch = env.GITHUB_BRANCH;
 
+  // A failed fetch (DNS, connection reset) becomes a GitHubError, so callers
+  // can tell GitHub trouble from bugs.
   const api = (method, path, body) => fetchImpl(`https://api.github.com/repos/${env.GITHUB_REPO}${path}`, {
     method,
     headers: {
@@ -40,7 +42,7 @@ export function github(env, fetchImpl = fetch) {
       ...(body ? { "Content-Type": "application/json" } : {}),
     },
     body: body ? JSON.stringify(body) : undefined,
-  });
+  }).catch((e) => { throw new GitHubError(`Couldn't reach GitHub: ${e?.message}`); });
 
   // "GitHub <what> failed (<status>)", plus GitHub's own message when it sent one.
   const failure = async (res, what) => {
