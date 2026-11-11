@@ -39,23 +39,36 @@ class TestPostPhotos < Minitest::Test
   def test_missing_image_names_the_post_and_position
     err = assert_raises(ArgumentError) { PostPhotos.for(album({ "image" => "2026/a.jpg", "alt" => "A" }, { "alt" => "B" })) }
     assert_includes err.message, "Album photo has no image (in _posts/2026-11-07-x.md, photo 2)"
-    assert_includes err.message, "_posts/2026-11-07-x.md"
   end
 
   def test_missing_alt_and_caption_names_the_post_and_position
     err = assert_raises(ArgumentError) { PostPhotos.for(album({ "image" => "2026/a.jpg", "caption" => "  " })) }
     assert_includes err.message, "Album photo needs alt text or a caption (in _posts/2026-11-07-x.md, photo 1)"
-    assert_includes err.message, "_posts/2026-11-07-x.md"
   end
 
   def test_photos_that_is_not_a_list_raises
     err = assert_raises(ArgumentError) { PostPhotos.for(Post.new({ "type" => "album", "photos" => "2026/a.jpg" })) }
-    assert_includes err.message, "photos must be a list"
+    assert_includes err.message, "photos must be a list (in _posts/2026-11-07-x.md)"
+  end
+
+  def test_empty_album_raises
+    err = assert_raises(ArgumentError) { PostPhotos.for(Post.new({ "type" => "album", "photos" => [] })) }
+    assert_includes err.message, "Album has no photos (in _posts/2026-11-07-x.md)"
   end
 
   def test_entry_that_is_not_a_mapping_raises
     err = assert_raises(ArgumentError) { PostPhotos.for(album("2026/a.jpg")) }
-    assert_includes err.message, "Album photo must have image and alt (in _posts/2026-11-07-x.md, photo 1)"
+    assert_includes err.message, "Album photo must be a mapping with image and alt or caption (in _posts/2026-11-07-x.md, photo 1)"
+  end
+
+  def test_nested_list_entry_raises_argument_error
+    err = assert_raises(ArgumentError) { PostPhotos.for(album(["2026/a.jpg", "A"])) }
+    assert_includes err.message, "Album photo must be a mapping with image and alt or caption (in _posts/2026-11-07-x.md, photo 1)"
+  end
+
+  def test_photo_post_image_is_stripped
+    post = Post.new({ "image" => " 2026/a.jpg ", "alt" => "A" })
+    assert_equal "2026/a.jpg", PostPhotos.for(post).first[:image]
   end
 
   def test_photo_post_is_one_entry_without_index
