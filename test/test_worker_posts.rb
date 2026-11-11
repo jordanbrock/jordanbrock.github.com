@@ -29,8 +29,6 @@ class TestWorkerPosts < Minitest::Test
 
   ALL = %w[note link link-preview photo album awkward].freeze
 
-  # The site's template_engine is "erb", which Bridgetown runs on every post
-  # whose front matter doesn't name another engine. Posted bodies must not run.
   def test_link_with_preview
     post = fixture("link-preview")
     assert_equal "link", PostType.for_resource(post)
@@ -43,6 +41,8 @@ class TestWorkerPosts < Minitest::Test
     assert_equal [[post, { image: "2026/a-story-preview.jpg", alt: "", caption: nil, index: nil }]], PostPhotos.previews([post])
   end
 
+  # The site's template_engine is "erb", which Bridgetown runs on every post
+  # whose front matter doesn't name another engine. Posted bodies must not run.
   def test_every_fixture_turns_off_erb
     config = Bridgetown::Configuration.new("template_engine" => "erb")
     erb = Bridgetown::Converters::ERBTemplates.new(config)

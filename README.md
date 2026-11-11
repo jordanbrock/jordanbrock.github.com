@@ -26,7 +26,7 @@ The front matter decides the type (or set `type:` explicitly):
 
 - **Article**: `title`, optional `excerpt` (otherwise the first paragraph is the summary).
 - **Note**: no front matter needed.
-- **Link**: `link`, optional `title` (otherwise the link's domain).
+- **Link**: `link`, optional `title` (otherwise the link's domain). Optionally `preview`, a mapping of `title`, `description`, `site` and `image` (a path under `src/photos/`, like a photo's): the link's sharing preview, shown in the card. The posting page fills it in.
 - **Photo**: `image`, a path under `src/photos/` (e.g. `2026/beach.jpg`), plus `alt`. The body is the caption.
 - **Album**: `photos`, a list of `image`, `alt` and optional `caption` (alt falls back to the caption; one of them is required); optional `title`; the body is the intro. The first photo is the cover. Use either `image` or `photos`, not both.
 
