@@ -15,7 +15,7 @@ export function toBase64(bytes) {
   return btoa(binary);
 }
 
-export const BLOB_CONCURRENCY = 4;
+export const BLOB_CONCURRENCY = 2;
 
 const encodePath = (path) => path.split("/").map(encodeURIComponent).join("/");
 
@@ -56,21 +56,25 @@ export function github(env, fetchImpl = fetch) {
 
   // files: [{ path, content: string | Uint8Array }]. Resolves to the new commit's sha.
   async function commit(files, message, author) {
-    // Local copies, so each file's bytes can be dropped once uploaded
-    // without touching the caller's objects.
+    // Local copies; the caller's objects are left alone.
     const pending = files.map((file) => ({
       path: file.path,
       bytes: typeof file.content === "string" ? new TextEncoder().encode(file.content) : file.content,
     }));
     const tree = new Array(pending.length);
     let next = 0;
+    let failed = false;
     const worker = async () => {
-      while (next < pending.length) {
-        const i = next++;
-        const entry = pending[i];
-        const blob = await ok(await api("POST", "/git/blobs", { content: toBase64(entry.bytes), encoding: "base64" }), "blob");
-        entry.bytes = null;
-        tree[i] = { path: entry.path, mode: "100644", type: "blob", sha: blob.sha };
+      try {
+        while (!failed && next < pending.length) {
+          const i = next++;
+          const entry = pending[i];
+          const blob = await ok(await api("POST", "/git/blobs", { content: toBase64(entry.bytes), encoding: "base64" }), "blob");
+          tree[i] = { path: entry.path, mode: "100644", type: "blob", sha: blob.sha };
+        }
+      } catch (error) {
+        failed = true;
+        throw error;
       }
     };
     await Promise.all(Array.from({ length: Math.min(BLOB_CONCURRENCY, pending.length) }, worker));

@@ -71,7 +71,7 @@ describe("commit", () => {
 
 describe("commit details", () => {
   it("uploads at most BLOB_CONCURRENCY blobs at once and keeps tree order", async () => {
-    expect(BLOB_CONCURRENCY).toBe(4);
+    expect(BLOB_CONCURRENCY).toBe(2);
     let inFlight = 0;
     let peak = 0;
     const base = fakeGitHub();
@@ -82,10 +82,20 @@ describe("commit details", () => {
     };
     const files = ["a", "b", "c", "d", "e", "f"].map((c) => ({ path: `p/${c}`, content: c }));
     await github(env, fetchImpl).commit(files, "m", author);
-    expect(peak).toBe(4);
+    expect(peak).toBe(2);
     const tree = base.calls.find((c) => c.key.endsWith("/trees")).body.tree;
     expect(tree.map((t) => t.path)).toEqual(files.map((f) => f.path));
     expect(tree.map((t) => t.sha)).toEqual(files.map((f) => `blob-${Buffer.from(f.content).toString("base64")}`));
+  });
+
+  it("stops uploading after the first failed blob", async () => {
+    let n = 0;
+    const { fetchImpl, calls } = fakeGitHub({
+      "POST /repos/o/r/git/blobs": (body) => (++n === 2 ? new Response("{}", { status: 500 }) : { sha: `blob-${body.content}` }),
+    });
+    const files = Array.from({ length: 8 }, (_, i) => ({ path: `p${i}`, content: `c${i}` }));
+    await expect(github(env, fetchImpl).commit(files, "m", author)).rejects.toThrow("GitHub blob failed (500)");
+    expect(calls.filter((c) => c.key.endsWith("/blobs")).length).toBeLessThan(8);
   });
 
   it("does not mutate the caller's files", async () => {

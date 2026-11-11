@@ -41,9 +41,9 @@ describe("validate", () => {
     fails({ kind: "photos", photos: Array.from({ length: MAX_PHOTOS + 1 }, () => photo()) }, `At most ${MAX_PHOTOS} photos per post.`);
   });
 
-  it("refuses photos that add up to more than 60 MB", () => {
+  it("refuses photos that add up to more than 40 MB", () => {
     const chunk = new Uint8Array(9 * 1024 * 1024);
-    fails({ kind: "photos", photos: Array.from({ length: 7 }, () => photo({ bytes: chunk })) }, "These photos add up to more than 60 MB. Post them in two goes.");
+    fails({ kind: "photos", photos: Array.from({ length: 5 }, () => photo({ bytes: chunk })) }, "These photos add up to more than 40 MB. Post them in two goes.");
   });
 
   it("names the photo that's missing alt text", () => {

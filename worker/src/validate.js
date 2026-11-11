@@ -6,7 +6,7 @@ export class ValidationError extends Error {}
 
 export const MAX_PHOTOS = 30;
 export const MAX_PHOTO_BYTES = 10 * 1024 * 1024;
-export const MAX_POST_BYTES = 60 * 1024 * 1024; // Workers have 128 MB of memory; the bodies are held, then copied
+export const MAX_POST_BYTES = 40 * 1024 * 1024; // Workers have 128 MB of memory; the bodies are held, then copied
 const KINDS = ["note", "link", "photos"];
 
 export function validate(input) {
@@ -25,7 +25,7 @@ export function validate(input) {
     if (input.photos.length === 0) fail("Add at least one photo.");
     if (input.photos.length > MAX_PHOTOS) fail(`At most ${MAX_PHOTOS} photos per post.`);
     const total = input.photos.reduce((sum, photo) => sum + photo.bytes.length, 0);
-    if (total > MAX_POST_BYTES) fail("These photos add up to more than 60 MB. Post them in two goes.");
+    if (total > MAX_POST_BYTES) fail("These photos add up to more than 40 MB. Post them in two goes.");
     input.photos.forEach((photo, i) => {
       const n = i + 1;
       if (!photo.alt.trim()) fail(`Photo ${n} needs alt text.`);
