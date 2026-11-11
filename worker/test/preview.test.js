@@ -104,3 +104,63 @@ describe("fetchPreviewImage", () => {
     await expect(fetchPreviewImage("https://example.com/i", async () => new Response("x", { status: 500 }))).rejects.toMatchObject({ status: 502 });
   });
 });
+
+const stalled = (type) => async () =>
+  new Response(new ReadableStream({ pull() { throw new DOMException("x", "TimeoutError"); } }), { headers: { "Content-Type": type } });
+const chunked = (chunks, type = "text/html") => async () =>
+  new Response(new ReadableStream({ start(c) { for (const ch of chunks) c.enqueue(ch); c.close(); } }), { headers: { "Content-Type": type } });
+const enc = (s) => new TextEncoder().encode(s);
+
+describe("failures while reading the body", () => {
+  it("reports a page that stalls or resets as a 502", async () => {
+    await expect(fetchPreview("https://example.com/", stalled("text/html"))).rejects.toMatchObject({ status: 502, message: "That page took too long or stopped answering." });
+    await expect(fetchPreviewImage("https://example.com/i", stalled("image/png"))).rejects.toMatchObject({ status: 502 });
+  });
+});
+
+describe("parsePreview details", () => {
+  it("copes with > inside a quoted attribute value", () => {
+    const html = `<meta property="og:title" content="a > b"><meta property="og:site_name" content="S">`;
+    expect(parsePreview(html, PAGE)).toMatchObject({ title: "a > b", site: "S" });
+  });
+
+  it("decodes typographic entities and leaves surrogate code points alone", () => {
+    const html = `<meta property="og:title" content="It&rsquo;s &mdash; fine &amp;#xD800; &#xD800;">`;
+    expect(parsePreview(html, PAGE).title).toBe("It\u2019s \u2014 fine &#xD800; &#xD800;");
+  });
+});
+
+describe("page encodings and kinds", () => {
+  it("decodes with the charset from Content-Type", async () => {
+    const body = new Uint8Array([...enc("<title>caf"), 0xe9, ...enc("</title>")]);
+    const latin = async () => new Response(body, { headers: { "Content-Type": "text/html; charset=windows-1252" } });
+    expect((await fetchPreview("https://example.com/", latin)).title).toBe("caf\u00e9");
+  });
+
+  it("falls back to UTF-8 for an unknown charset", async () => {
+    const odd = async () => new Response("<title>ok</title>", { headers: { "Content-Type": "text/html; charset=bogus-9" } });
+    expect((await fetchPreview("https://example.com/", odd)).title).toBe("ok");
+  });
+
+  it("uses the page itself as the image when the URL is an image", async () => {
+    const fetchImpl = async () => {
+      const res = new Response(PNG, { headers: { "Content-Type": "image/png" } });
+      Object.defineProperty(res, "url", { value: "https://example.com/final.png" });
+      return res;
+    };
+    expect(await fetchPreview("https://example.com/p", fetchImpl)).toEqual({ title: "", description: "", site: "", image: "https://example.com/final.png" });
+  });
+
+  it("keeps exactly the first 1 MB across several chunks", async () => {
+    const MB = 1024 * 1024;
+    const tag = "<title>Edge</title>";
+    const build = (end) => {
+      const a = new Uint8Array(600000).fill(32);
+      const b = new Uint8Array(600000).fill(32);
+      b.set(enc(tag), end - 600000 - tag.length);
+      return [a, b, new Uint8Array(600000).fill(32)];
+    };
+    expect((await fetchPreview("https://example.com/", chunked(build(MB)))).title).toBe("Edge");
+    expect((await fetchPreview("https://example.com/", chunked(build(MB + 1)))).title).toBe("");
+  });
+});

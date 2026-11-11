@@ -38,6 +38,8 @@ async function denied(request, env, deps) {
 // send Origin on same-origin GETs.
 async function preview(request, env, deps, url) {
   if (request.method !== "GET") return json({ error: "Use GET." }, 405);
+  const site = request.headers.get("Sec-Fetch-Site");
+  if (site && site !== "same-origin" && site !== "none") return json({ error: "Previews must come from the posting page." }, 403);
   const refusal = await denied(request, env, deps);
   if (refusal) return refusal;
   const target = url.searchParams.get("url");

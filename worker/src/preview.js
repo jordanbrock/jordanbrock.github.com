@@ -11,12 +11,16 @@ export class PreviewError extends Error {
 }
 
 const LIMITS = { title: 300, description: 500, site: 100 };
-const NAMED = { amp: "&", lt: "<", gt: ">", quot: '"', apos: "'", nbsp: " " };
+const NAMED = {
+  amp: "&", lt: "<", gt: ">", quot: '"', apos: "'", nbsp: " ",
+  rsquo: "\u2019", lsquo: "\u2018", ldquo: "\u201c", rdquo: "\u201d", mdash: "\u2014", ndash: "\u2013",
+  hellip: "\u2026", copy: "\u00a9", reg: "\u00ae", trade: "\u2122", middot: "\u00b7",
+};
 
 const decode = (s) => s.replace(/&(#x[0-9a-f]+|#\d+|[a-z]+);/gi, (m, e) => {
   if (e[0] === "#") {
     const code = e[1] === "x" || e[1] === "X" ? parseInt(e.slice(2), 16) : parseInt(e.slice(1), 10);
-    return code > 0 && code <= 0x10ffff ? String.fromCodePoint(code) : m;
+    return code > 0 && code <= 0x10ffff && !(code >= 0xd800 && code <= 0xdfff) ? String.fromCodePoint(code) : m;
   }
   return NAMED[e.toLowerCase()] ?? m;
 });
@@ -25,7 +29,7 @@ const clean = (s, max) => decode(String(s ?? "")).replace(/\s+/g, " ").trim().sl
 // name/property (lowercased) => content, first one wins.
 function metaTags(html) {
   const tags = {};
-  for (const [tag] of html.matchAll(/<meta\b[^>]*>/gi)) {
+  for (const [tag] of html.matchAll(/<meta\b(?:[^>"']|"[^"]*"|'[^']*')*>/gi)) {
     const attrs = {};
     for (const m of tag.matchAll(/([a-z_:.-]+)\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s"'>]+))/gi)) {
       attrs[m[1].toLowerCase()] = m[2] ?? m[3] ?? m[4];
@@ -64,7 +68,9 @@ const TIMEOUT_MS = 5000;
 // Generic on purpose: never name the site's owner to other sites.
 const HEADERS = { "User-Agent": "Mozilla/5.0 (compatible; LinkPreview/1.0)" };
 
-// Only public http(s) hosts: no localhost or IP literals.
+// Only public http(s) hosts: no localhost or IP literals. Redirects aren't
+// re-checked: deployed Workers can't reach private networks anyway, so this
+// check is for clear error messages.
 function target(raw) {
   let url;
   try { url = new URL(String(raw ?? "").trim()); } catch { throw new PreviewError("That isn't a valid URL.", 422); }
@@ -96,18 +102,23 @@ async function read(res, max, truncate) {
   const chunks = [];
   let total = 0;
   const reader = res.body.getReader();
-  for (;;) {
-    const { done, value } = await reader.read();
-    if (done) break;
-    total += value.length;
-    if (total > max) {
-      await reader.cancel();
-      if (!truncate) throw new PreviewError("That image is over 5 MB.", 422);
-      chunks.push(value.subarray(0, value.length - (total - max)));
-      total = max;
-      break;
+  try {
+    for (;;) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      total += value.length;
+      if (total > max) {
+        await reader.cancel();
+        if (!truncate) throw new PreviewError("That image is over 5 MB.", 422);
+        chunks.push(value.subarray(0, value.length - (total - max)));
+        total = max;
+        break;
+      }
+      chunks.push(value);
     }
-    chunks.push(value);
+  } catch (e) {
+    if (e instanceof PreviewError) throw e;
+    throw new PreviewError("That page took too long or stopped answering.", 502); // timeout or reset mid-body
   }
   const bytes = new Uint8Array(total);
   let at = 0;
@@ -115,14 +126,29 @@ async function read(res, max, truncate) {
   return bytes;
 }
 
+// UTF-8 unless Content-Type names a charset the runtime knows.
+function decodeBody(bytes, contentType) {
+  const label = /charset\s*=\s*["']?([^\s;"']+)/i.exec(contentType)?.[1];
+  try {
+    return new TextDecoder(label || "utf-8").decode(bytes);
+  } catch {
+    return new TextDecoder().decode(bytes);
+  }
+}
+
 export async function fetchPreview(raw, fetchImpl = fetch) {
   const url = target(raw);
   const res = await get(url, "text/html,application/xhtml+xml", fetchImpl);
-  if (!/html/i.test(res.headers.get("Content-Type") ?? "")) {
+  const type = res.headers.get("Content-Type") ?? "";
+  if (/^\s*image\//i.test(type)) {
+    await res.body?.cancel();
+    return { ...parsePreview("", url), image: res.url || url };
+  }
+  if (!/html/i.test(type)) {
     await res.body?.cancel();
     return parsePreview("", url);
   }
-  const html = new TextDecoder().decode(await read(res, HTML_BYTES, true));
+  const html = decodeBody(await read(res, HTML_BYTES, true), type);
   return parsePreview(html, res.url || url);
 }
 

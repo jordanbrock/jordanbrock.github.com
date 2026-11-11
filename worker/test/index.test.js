@@ -254,6 +254,20 @@ describe("GET /preview", () => {
     expect(body.error).toMatch(/public/);
   });
 
+  it("refuses cross-site requests but allows same-origin and direct ones", async () => {
+    const withSite = async (site) => {
+      const req = await get("/preview?url=https%3A%2F%2Fexample.com%2Fs", await keys.sign());
+      req.headers.set("Sec-Fetch-Site", site);
+      return run(req, { fetchImpl: vi.fn(html) });
+    };
+    const blocked = await withSite("cross-site");
+    expect(blocked.res.status).toBe(403);
+    expect(blocked.body.error).toBe("Previews must come from the posting page.");
+    expect((await withSite("same-site")).res.status).toBe(403);
+    expect((await withSite("same-origin")).res.status).toBe(200);
+    expect((await withSite("none")).res.status).toBe(200);
+  });
+
   it("only answers GET", async () => {
     const { res } = await run(request({ path: "/preview?url=x", token: await keys.sign() }));
     expect(res.status).toBe(405);
