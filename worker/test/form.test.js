@@ -23,6 +23,14 @@ describe("parseForm", () => {
     });
   });
 
+  it("splits tags on commas or spaces, drops #, lowercases and removes repeats", async () => {
+    const form = new FormData();
+    form.append("kind", "note");
+    form.append("content", "Hi");
+    form.append("tags", "#Photography #tech, tech ##web,,  #");
+    expect((await parseForm(form)).tags).toEqual(["photography", "tech", "web"]);
+  });
+
   it("refuses a photo field that isn't a file", async () => {
     const form = new FormData();
     form.append("kind", "photos");
