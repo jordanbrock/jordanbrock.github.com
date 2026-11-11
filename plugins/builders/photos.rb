@@ -19,16 +19,16 @@ module Builders
 
     # Registry: image path from front matter => { widths:, width:, height:, base: }.
     # site.data wraps it in HashWithDotAccess (indifferent keys); readers use symbols.
+    # An image used by several posts is processed once.
     def process_photos
       processor.check_gps!
-      posts = PostType.posts(site.collections.posts.resources, "photo")
-      PhotoProcessor.check_collisions!(posts.map { _1.data.image.to_s })
+      entries = PostPhotos.tiles(site.collections.posts.resources)
+      PhotoProcessor.check_collisions!(entries.map { _2[:image] })
       registry = {}
-      posts.each do |post|
-        image = post.data.image.to_s
-        registry[image] = processor.process(image, guard: false)
+      entries.each do |post, entry|
+        registry[entry[:image]] ||= processor.process(entry[:image], guard: false)
       rescue PhotoProcessor::Error, Vips::Error => e
-        raise PhotoProcessor::Error, "#{e.message.strip} (in #{post.relative_path})"
+        raise PhotoProcessor::Error, "#{e.message.strip} #{PostPhotos.where(post, entry)}"
       end
       site.data.photos = registry
     end
