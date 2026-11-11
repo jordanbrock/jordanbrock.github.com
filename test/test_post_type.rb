@@ -73,4 +73,21 @@ class TestPostType < Minitest::Test
     assert_equal "#", PostType.safe_link("https://")
     assert_equal "#", PostType.safe_link(nil)
   end
+
+  def test_photos_list_means_album
+    assert_equal "album", t("photos" => [{ "image" => "2026/a.jpg" }], "link" => "https://a", "title" => "T")
+  end
+
+  def test_empty_photos_list_is_ignored
+    assert_equal "article", t("photos" => [], "title" => "T")
+  end
+
+  def test_explicit_album_type
+    assert_equal "album", t("type" => "album")
+  end
+
+  def test_image_and_photos_together_raise
+    err = assert_raises(ArgumentError) { t("image" => "2026/a.jpg", "photos" => [{ "image" => "2026/b.jpg" }]) }
+    assert_includes err.message, "either image or photos"
+  end
 end
