@@ -120,6 +120,13 @@ class TestFeedEntry < Minitest::Test
     assert_equal expected, FeedEntry.trail(post, photos: PHOTOS, base_url: BASE)
   end
 
+  def test_album_trail_names_a_missing_photo
+    post = album([{ "image" => "2026/gone.jpg", "alt" => "G" }])
+    err = assert_raises(PhotoProcessor::MissingError) { FeedEntry.trail(post, photos: PHOTOS, base_url: BASE) }
+    assert_includes err.message, "2026/gone.jpg"
+    assert_includes err.message, "_posts/2026-11-07-x.md"
+  end
+
   def test_other_types_have_no_trail
     assert_equal "", FeedEntry.trail(Post.new({ "image" => "2026/a.jpg" }), photos: PHOTOS, base_url: BASE)
     assert_equal "", FeedEntry.trail(Post.new({}), photos: PHOTOS, base_url: BASE)

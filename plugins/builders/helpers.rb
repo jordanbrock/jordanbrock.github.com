@@ -5,7 +5,7 @@ module Builders
     SITE_NAME = "Jordan Brock"
 
     def build
-      # Title for feeds and lists; notes and photos have no title.
+      # Title for feeds and lists; notes, photos and untitled albums have no title.
       helper :feed_title do |resource|
         FeedEntry.title(resource)
       end
