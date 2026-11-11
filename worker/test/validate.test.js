@@ -87,6 +87,8 @@ describe("JPEG checks", () => {
   it("refuses files that are not a well-formed run of segments", () => {
     expect(unsafeJpeg(jpeg(SOI, app0, sos, data, EOI))).toBe(true); // no frame
     expect(unsafeJpeg(jpeg(SOI, app0, seg(0xc0, [8, 0, 16, 0, 0, 1, 1, 0x11, 0]), sos, data, EOI))).toBe(true); // zero width
+    expect(unsafeJpeg(jpeg(SOI, app0, seg(0xc0, []), sof, sos, data, EOI))).toBe(true); // frame too short
+    expect(unsafeJpeg(jpeg(SOI, app0, sof, sof, sos, data, EOI))).toBe(true); // two frames
     expect(unsafeJpeg(jpeg(SOI, app0, sof))).toBe(true); // truncated before SOS
     expect(unsafeJpeg(jpeg(clean, [0, 0]))).toBe(true); // trailing bytes after EOI
     expect(unsafeJpeg(png)).toBe(true);

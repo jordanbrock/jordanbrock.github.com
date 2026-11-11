@@ -58,6 +58,7 @@ export function unsafeJpeg(b) {
     const len = (b[i + 2] << 8) | b[i + 3];
     if (len < 2) return true;
     if (m >= 0xc0 && m <= 0xcf && m !== 0xc4 && m !== 0xc8 && m !== 0xcc) {
+      if (frame || len < 11 || i + 2 + len > b.length) return true; // second frame, or too short for 8 bytes + a component
       const height = (b[i + 5] << 8) | b[i + 6];
       const width = (b[i + 7] << 8) | b[i + 8];
       if (!height || !width) return true;
