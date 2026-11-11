@@ -91,6 +91,12 @@ class TestPostType < Minitest::Test
     assert_includes err.message, "either image or photos"
   end
 
+  def test_photos_with_another_explicit_type_raise
+    err = assert_raises(ArgumentError) { t("type" => "note", "photos" => [{ "image" => "2026/a.jpg" }]) }
+    assert_includes err.message, "photos is only for album posts"
+    assert_equal "album", t("type" => "album", "photos" => [{ "image" => "2026/a.jpg" }])
+  end
+
   def test_non_list_photos_still_means_album # PostPhotos rejects it later
     assert_equal "album", t("photos" => "2026/a.jpg")
   end

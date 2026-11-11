@@ -125,6 +125,7 @@ class TestFeedEntry < Minitest::Test
     err = assert_raises(PhotoProcessor::MissingError) { FeedEntry.trail(post, photos: PHOTOS, base_url: BASE) }
     assert_includes err.message, "2026/gone.jpg"
     assert_includes err.message, "_posts/2026-11-07-x.md"
+    assert_includes err.message, "photo 1"
   end
 
   def test_other_types_have_no_trail

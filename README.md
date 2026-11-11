@@ -28,5 +28,6 @@ The front matter decides the type (or set `type:` explicitly):
 - **Note**: no front matter needed.
 - **Link**: `link`, optional `title` (otherwise the link's domain).
 - **Photo**: `image`, a path under `src/photos/` (e.g. `2026/beach.jpg`), plus `alt`. The body is the caption.
+- **Album**: `photos`, a list of `image`, `alt` and optional `caption` (alt falls back to the caption; one of them is required); optional `title`; the body is the intro. The first photo is the cover. Use either `image` or `photos`, not both.
 
 Photos are resized into WebP and JPEG sizes at build time; originals in `src/photos/` are never published. A photo with GPS data fails the build: run `bin/bridgetown photos:strip` first.

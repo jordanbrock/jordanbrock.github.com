@@ -1,8 +1,8 @@
 require "fileutils"
 
 module Builders
-  # Resizes photo-post images before render (so templates know their sizes)
-  # and copies the results into output/photos after write. Originals in
+  # Resizes the images of photo and album posts before render (so templates
+  # know their sizes) and copies the results into output/photos after write. Originals in
   # src/photos are excluded from the build and never published.
   class Photos < SiteBuilder
     def build

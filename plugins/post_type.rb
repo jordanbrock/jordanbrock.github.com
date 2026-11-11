@@ -14,6 +14,10 @@ module PostType
     unless explicit.empty?
       raise ArgumentError, "Unknown post type: #{explicit}" unless TYPES.include?(explicit)
 
+      if explicit != "album" && listed?(data["photos"])
+        raise ArgumentError, "photos is only for album posts"
+      end
+
       return explicit
     end
 

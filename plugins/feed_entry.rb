@@ -51,7 +51,7 @@ module FeedEntry
     return "" unless PostType.for_resource(resource) == "album"
 
     PostPhotos.for(resource).map do |entry|
-      info = PhotoProcessor.lookup!(photos, entry[:image], post: source(resource))
+      info = PhotoProcessor.lookup!(photos, entry[:image], post: "#{source(resource)}, photo #{entry[:index]}")
       src = base_url.to_s + PhotoProcessor.jpeg_path(info)
       img = %(<p><img src="#{CGI.escapeHTML(src)}" alt="#{CGI.escapeHTML(entry[:alt])}"></p>)
       entry[:caption] ? img + %(<p>#{CGI.escapeHTML(entry[:caption])}</p>) : img
