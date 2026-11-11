@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "test": "vitest run",
-    "dev": "wrangler dev",
+    "dev": "wrangler dev --local-upstream localhost:8787 --port 8787",
     "deploy": "wrangler deploy"
   },
   "dependencies": {

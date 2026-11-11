@@ -4,6 +4,7 @@
 import { stripApp1 } from "./jpeg.js";
 
 const MAX_WIDTH = 2400; // the widest size the site makes
+const MAX_PHOTOS = 25; // the server's cap: MAX_PHOTOS in src/validate.js
 const MAX_POST_BYTES = 40 * 1024 * 1024; // the server's cap: MAX_POST_BYTES in src/validate.js
 const KINDS = ["note", "link", "photos"];
 const CONTENT_LABELS = { note: "Note", link: "Comment (optional)", photos: "Intro (optional)" };
@@ -136,6 +137,10 @@ form.addEventListener("submit", async (event) => {
   for (const name of ["kind", "content", "url", "title", "tags"]) data.append(name, form.elements[name].value);
   if (kind() === "photos") {
     // Checked here too so a big album isn't uploaded only to be refused.
+    if (photos.length > MAX_PHOTOS) {
+      status.textContent = `At most ${MAX_PHOTOS} photos per post.`;
+      return;
+    }
     if (photos.reduce((sum, p) => sum + p.blob.size, 0) > MAX_POST_BYTES) {
       status.textContent = "These photos add up to more than 40 MB. Post them in two goes.";
       return;
@@ -156,11 +161,13 @@ form.addEventListener("submit", async (event) => {
       throw new Error("Your sign-in has expired. Copy anything you want to keep, then reload the page to sign in again.");
     }
     const body = await res.json().catch(() => ({}));
-    if (!res.ok) throw new Error(body.error || `Posting failed (${res.status}).`);
+    // 201 is a commit; 200 with dryRun is a local dry run. Anything else keeps the form.
+    const dryRun = res.status === 200 && body.dryRun === true;
+    if (res.status !== 201 && !dryRun) throw new Error(body.error || `Posting failed (${res.status}).`);
     reset();
     const link = document.createElement("a");
     Object.assign(link, { href: body.url, textContent: body.url });
-    status.replaceChildren("Posted. It'll be live in about two minutes: ", link);
+    status.replaceChildren(dryRun ? "Dry run (nothing was committed): " : "Posted. It'll be live in about two minutes: ", link);
   } catch (e) {
     status.textContent = e instanceof TypeError ? "Couldn't reach the server. Check your connection and try again." : e.message;
   } finally {
