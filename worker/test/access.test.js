@@ -1,6 +1,6 @@
 import { beforeAll, describe, expect, it } from "vitest";
 import { AccessError, verifyAccess } from "../src/access.js";
-import { EMAIL, env, makeKeys } from "./keys.js";
+import { EMAIL, TEAM, env, makeKeys } from "./keys.js";
 
 let keys;
 beforeAll(async () => { keys = await makeKeys(); });
@@ -22,6 +22,7 @@ describe("verifyAccess", () => {
       await keys.sign({ aud: "other" }),
       await keys.sign({ iss: "https://evil.cloudflareaccess.com" }),
       await keys.sign({ email: "someone@example.com" }),
+      await keys.sign({ exp: null }),
       "not.a.jwt",
     ]) {
       await expect(verifyAccess(req(token), env, keys.keySet)).rejects.toBeInstanceOf(AccessError);
@@ -31,6 +32,16 @@ describe("verifyAccess", () => {
   it("fails closed when Access isn't configured", async () => {
     const token = await keys.sign();
     await expect(verifyAccess(req(token), { ...env, ACCESS_AUD: "" }, keys.keySet)).rejects.toThrow("Access is not configured");
+  });
+
+  it("accepts a team domain written with a trailing slash", async () => {
+    const token = await keys.sign();
+    await expect(verifyAccess(req(token), { ...env, ACCESS_TEAM_DOMAIN: TEAM + "/" }, keys.keySet)).resolves.toMatchObject({ email: EMAIL });
+  });
+
+  it("fails closed when the team domain isn't a URL", async () => {
+    const token = await keys.sign();
+    await expect(verifyAccess(req(token), { ...env, ACCESS_TEAM_DOMAIN: "not a url" }, keys.keySet)).rejects.toThrow("Access is not configured");
   });
 
   it("skips the check only for localhost with DEV_SKIP_ACCESS", async () => {

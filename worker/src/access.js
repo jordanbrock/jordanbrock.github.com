@@ -20,12 +20,17 @@ export async function verifyAccess(request, env, keySet) {
   const { ACCESS_TEAM_DOMAIN: team, ACCESS_AUD: audience, ALLOWED_EMAIL: allowed } = env;
   if (!team || !audience || !allowed) throw new AccessError("Access is not configured");
 
+  let issuer;
+  try { issuer = new URL(team).origin; } catch { throw new AccessError("Access is not configured"); }
+
   const token = request.headers.get("Cf-Access-Jwt-Assertion");
   if (!token) throw new AccessError("No Access token");
 
   let payload;
   try {
-    ({ payload } = await jwtVerify(token, keySet ?? remoteKeys(team), { issuer: team, audience }));
+    ({ payload } = await jwtVerify(token, keySet ?? remoteKeys(issuer), {
+      issuer, audience, algorithms: ["RS256"], requiredClaims: ["exp", "email"], clockTolerance: 30,
+    }));
   } catch (e) {
     throw new AccessError(e.message);
   }

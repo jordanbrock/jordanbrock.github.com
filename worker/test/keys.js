@@ -15,8 +15,11 @@ export async function makeKeys() {
   const { publicKey, privateKey } = await generateKeyPair("RS256");
   const jwk = { ...(await exportJWK(publicKey)), kid: "k1", alg: "RS256" };
   const keySet = createLocalJWKSet({ keys: [jwk] });
-  const sign = ({ email = EMAIL, aud = AUD, iss = TEAM, exp = "1h" } = {}) =>
-    new SignJWT({ email }).setProtectedHeader({ alg: "RS256", kid: "k1" })
-      .setIssuer(iss).setAudience(aud).setIssuedAt().setExpirationTime(exp).sign(privateKey);
+  const sign = ({ email = EMAIL, aud = AUD, iss = TEAM, exp = "1h" } = {}) => {
+    const jwt = new SignJWT({ email }).setProtectedHeader({ alg: "RS256", kid: "k1" })
+      .setIssuer(iss).setAudience(aud).setIssuedAt();
+    if (exp !== null) jwt.setExpirationTime(exp);
+    return jwt.sign(privateKey);
+  };
   return { keySet, sign };
 }
