@@ -36,11 +36,11 @@ export async function handle(request, env, deps = {}) {
     return json({ error: "You're not signed in. Reload the page to sign in again." }, 401);
   }
 
-  // Browsers send a Content-Length with a form; without one the size can't be
-  // checked before the body is read.
-  const length = request.headers.get("Content-Length");
-  if (length === null) return json({ error: "Length required." }, 411);
-  if (Number(length) > MAX_POST_BYTES + FORM_OVERHEAD) return json({ error: TOO_BIG }, 413);
+  // Refuse an oversized body before reading it when its size is known. Without
+  // a Content-Length (the edge may drop it), the runtime's body cap and the
+  // photo budget in parseForm still apply.
+  const length = Number(request.headers.get("Content-Length"));
+  if (length > MAX_POST_BYTES + FORM_OVERHEAD) return json({ error: TOO_BIG }, 413);
 
   let form;
   try {

@@ -52,7 +52,7 @@ export function github(env, fetchImpl = fetch) {
 
   const ok = async (res, what) => {
     if (!res.ok) throw await failure(res, what);
-    return res.json();
+    return res.json().catch((e) => { throw new GitHubError(`GitHub ${what} sent a bad reply: ${e?.message}`, res.status); });
   };
 
   // Whether a file or directory exists on the branch.

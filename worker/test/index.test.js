@@ -166,11 +166,11 @@ describe("POST /posts", () => {
     expect(body).toEqual({ error: "That didn't arrive as a form. Reload the page and try again." });
   });
 
-  it("asks for a length when there's no Content-Length", async () => {
-    const { res, body, github } = await run(request({ token: await keys.sign(), length: false }));
-    expect(res.status).toBe(411);
-    expect(body).toEqual({ error: "Length required." });
-    expect(github.exists).not.toHaveBeenCalled();
+  // The edge may not pass a Content-Length on (HTTP/2, HTTP/3); the photo
+  // budget is still checked once the form is read.
+  it("still posts when there's no Content-Length", async () => {
+    const { res } = await run(request({ token: await keys.sign(), length: false }));
+    expect(res.status).toBe(201);
   });
 
   it("refuses a note with a photo", async () => {
