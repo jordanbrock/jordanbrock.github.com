@@ -1,0 +1,17 @@
+name = "jordanbrock-post"
+main = "src/index.js"
+compatibility_date = "2026-11-01"
+# Top-level keys must come before the first [table], or TOML puts them inside it.
+routes = [{ pattern = "post.jordanbrock.com", custom_domain = true }]
+
+# The posting page (public/) is served as static assets. Anything that isn't a
+# file, i.e. POST /posts, reaches the Worker. Cloudflare Access guards the
+# whole hostname; the Worker also checks the Access token itself.
+[assets]
+directory = "./public"
+
+[vars]
+GITHUB_REPO = "jordanbrock/jordanbrock.github.com"
+GITHUB_BRANCH = "master"
+# Secrets, set with `wrangler secret put` (see README.md): GITHUB_TOKEN,
+# ACCESS_TEAM_DOMAIN, ACCESS_AUD, ALLOWED_EMAIL, AUTHOR_NAME, AUTHOR_EMAIL.

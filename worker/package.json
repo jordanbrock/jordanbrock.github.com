@@ -1,0 +1,17 @@
+{
+  "name": "jordanbrock-post",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "vitest run",
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy"
+  },
+  "dependencies": {
+    "jose": "^6.2.17"
+  },
+  "devDependencies": {
+    "vitest": "^5.1.0",
+    "wrangler": "^4.160.0"
+  }
+}
