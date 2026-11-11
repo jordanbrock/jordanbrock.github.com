@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { GitHubError, github, toBase64 } from "../src/github.js";
+import { BLOB_CONCURRENCY, GitHubError, github, toBase64 } from "../src/github.js";
 import { env } from "./keys.js";
 
 // A fake api.github.com: routes are keyed "METHOD /path"; every call is recorded.
@@ -8,7 +8,7 @@ function fakeGitHub(overrides = {}) {
   const routes = {
     "GET /repos/o/r/git/ref/heads/master": () => ({ object: { sha: "parent" } }),
     "GET /repos/o/r/git/commits/parent": () => ({ tree: { sha: "basetree" } }),
-    "POST /repos/o/r/git/blobs": () => ({ sha: `blob${calls.filter((c) => c.key.endsWith("/blobs")).length}` }),
+    "POST /repos/o/r/git/blobs": (body) => ({ sha: `blob-${body.content}` }),
     "POST /repos/o/r/git/trees": () => ({ sha: "tree" }),
     "POST /repos/o/r/git/commits": () => ({ sha: "new" }),
     "PATCH /repos/o/r/git/refs/heads/master": () => ({}),
@@ -45,8 +45,8 @@ describe("commit", () => {
     expect(calls.find((c) => c.key.endsWith("/trees")).body).toEqual({
       base_tree: "basetree",
       tree: [
-        { path: "src/_posts/a.md", mode: "100644", type: "blob", sha: "blob1" },
-        { path: "src/photos/2026/a.jpg", mode: "100644", type: "blob", sha: "blob2" },
+        { path: "src/_posts/a.md", mode: "100644", type: "blob", sha: "blob-aGk=" },
+        { path: "src/photos/2026/a.jpg", mode: "100644", type: "blob", sha: "blob-AQID" },
       ],
     });
     expect(calls.find((c) => c.key === "POST /repos/o/r/git/commits").body).toEqual({ message: "Post: a", tree: "tree", parents: ["parent"], author });
@@ -66,6 +66,52 @@ describe("commit", () => {
   it("reports which GitHub call failed", async () => {
     const { fetchImpl } = fakeGitHub({ "POST /repos/o/r/git/trees": () => new Response("{}", { status: 500 }) });
     await expect(github(env, fetchImpl).commit([{ path: "a", content: "x" }], "m", author)).rejects.toThrow("GitHub tree failed (500)");
+  });
+});
+
+describe("commit details", () => {
+  it("uploads at most BLOB_CONCURRENCY blobs at once and keeps tree order", async () => {
+    expect(BLOB_CONCURRENCY).toBe(4);
+    let inFlight = 0;
+    let peak = 0;
+    const base = fakeGitHub();
+    const fetchImpl = async (url, init) => {
+      const isBlob = init.method === "POST" && new URL(url).pathname.endsWith("/blobs");
+      if (isBlob) { inFlight++; peak = Math.max(peak, inFlight); await new Promise((r) => setTimeout(r, 0)); }
+      try { return await base.fetchImpl(url, init); } finally { if (isBlob) inFlight--; }
+    };
+    const files = ["a", "b", "c", "d", "e", "f"].map((c) => ({ path: `p/${c}`, content: c }));
+    await github(env, fetchImpl).commit(files, "m", author);
+    expect(peak).toBe(4);
+    const tree = base.calls.find((c) => c.key.endsWith("/trees")).body.tree;
+    expect(tree.map((t) => t.path)).toEqual(files.map((f) => f.path));
+    expect(tree.map((t) => t.sha)).toEqual(files.map((f) => `blob-${Buffer.from(f.content).toString("base64")}`));
+  });
+
+  it("does not mutate the caller's files", async () => {
+    const files = [{ path: "a", content: new Uint8Array([1]) }];
+    await github(env, fakeGitHub().fetchImpl).commit(files, "m", author);
+    expect(files[0].content).toEqual(new Uint8Array([1]));
+    expect(Object.keys(files[0])).toEqual(["path", "content"]);
+  });
+
+  it("includes GitHub's message in the error", async () => {
+    const { fetchImpl } = fakeGitHub({ "POST /repos/o/r/git/trees": () => Response.json({ message: "Bad path" }, { status: 422 }) });
+    await expect(github(env, fetchImpl).commit([{ path: "a", content: "x" }], "m", author)).rejects.toThrow("GitHub tree failed (422): Bad path");
+  });
+
+  it("truncates long messages", async () => {
+    const { fetchImpl } = fakeGitHub({ "POST /repos/o/r/git/trees": () => Response.json({ message: "x".repeat(500) }, { status: 422 }) });
+    await expect(github(env, fetchImpl).commit([{ path: "a", content: "x" }], "m", author)).rejects.toThrow(`GitHub tree failed (422): ${"x".repeat(200)}`);
+  });
+
+  it("encodes the branch name per segment", async () => {
+    const { fetchImpl, calls } = fakeGitHub({
+      "GET /repos/o/r/git/ref/heads/feat/a%20b": () => ({ object: { sha: "parent" } }),
+      "PATCH /repos/o/r/git/refs/heads/feat/a%20b": () => ({}),
+    });
+    await github({ ...env, GITHUB_BRANCH: "feat/a b" }, fetchImpl).commit([{ path: "a", content: "x" }], "m", author);
+    expect(calls.some((c) => c.key === "PATCH /repos/o/r/git/refs/heads/feat/a%20b")).toBe(true);
   });
 });
 
