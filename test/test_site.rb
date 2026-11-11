@@ -188,7 +188,10 @@ class TestSite < Bridgetown::Test
       html get post.relative_url
       a = document.query_selector(".link-card a.link-card__title")
       expect(a["href"]).must_equal post.data.link
-      expect(document.query_selector(".link-card .meta").text).must_include Posts::Link.new(resource: post, mode: :full).source
+      expected = PostType.front_matter(post).dig("preview", "site").to_s.strip
+      expected = PostType.link_domain(post.data.link) if expected.empty?
+      expect(expected).wont_be_empty
+      expect(document.query_selector(".link-card .meta").text).must_include expected
     end
 
     it "a title-less note renders as a note with a body-derived title" do
@@ -237,6 +240,33 @@ class TestSite < Bridgetown::Test
       html get post.relative_url
       expect(document.query_selector(".link-card__image picture img")).wont_be_nil
       expect(document.query_selector(".link-card__image img")["alt"]).must_equal ""
+    end
+
+    describe "rendering the link card" do
+      def render_card(preview)
+        post = first_of("link")
+        c = Posts::Link.new(resource: post, mode: :full)
+        c.define_singleton_method(:preview) { preview } if preview
+        Bridgetown::Current.site = site
+        Nokolexbor::Document.parse(c.render_in(Bridgetown::ERBView.new(post)))
+      end
+
+      it "shows the image as decorative, the site name, and escapes the description" do
+        key = site.data.photos&.keys&.first or skip("no processed photos")
+        doc = render_card({ "image" => key, "description" => "<b>x</b>", "site" => "Ex" })
+        expect(doc.query_selector('a.link-card__image[tabindex="-1"][aria-hidden="true"] picture img[alt=""]')).wont_be_nil
+        expect(doc.query_selector(".meta").text).must_include "Ex"
+        p = doc.query_selector("p.link-card__description")
+        expect(p.text).must_equal "<b>x</b>"
+        expect(p.query_selector("b")).must_be_nil
+      end
+
+      it "without a preview shows no image or description, and the domain" do
+        doc = render_card(nil)
+        expect(doc.query_selector(".link-card__image")).must_be_nil
+        expect(doc.query_selector(".link-card__description")).must_be_nil
+        expect(doc.query_selector(".meta").text).must_include PostType.link_domain(first_of("link").data.link)
+      end
     end
 
     it "photo captions join paragraphs with a space and add no separator" do
