@@ -19,7 +19,7 @@ export function perthParts(now) {
 export function slugify(text, fallback) {
   const words = String(text ?? "")
     .replace(/https?:\/\/\S+/g, " ")
-    .normalize("NFKD").replace(/[̀-ͯ]/g, "")
+    .normalize("NFKD").replace(/[\u0300-\u036f]/g, "")
     .toLowerCase().replace(/[^a-z0-9]+/g, " ")
     .trim().split(" ").filter(Boolean);
   return words.slice(0, SLUG_WORDS).join("-") || fallback;
