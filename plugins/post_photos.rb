@@ -29,7 +29,7 @@ module PostPhotos
 
   def self.album(resource)
     list = PostType.front_matter(resource)["photos"]
-    raise ArgumentError, "photos must be a list #{where(resource, {})}" unless list.is_a?(Array)
+    raise ArgumentError, "Album photos must be a list of mappings with image and alt or caption #{where(resource, {})}" unless list.is_a?(Array)
     raise ArgumentError, "Album has no photos #{where(resource, {})}" if list.empty?
 
     list.each.with_index(1).map do |raw, index|

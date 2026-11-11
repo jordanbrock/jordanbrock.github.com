@@ -23,7 +23,7 @@ module Builders
     def process_photos
       processor.check_gps!
       entries = PostPhotos.tiles(site.collections.posts.resources)
-      PhotoProcessor.check_collisions!(entries.map { _2[:image] })
+      PhotoProcessor.check_collisions!(entries.map { |_post, entry| entry[:image] })
       registry = {}
       entries.each do |post, entry|
         registry[entry[:image]] ||= processor.process(entry[:image], guard: false)

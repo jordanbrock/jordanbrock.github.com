@@ -48,7 +48,7 @@ class TestPostPhotos < Minitest::Test
 
   def test_photos_that_is_not_a_list_raises
     err = assert_raises(ArgumentError) { PostPhotos.for(Post.new({ "type" => "album", "photos" => "2026/a.jpg" })) }
-    assert_includes err.message, "photos must be a list (in _posts/2026-11-07-x.md)"
+    assert_includes err.message, "Album photos must be a list of mappings with image and alt or caption (in _posts/2026-11-07-x.md)"
   end
 
   def test_empty_album_raises

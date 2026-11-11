@@ -89,5 +89,6 @@ class TestFeedEntry < Minitest::Test
     assert_raises(PhotoProcessor::InvalidError) { PhotoProcessor.lookup!(PHOTOS, " ") }
     assert_raises(PhotoProcessor::MissingError) { PhotoProcessor.lookup!(nil, "2026/a.jpg") }
     assert_equal PHOTOS["2026/a.jpg"], PhotoProcessor.lookup!(PHOTOS, "2026/a.jpg")
+    assert_equal PHOTOS["2026/a.jpg"], PhotoProcessor.lookup!(PHOTOS, " 2026/a.jpg ")
   end
 end
