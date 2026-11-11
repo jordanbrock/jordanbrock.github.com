@@ -1,6 +1,6 @@
 require "uri"
 
-# Decides which of the four post types a post is, from its front matter.
+# Decides which post type a post is (see TYPES), from its front matter.
 module PostType
   TYPES = %w[article note link photo album].freeze
 
