@@ -14,7 +14,7 @@
   </div>
   <% if full? %>
     <% photos.each do |photo| %>
-      <figure id="photo-<%= photo[:index] %>">
+      <figure id="<%= anchor_id(photo) %>">
         <%= render Picture.new(image: photo[:image], alt: photo[:alt], eager: photo[:index] == 1) %>
         <% if photo[:caption] %><figcaption><%= photo[:caption] %></figcaption><% end %>
       </figure>
@@ -24,7 +24,7 @@
     <% if strip.any? %>
       <div class="album__strip">
         <% strip.each_with_index do |photo, i| %>
-          <a href="<%= url %>#photo-<%= photo[:index] %>"><%= render Picture.new(image: photo[:image], alt: photo[:alt], sizes: STRIP_SIZES) %><% if i == strip.size - 1 && more.positive? %><span class="album__more" aria-hidden="true">+<%= more %></span><% end %></a>
+          <a href="<%= strip_href(i) %>"<% if strip_label(i) %> aria-label="<%= strip_label(i) %>"<% end %>><%= render Picture.new(image: photo[:image], alt: photo[:alt], sizes: STRIP_SIZES) %><% if last_with_more?(i) %><span class="album__more" aria-hidden="true">+<%= more %></span><% end %></a>
         <% end %>
       </div>
     <% end %>

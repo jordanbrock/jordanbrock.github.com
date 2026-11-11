@@ -156,6 +156,16 @@ class TestSite < Bridgetown::Test
       expect(seven.strip.map { _1[:index] }).must_equal [2, 3, 4, 5]
       expect(seven.more).must_equal 2
       expect(Posts::Album.new(resource: stub.call(5), mode: :summary).more).must_equal 0
+      two = Posts::Album.new(resource: stub.call(2), mode: :summary)
+      expect(two.strip.size).must_equal 1
+      expect(two.more).must_equal 0
+      expect(Posts::Album.new(resource: stub.call(6), mode: :summary).more).must_equal 1
+      expect(PostPhotos.anchor(seven.strip_target(3))).must_equal "#photo-6"
+      expect(seven.strip_label(3)).must_include "(and 2 more)"
+      expect(seven.strip_label(0)).must_be_nil
+      five = Posts::Album.new(resource: stub.call(5), mode: :summary)
+      expect(PostPhotos.anchor(five.strip_target(3))).must_equal "#photo-5"
+      expect(five.strip_label(3)).must_be_nil
     end
 
     it "renders each type with its own class" do
