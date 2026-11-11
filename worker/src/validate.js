@@ -45,35 +45,62 @@ export function validate(input) {
 
 export const isJpeg = (b) => b.length > 3 && b[0] === 0xff && b[1] === 0xd8 && b[2] === 0xff;
 
-// True unless the JPEG is a clean, well-formed run of segments: SOI, header
-// segments with lengths (none of them APP1, i.e. EXIF/XMP), a frame (SOFn),
-// SOS, image data with no APP1, and EOI as the last two bytes. Anything odd is
-// refused, because libjpeg is more forgiving than this walk and could still
-// find camera data we skipped.
+// Application segments allowed, by marker: the payload must start with the
+// given signature. Any other APPn, and COM, may carry camera data.
+const ALLOWED_APP = { 0xe0: "JFIF\0", 0xe2: "ICC_PROFILE\0", 0xee: "Adobe" };
+const TABLES = [0xc4, 0xcc, 0xdb, 0xdd]; // DHT, DAC, DQT, DRI
+const isFrame = (m) => m >= 0xc0 && m <= 0xcf && !TABLES.includes(m) && m !== 0xc8; // SOFn
+
+const startsWith = (b, at, text) => [...text].every((c, k) => b[at + k] === c.charCodeAt(0));
+
+// The index of the marker that ends the entropy-coded data starting at j.
+// In that data FF is stuffed as FF00, and RSTn markers sit inline.
+function endOfScan(b, j) {
+  for (; j + 1 < b.length; j++) {
+    if (b[j] !== 0xff) continue;
+    const n = b[j + 1];
+    if (n === 0x00 || n === 0xff || (n >= 0xd0 && n <= 0xd7)) continue;
+    return j;
+  }
+  return b.length;
+}
+
+// True unless the JPEG is a clean, well-formed run of segments: SOI, then
+// tables, one frame (SOFn) and scans (SOS + entropy data), with only JFIF,
+// ICC colour and Adobe application segments anywhere, and EOI as the last two
+// bytes. Anything else is refused (an allowlist), because libjpeg is more
+// forgiving than this walk and could still find camera data we skipped.
 export function unsafeJpeg(b) {
   if (!isJpeg(b)) return true;
   let i = 2;
   let frame = false;
+  let scanned = false;
   for (;;) {
     if (i + 1 >= b.length || b[i] !== 0xff) return true;
     while (i + 1 < b.length && b[i + 1] === 0xff) i++; // fill bytes
+    if (i + 1 >= b.length) return true;
     const m = b[i + 1];
-    if (m === 0xda) break; // start of scan
-    if (m === 0xe1) return true; // APP1: EXIF or XMP
-    if (m === 0x00 || m === 0x01 || (m >= 0xd0 && m <= 0xd9)) return true; // no-length marker in the header
+    if (m === 0xd9) return !(scanned && i + 2 === b.length); // EOI must end the file
     if (i + 3 >= b.length) return true;
     const len = (b[i + 2] << 8) | b[i + 3];
-    if (len < 2) return true;
-    if (m >= 0xc0 && m <= 0xcf && m !== 0xc4 && m !== 0xc8 && m !== 0xcc) {
-      if (frame || len < 11 || i + 2 + len > b.length) return true; // second frame, or too short for 8 bytes + a component
+    if (len < 2 || i + 2 + len > b.length) return true;
+    const next = i + 2 + len;
+    if (m === 0xda) {
+      if (!frame) return true;
+      scanned = true;
+      i = endOfScan(b, next);
+      continue;
+    }
+    if (isFrame(m)) {
+      if (frame || len < 11) return true; // second frame, or too short for 8 bytes + a component
       const height = (b[i + 5] << 8) | b[i + 6];
       const width = (b[i + 7] << 8) | b[i + 8];
       if (!height || !width) return true;
       frame = true;
+    } else if (!TABLES.includes(m)) {
+      const signature = ALLOWED_APP[m];
+      if (!signature || len - 2 < signature.length || !startsWith(b, i + 4, signature)) return true;
     }
-    i += 2 + len;
+    i = next;
   }
-  if (!frame) return true;
-  for (let j = i + 2; j + 1 < b.length; j++) if (b[j] === 0xff && b[j + 1] === 0xe1) return true;
-  return !(b[b.length - 2] === 0xff && b[b.length - 1] === 0xd9);
 }

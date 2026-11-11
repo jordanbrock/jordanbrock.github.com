@@ -76,6 +76,32 @@ describe("JPEG checks", () => {
     expect(unsafeJpeg(jpeg(SOI, app0, app1, sof, sos, data, EOI))).toBe(true);
   });
 
+  it("allows only JFIF, ICC colour and Adobe application segments", () => {
+    const app = (marker, text) => seg(marker, ascii(text));
+    const with_ = (...segments) => jpeg(SOI, ...segments, sof, sos, data, EOI);
+    expect(unsafeJpeg(with_(app0, app(0xe2, "ICC_PROFILE\0\x01\x01data")))).toBe(false); // ICC colour
+    expect(unsafeJpeg(with_(app(0xee, "Adobe\0\x64\0\0\0\0\x01")))).toBe(false); // Adobe colour transform
+    expect(unsafeJpeg(with_(app(0xed, "Photoshop 3.0\x008BIM")))).toBe(true); // APP13: IPTC
+    expect(unsafeJpeg(with_(app(0xe5, "anything")))).toBe(true); // unknown APP5
+    expect(unsafeJpeg(with_(app(0xfe, "a comment")))).toBe(true); // COM
+    expect(unsafeJpeg(with_(app(0xe0, "JFXX\0\x10thumb")))).toBe(true); // APP0 that isn't JFIF
+    expect(unsafeJpeg(with_(app(0xe2, "MPF\0")))).toBe(true); // APP2 that isn't ICC
+    expect(unsafeJpeg(with_(app(0xee, "Other")))).toBe(true); // APP14 that isn't Adobe
+    expect(unsafeJpeg(with_(seg(0xf0, [1, 2])))).toBe(true); // reserved JPGn
+  });
+
+  it("walks every scan of a progressive JPEG, applying the same rules between scans", () => {
+    const dht = seg(0xc4, [0x00, ...Array(16).fill(0)]);
+    const dqt = seg(0xdb, [0x00, ...Array(64).fill(1)]);
+    const prog = seg(0xc2, [8, 0, 16, 0, 16, 1, 1, 0x11, 0]);
+    const rst = [0xff, 0xd0];
+    expect(unsafeJpeg(jpeg(SOI, app0, dqt, prog, dht, sos, data, rst, data, dht, sos, data, EOI))).toBe(false);
+    expect(unsafeJpeg(jpeg(SOI, app0, prog, sos, data, seg(0xed, ascii("8BIM")), sos, data, EOI))).toBe(true); // APP13 between scans
+    expect(unsafeJpeg(jpeg(SOI, app0, prog, sos, data, seg(0xfe, ascii("hi")), sos, data, EOI))).toBe(true); // COM between scans
+    expect(unsafeJpeg(jpeg(SOI, app0, prog, sos, data, seg(0xe1, ascii("Exif\0\0")), sos, data, EOI))).toBe(true); // APP1 between scans
+    expect(unsafeJpeg(jpeg(SOI, app0, prog, sos, data, prog, sos, data, EOI))).toBe(true); // a second frame
+  });
+
   it("refuses odd bytes that libjpeg skips before a later APP1", () => {
     expect(unsafeJpeg(jpeg(SOI, app0, [0x00], app1, sof, sos, data, EOI))).toBe(true);
     expect(unsafeJpeg(jpeg(SOI, app0, [0xff, 0x01], app1, sof, sos, data, EOI))).toBe(true);

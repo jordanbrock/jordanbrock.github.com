@@ -4,7 +4,7 @@
 
 - The page (`public/`) is a static asset of this Cloudflare Worker.
 - `POST /posts` (`src/index.js`) checks the Cloudflare Access token, validates the post against the site's rules, and commits the Markdown file and photos to master in one commit through the GitHub API. If the name is taken it adds `-2`, `-3`; if master moves mid-commit it retries once.
-- Photos are resized to 2400px wide and re-encoded as JPEG in the browser, which removes GPS and all other metadata. The Worker refuses any JPEG that still has EXIF or XMP. The repo is public, so this is the only GPS check before a photo is published.
+- Photos are resized to 2400px wide and re-encoded as JPEG in the browser, which removes GPS and all other metadata. The Worker refuses any JPEG with metadata other than JFIF, ICC colour or Adobe segments. The repo is public, so this is the only GPS check before a photo is published.
 - Limits: 25 photos and 40 MB per post, 10 MB per photo.
 
 ## Setup (once)

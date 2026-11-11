@@ -1,7 +1,7 @@
 // The posting page: tabs, preparing photos in the browser, and sending the
 // post to /posts. Photos are resized to at most MAX_WIDTH and re-encoded as
 // JPEG on a canvas, which drops all their metadata (including GPS).
-import { stripApp1 } from "./jpeg.js";
+import { stripMetadata } from "./jpeg.js";
 
 const MAX_WIDTH = 2400; // the widest size the site makes
 const MAX_PHOTOS = 25; // the server's cap: MAX_PHOTOS in src/validate.js
@@ -54,8 +54,8 @@ async function toJpeg(file) {
     ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
     const blob = await new Promise((resolve) => canvas.toBlob(resolve, "image/jpeg", 0.9));
     if (!blob) throw new Error("encode failed");
-    // Some encoders may still write an EXIF/XMP segment, which the Worker refuses.
-    const bytes = stripApp1(new Uint8Array(await blob.arrayBuffer()));
+    // Some encoders may still write EXIF or other metadata, which the Worker refuses.
+    const bytes = stripMetadata(new Uint8Array(await blob.arrayBuffer()));
     return new Blob([bytes], { type: "image/jpeg" });
   } finally {
     URL.revokeObjectURL(src);

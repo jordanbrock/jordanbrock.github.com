@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { stripApp1 } from "../public/jpeg.js";
+import { stripMetadata } from "../public/jpeg.js";
 import { unsafeJpeg } from "../src/validate.js";
 
 const SOI = [0xff, 0xd8];
@@ -13,20 +13,20 @@ const EOI = [0xff, 0xd9];
 
 const jpeg = (...parts) => new Uint8Array(parts.flat());
 
-describe("stripApp1", () => {
+describe("stripMetadata", () => {
   it("removes APP1 and keeps APP0, SOF, SOS and the data", () => {
-    const out = stripApp1(jpeg(SOI, APP0, APP1, SOF, SOS, DATA, EOI));
+    const out = stripMetadata(jpeg(SOI, APP0, APP1, SOF, SOS, DATA, EOI));
     expect([...out]).toEqual([...jpeg(SOI, APP0, SOF, SOS, DATA, EOI)]);
   });
 
   it("removes every APP1 segment", () => {
-    const out = stripApp1(jpeg(SOI, APP1, APP0, APP1, SOF, SOS, DATA, EOI));
+    const out = stripMetadata(jpeg(SOI, APP1, APP0, APP1, SOF, SOS, DATA, EOI));
     expect([...out]).toEqual([...jpeg(SOI, APP0, SOF, SOS, DATA, EOI)]);
   });
 
-  it("returns a JPEG with no APP1 byte for byte", () => {
+  it("returns a JPEG with no metadata byte for byte", () => {
     const input = jpeg(SOI, APP0, SOF, SOS, DATA, EOI);
-    expect([...stripApp1(input)]).toEqual([...input]);
+    expect([...stripMetadata(input)]).toEqual([...input]);
   });
 
   it("returns malformed input unchanged", () => {
@@ -37,12 +37,24 @@ describe("stripApp1", () => {
       jpeg(SOI, APP1, [0xff, 0xd0], SOF, SOS, EOI), // no-length marker in the header
       jpeg(SOI, APP0, APP1), // no SOS
     ];
-    for (const input of cases) expect(stripApp1(input)).toBe(input);
+    for (const input of cases) expect(stripMetadata(input)).toBe(input);
   });
 
   it("makes a well-formed JPEG with APP1 pass the server's check", () => {
     const input = jpeg(SOI, APP0, APP1, SOF, SOS, DATA, EOI);
     expect(unsafeJpeg(input)).toBe(true);
-    expect(unsafeJpeg(stripApp1(input))).toBe(false);
+    expect(unsafeJpeg(stripMetadata(input))).toBe(false);
+  });
+
+  it("removes every application segment and comment the server would refuse", () => {
+    const seg = (marker, text) => [0xff, marker, 0, text.length + 2, ...[...text].map((c) => c.charCodeAt(0))];
+    const ICC = seg(0xe2, "ICC_PROFILE\0\x01\x01");
+    const ADOBE = seg(0xee, "Adobe\0\x64\0\0\0\0\x01");
+    const refused = [seg(0xe0, "JFXX\0"), APP1, seg(0xe2, "MPF\0"), seg(0xe5, "x"), seg(0xed, "Photoshop 3.0\0"), seg(0xee, "Other"), seg(0xef, "x"), seg(0xfe, "comment")];
+    const input = jpeg(SOI, APP0, ...refused, ICC, ADOBE, SOF, SOS, DATA, EOI);
+    expect(unsafeJpeg(input)).toBe(true);
+    const out = stripMetadata(input);
+    expect([...out]).toEqual([...jpeg(SOI, APP0, ICC, ADOBE, SOF, SOS, DATA, EOI)]);
+    expect(unsafeJpeg(out)).toBe(false);
   });
 });
