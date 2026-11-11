@@ -21,11 +21,11 @@ describe("slugify", () => {
   });
 
   it("drops accents, URLs and anything past six words", () => {
-    expect(slugify("Café déjà vu https://example.com/a b c d e f", "x")).toBe("cafe-deja-vu-b-c-d");
+    expect(slugify("Caf\u00e9 d\u00e9j\u00e0 vu https://example.com/a b c d e f", "x")).toBe("cafe-deja-vu-b-c-d");
   });
 
   it("falls back when nothing usable is left", () => {
-    expect(slugify("🦆 🦆", "note")).toBe("note");
+    expect(slugify("\ud83e\udd86 \ud83e\udd86", "note")).toBe("note");
     expect(slugify("", "photo")).toBe("photo");
   });
 });
@@ -86,5 +86,35 @@ describe("buildPost", () => {
     expect(post.path).toBe("src/_posts/2026-11-11-dusk-2.md");
     expect(post.url).toBe("https://jordanbrock.com/2026/11/11/dusk-2/");
     expect(post.photos[0].path).toBe("src/photos/2026/dusk-2.jpg");
+  });
+
+  it("cleans control characters out of front matter strings", () => {
+    const dirty = "a\u007fb\u0085c";
+    const photo = buildPost(input({ kind: "photos", photos: [{ bytes: jpeg, alt: dirty, caption: "Dusk" }], tags: [dirty] }), now);
+    expect(photo.markdown).toContain('alt: "a b c"');
+    expect(photo.markdown).toContain('tags: ["a b c"]');
+    const link = buildPost(input({ kind: "link", url: "https://example.com/", title: dirty }), now);
+    expect(link.markdown).toContain('title: "a b c"');
+  });
+
+  it("writes link URLs in normalised form", () => {
+    const post = buildPost(input({ kind: "link", url: "https://b\u00fccher.de/caf\u00e9 a" }), now);
+    expect(post.markdown).toContain('link: "https://xn--bcher-kva.de/caf%C3%A9%20a"');
+  });
+
+  it("keeps the intro text of a single photo post after its caption", () => {
+    const post = buildPost(input({ kind: "photos", content: "Long day.", photos: [{ bytes: jpeg, alt: "A", caption: "Dusk." }] }), now);
+    expect(post.markdown.endsWith("---\nDusk.\n\nLong day.\n")).toBe(true);
+    expect(post.slug).toBe("dusk-long-day");
+  });
+});
+
+describe("slugify limits", () => {
+  it("caps slugs at 60 characters", () => {
+    expect(slugify("a".repeat(100), "x")).toBe("a".repeat(60));
+  });
+
+  it("transliterates letters NFKD leaves alone", () => {
+    expect(slugify("Stra\u00dfe \u00c6r\u00f8", "x")).toBe("strasse-aero");
   });
 });

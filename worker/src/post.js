@@ -4,6 +4,9 @@
 const ZONE = "Australia/Perth"; // no daylight saving: always +0800
 const SITE = "https://jordanbrock.com";
 const SLUG_WORDS = 6;
+const SLUG_MAX = 60;
+// Letters NFKD does not decompose (input is already lowercase).
+const LIGATURES = { "\u00df": "ss", "\u00e6": "ae", "\u00f8": "o", "\u0142": "l", "\u0111": "d", "\u0153": "oe" };
 
 // The Perth date ("2026-11-11"), time ("14:03:09") and year of a moment.
 export function perthParts(now) {
@@ -19,14 +22,16 @@ export function perthParts(now) {
 export function slugify(text, fallback) {
   const words = String(text ?? "")
     .replace(/https?:\/\/\S+/g, " ")
+    .toLowerCase()
+    .replace(/[\u00df\u00e6\u00f8\u0142\u0111\u0153]/g, (c) => LIGATURES[c])
     .normalize("NFKD").replace(/[\u0300-\u036f]/g, "")
-    .toLowerCase().replace(/[^a-z0-9]+/g, " ")
+    .replace(/[^a-z0-9]+/g, " ")
     .trim().split(" ").filter(Boolean);
-  return words.slice(0, SLUG_WORDS).join("-") || fallback;
+  return words.slice(0, SLUG_WORDS).join("-").slice(0, SLUG_MAX).replace(/-+$/, "") || fallback;
 }
 
 const text = (s) => String(s ?? "").replace(/\r\n?/g, "\n").trim(); // keeps paragraphs
-const line = (s) => text(s).replace(/\s+/g, " "); // one line, for front matter
+const line = (s) => text(s).toWellFormed().replace(/[\u0000-\u001f\u007f-\u009f]/g, " ").replace(/\s+/g, " ").trim(); // one line, for front matter
 const quote = (s) => JSON.stringify(s); // a JSON string is a valid YAML double-quoted string
 
 // YAML front matter. Empty values are left out; every string is quoted.
@@ -63,11 +68,11 @@ export function buildPost(input, now, n = 1) {
   if (input.kind === "note") {
     slug = slugify(body, "note");
   } else if (input.kind === "link") {
-    const url = line(input.url);
+    const url = new URL(line(input.url)).href;
     slug = slugify(title || new URL(url).hostname.replace(/^www\./, ""), "link");
     Object.assign(fields, { title, link: url });
   } else if (single) {
-    body = text(input.photos[0].caption) || body;
+    body = [text(input.photos[0].caption), body].filter(Boolean).join("\n\n");
     slug = slugify(body, "photo");
   } else {
     slug = slugify(title || body, "album");
