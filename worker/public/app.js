@@ -5,16 +5,19 @@ import { stripApp1 } from "./jpeg.js";
 
 const MAX_WIDTH = 2400; // the widest size the site makes
 const MAX_PHOTOS = 25; // the server's cap: MAX_PHOTOS in src/validate.js
+const MAX_PHOTO_BYTES = 10 * 1024 * 1024; // the server's cap: MAX_PHOTO_BYTES in src/validate.js
 const MAX_POST_BYTES = 40 * 1024 * 1024; // the server's cap: MAX_POST_BYTES in src/validate.js
 const KINDS = ["note", "link", "photos"];
 const CONTENT_LABELS = { note: "Note", link: "Comment (optional)", photos: "Intro (optional)" };
+const FIELDS = ["kind", "content", "url", "title", "tags"];
 
 const form = document.querySelector("#post");
+const fields = document.querySelector("#fields");
 const list = document.querySelector("#photos");
 const picker = document.querySelector("#picker");
 const status = document.querySelector("#status");
-const submit = document.querySelector("#submit");
 let photos = []; // [{ blob, url, alt, caption }] in post order
+let preparing = false;
 
 const kind = () => form.elements.kind.value;
 
@@ -38,15 +41,17 @@ function render() {
 
 async function toJpeg(file) {
   const src = URL.createObjectURL(file);
+  const canvas = document.createElement("canvas");
   try {
     const img = new Image();
     img.src = src;
     await img.decode(); // browsers apply the EXIF orientation when decoding
     const scale = Math.min(1, MAX_WIDTH / img.naturalWidth);
-    const canvas = document.createElement("canvas");
     canvas.width = Math.round(img.naturalWidth * scale);
     canvas.height = Math.round(img.naturalHeight * scale);
-    canvas.getContext("2d").drawImage(img, 0, 0, canvas.width, canvas.height);
+    const ctx = canvas.getContext("2d");
+    if (!ctx) throw new Error("This browser couldn't make a canvas to resize the photo.");
+    ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
     const blob = await new Promise((resolve) => canvas.toBlob(resolve, "image/jpeg", 0.9));
     if (!blob) throw new Error("encode failed");
     // Some encoders may still write an EXIF/XMP segment, which the Worker refuses.
@@ -54,22 +59,25 @@ async function toJpeg(file) {
     return new Blob([bytes], { type: "image/jpeg" });
   } finally {
     URL.revokeObjectURL(src);
+    canvas.width = canvas.height = 0; // iOS holds canvas memory until it's shrunk
   }
 }
 
-function field(label, value, onInput) {
+function field(label, ariaLabel, value, onInput) {
   const wrap = document.createElement("label");
   const input = document.createElement("input");
   input.value = value;
   input.autocomplete = "off";
+  input.setAttribute("aria-label", ariaLabel);
   input.addEventListener("input", () => onInput(input.value));
   wrap.append(label, input);
   return wrap;
 }
 
-function button(text, label, enabled, onClick) {
+function button(text, action, label, enabled, onClick) {
   const b = document.createElement("button");
   Object.assign(b, { type: "button", textContent: text, disabled: !enabled });
+  b.dataset.action = action;
   b.setAttribute("aria-label", label);
   b.addEventListener("click", onClick);
   return b;
@@ -83,18 +91,30 @@ function renderPhotos() {
     const tools = document.createElement("div");
     tools.className = "tools";
     tools.append(
-      button("\u2191", `Move photo ${i + 1} up`, i > 0, () => move(i, -1)),
-      button("\u2193", `Move photo ${i + 1} down`, i < photos.length - 1, () => move(i, 1)),
-      button("Remove", `Remove photo ${i + 1}`, true, () => removePhoto(i)),
+      button("\u2191", "up", `Move photo ${i + 1} up`, i > 0, () => move(i, -1, "up")),
+      button("\u2193", "down", `Move photo ${i + 1} down`, i < photos.length - 1, () => move(i, 1, "down")),
+      button("Remove", "remove", `Remove photo ${i + 1}`, true, () => removePhoto(i)),
     );
-    li.append(thumb, field("Alt text", p.alt, (v) => (p.alt = v)), field("Caption (optional)", p.caption, (v) => (p.caption = v)), tools);
+    li.append(
+      thumb,
+      field("Alt text", `Photo ${i + 1} alt text`, p.alt, (v) => (p.alt = v)),
+      field("Caption (optional)", `Photo ${i + 1} caption`, p.caption, (v) => (p.caption = v)),
+      tools,
+    );
     return li;
   }));
 }
 
-function move(i, by) {
+const control = (i, action) => list.children[i]?.querySelector(`[data-action="${action}"]`);
+
+// Keeps focus on the button that was pressed, now on the moved photo; if
+// that button is disabled at the new place, the other arrow.
+function move(i, by, action) {
   [photos[i], photos[i + by]] = [photos[i + by], photos[i]];
   renderPhotos();
+  const j = i + by;
+  const same = control(j, action);
+  (same && !same.disabled ? same : control(j, action === "up" ? "down" : "up"))?.focus();
 }
 
 function removePhoto(i) {
@@ -102,22 +122,39 @@ function removePhoto(i) {
   photos.splice(i, 1);
   renderPhotos();
   render();
+  (control(i, "remove") ?? picker).focus();
 }
+
+const failure = (name) => (/\.hei[cf]$/i.test(name) ? `${name} (HEIC isn't supported in this browser; try Safari.)` : name);
 
 picker.addEventListener("change", async () => {
   const files = [...picker.files];
   picker.value = "";
-  const failed = [];
+  if (files.length === 0) return;
+  const unreadable = [];
+  const tooBig = [];
+  preparing = true;
+  fields.disabled = true;
   status.textContent = `Preparing ${files.length} photo${files.length === 1 ? "" : "s"}\u2026`;
-  for (const file of files) {
-    try {
-      const blob = await toJpeg(file);
-      photos.push({ blob, url: URL.createObjectURL(blob), alt: "", caption: "" });
-    } catch {
-      failed.push(file.name);
+  try {
+    for (const file of files) {
+      try {
+        const blob = await toJpeg(file);
+        if (blob.size > MAX_PHOTO_BYTES) {
+          tooBig.push(`${file.name} is too big after resizing.`);
+          continue;
+        }
+        photos.push({ blob, url: URL.createObjectURL(blob), alt: "", caption: "" });
+      } catch {
+        unreadable.push(failure(file.name));
+      }
     }
+  } finally {
+    preparing = false;
+    fields.disabled = false;
   }
-  status.textContent = failed.length ? `Couldn't read ${failed.join(", ")}.` : "";
+  const messages = unreadable.length ? [`Couldn't read ${unreadable.join(", ")}.`, ...tooBig] : tooBig;
+  status.textContent = messages.join(" ");
   renderPhotos();
   render();
 });
@@ -131,10 +168,22 @@ function reset() {
   setKind(k);
 }
 
+const isLink = (url) => typeof url === "string" && /^https?:\/\//i.test(url);
+
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
+  if (preparing) {
+    status.textContent = "Still preparing photos\u2026";
+    return;
+  }
+
+  // Built from each control's value (not new FormData(form)), so it works
+  // while the fieldset is disabled. A field the page is hiding sends "".
   const data = new FormData();
-  for (const name of ["kind", "content", "url", "title", "tags"]) data.append(name, form.elements[name].value);
+  for (const name of FIELDS) {
+    const el = form.elements[name];
+    data.append(name, el.closest("[hidden]") ? "" : el.value);
+  }
   if (kind() === "photos") {
     // Checked here too so a big album isn't uploaded only to be refused.
     if (photos.length > MAX_PHOTOS) {
@@ -152,7 +201,7 @@ form.addEventListener("submit", async (event) => {
     });
   }
 
-  submit.disabled = true;
+  fields.disabled = true;
   status.textContent = "Posting\u2026";
   try {
     // An expired Access session answers with a redirect to the sign-in page.
@@ -165,13 +214,18 @@ form.addEventListener("submit", async (event) => {
     const dryRun = res.status === 200 && body.dryRun === true;
     if (res.status !== 201 && !dryRun) throw new Error(body.error || `Posting failed (${res.status}).`);
     reset();
-    const link = document.createElement("a");
-    Object.assign(link, { href: body.url, textContent: body.url });
-    status.replaceChildren(dryRun ? "Dry run (nothing was committed): " : "Posted. It'll be live in about two minutes: ", link);
+    const prefix = dryRun ? "Dry run (nothing was committed)" : "Posted. It'll be live in about two minutes";
+    if (isLink(body.url)) {
+      const link = document.createElement("a");
+      Object.assign(link, { href: body.url, textContent: body.url });
+      status.replaceChildren(`${prefix}: `, link);
+    } else {
+      status.textContent = dryRun ? `${prefix}.` : "Posted.";
+    }
   } catch (e) {
     status.textContent = e instanceof TypeError ? "Couldn't reach the server. Check your connection and try again." : e.message;
   } finally {
-    submit.disabled = false;
+    fields.disabled = false;
   }
 });
 
@@ -180,3 +234,4 @@ const params = new URLSearchParams(location.search);
 form.elements.url.value = params.get("url") ?? "";
 form.elements.title.value = params.get("title") ?? "";
 setKind(KINDS.includes(params.get("tab")) ? params.get("tab") : "note");
+if (location.search) history.replaceState(null, "", location.pathname);

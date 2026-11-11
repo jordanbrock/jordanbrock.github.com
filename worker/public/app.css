@@ -13,7 +13,8 @@ main { max-width: 36rem; margin: 0 auto; padding: 1.5rem 1rem 4rem; }
 h1 { font-size: 1.5rem; margin: 0 0 1rem; }
 [hidden] { display: none !important; }
 
-form { display: grid; gap: 1rem; }
+form, #fields { display: grid; gap: 1rem; }
+#fields { border: 0; padding: 0; margin: 0; min-width: 0; }
 label { display: grid; gap: 0.35rem; font-weight: 600; font-size: 0.9375rem; }
 .hint { font-weight: 400; color: var(--muted); font-size: 0.8125rem; }
 input, textarea { font: inherit; font-weight: 400; width: 100%; padding: 0.6rem 0.7rem; border: 1px solid var(--rule);

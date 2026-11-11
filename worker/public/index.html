@@ -12,37 +12,39 @@
   <main>
     <h1>New post</h1>
     <form id="post" novalidate>
-      <div class="tabs">
-        <button type="button" data-kind="note" aria-pressed="true">Note</button>
-        <button type="button" data-kind="link" aria-pressed="false">Link</button>
-        <button type="button" data-kind="photos" aria-pressed="false">Photos</button>
-      </div>
-      <input type="hidden" name="kind" value="note">
+      <fieldset id="fields">
+        <div class="tabs">
+          <button type="button" data-kind="note" aria-pressed="true">Note</button>
+          <button type="button" data-kind="link" aria-pressed="false">Link</button>
+          <button type="button" data-kind="photos" aria-pressed="false">Photos</button>
+        </div>
+        <input type="hidden" name="kind" value="note">
 
-      <label data-for="link">URL
-        <input name="url" type="url" inputmode="url" autocomplete="off" autocapitalize="none">
-      </label>
-
-      <div data-for="photos">
-        <label class="pick">Choose photos
-          <input id="picker" type="file" accept="image/*" multiple>
+        <label data-for="link">URL
+          <input name="url" type="url" inputmode="url" autocomplete="off" autocapitalize="none">
         </label>
-        <ol id="photos" class="photos"></ol>
-      </div>
 
-      <label data-for="title">Title <span class="hint">optional</span>
-        <input name="title" autocomplete="off">
-      </label>
+        <div data-for="photos">
+          <label class="pick">Choose photos
+            <input id="picker" type="file" accept="image/*" multiple>
+          </label>
+          <ol id="photos" class="photos"></ol>
+        </div>
 
-      <label data-content><span id="content-label">Note</span>
-        <textarea name="content" rows="6"></textarea>
-      </label>
+        <label data-for="title">Title <span class="hint">optional</span>
+          <input name="title" autocomplete="off">
+        </label>
 
-      <label>Tags <span class="hint">comma separated, optional</span>
-        <input name="tags" autocomplete="off" autocapitalize="none">
-      </label>
+        <label data-content><span id="content-label">Note</span>
+          <textarea name="content" rows="6"></textarea>
+        </label>
 
-      <button type="submit" id="submit">Post</button>
+        <label>Tags <span class="hint">comma separated, optional</span>
+          <input name="tags" autocomplete="off" autocapitalize="none">
+        </label>
+
+        <button type="submit" id="submit">Post</button>
+      </fieldset>
       <p id="status" role="status" aria-live="polite"></p>
     </form>
   </main>
