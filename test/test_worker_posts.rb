@@ -27,8 +27,29 @@ class TestWorkerPosts < Minitest::Test
     Post.new(result.front_matter.transform_keys(&:to_s), result.content)
   end
 
+  ALL = %w[note link photo album awkward].freeze
+
+  # The site's template_engine is "erb", which Bridgetown runs on every post
+  # whose front matter doesn't name another engine. Posted bodies must not run.
+  def test_every_fixture_turns_off_erb
+    config = Bridgetown::Configuration.new("template_engine" => "erb")
+    erb = Bridgetown::Converters::ERBTemplates.new(config)
+    ALL.each do |name|
+      post = fixture(name)
+      assert_equal "none", post.attrs["template_engine"], name
+      refute erb.determine_template_engine(Struct.new(:data).new(post.attrs)), name
+    end
+    assert erb.determine_template_engine(Struct.new(:data).new({})), "a post without template_engine would run ERB"
+  end
+
+  def test_erb_tags_stay_verbatim
+    content = fixture("awkward").content
+    assert_includes content, "<%= x %>"
+    assert_includes content, "<%# y %>"
+  end
+
   def test_every_fixture_has_a_perth_date
-    %w[note link photo album awkward].each do |name|
+    ALL.each do |name|
       assert_equal NOW, fixture(name).date.utc, name
     end
   end

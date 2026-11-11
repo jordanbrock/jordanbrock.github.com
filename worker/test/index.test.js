@@ -45,7 +45,7 @@ describe("POST /posts", () => {
     expect(res.status).toBe(201);
     expect(body).toEqual({ url: "https://jordanbrock.com/2026/11/11/hello-there/", path: "src/_posts/2026-11-11-hello-there.md" });
     expect(github.commit).toHaveBeenCalledWith(
-      [{ path: "src/_posts/2026-11-11-hello-there.md", content: '---\ndate: "2026-11-11 14:03:09 +0800"\n---\nHello there\n' }],
+      [{ path: "src/_posts/2026-11-11-hello-there.md", content: '---\ndate: "2026-11-11 14:03:09 +0800"\ntemplate_engine: "none"\n---\nHello there\n' }],
       "Post: hello-there",
       { name: "Author", email: "author@example.com" },
       { mustBeNew: ["src/_posts/2026-11-11-hello-there.md"] },

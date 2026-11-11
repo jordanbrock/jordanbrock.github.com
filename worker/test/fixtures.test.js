@@ -16,10 +16,11 @@ const cases = {
     kind: "photos", title: "Lake walk", content: "A morning at the lake.",
     photos: [{ bytes: jpeg, alt: "A heron", caption: "Heron" }, { bytes: jpeg, alt: "An egret", caption: "" }],
   }),
-  // Strings YAML would turn into other types, a "#", and a body line of "---".
+  // Strings YAML would turn into other types, a "#", a body line of "---",
+  // and ERB tags, which must reach the site as text.
   awkward: input({
     kind: "photos", title: 'No: really, "yes" # not a comment',
-    content: "Caf\u00e9 \u00fcber \ud83d\udc26\n\n---\n\nAfter the rule.",
+    content: "Caf\u00e9 \u00fcber \ud83d\udc26\n\n---\n\nAfter the rule. <%= x %> <%# y %>",
     tags: ["null", "on"],
     photos: [{ bytes: jpeg, alt: "yes", caption: "2026-01-01" }, { bytes: jpeg, alt: "no", caption: "" }],
   }),

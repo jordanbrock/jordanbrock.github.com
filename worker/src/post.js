@@ -61,7 +61,9 @@ export function buildPost(input, now, n = 1) {
   const { date, time, year } = perthParts(now);
   const title = line(input.title);
   const single = input.kind === "photos" && input.photos.length === 1;
-  const fields = { date: `${date} ${time} +0800` };
+  // template_engine "none": the site runs ERB on posts by default, so <%= %>
+  // in a posted body would run Ruby at build time.
+  const fields = { date: `${date} ${time} +0800`, template_engine: "none" };
   let body = text(input.content);
   let slug;
 

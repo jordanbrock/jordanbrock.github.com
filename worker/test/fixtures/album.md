@@ -1,5 +1,6 @@
 ---
 date: "2026-11-11 14:03:09 +0800"
+template_engine: "none"
 title: "Lake walk"
 photos:
   - image: "2026/lake-walk/01.jpg"

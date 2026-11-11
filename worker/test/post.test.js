@@ -36,24 +36,24 @@ describe("buildPost", () => {
     expect(post.slug).toBe("saw-a-heron-today-nice");
     expect(post.path).toBe("src/_posts/2026-11-11-saw-a-heron-today-nice.md");
     expect(post.url).toBe("https://jordanbrock.com/2026/11/11/saw-a-heron-today-nice/");
-    expect(post.markdown).toBe('---\ndate: "2026-11-11 14:03:09 +0800"\ntags: ["birds"]\n---\nSaw a heron today.\n\nNice.\n');
+    expect(post.markdown).toBe('---\ndate: "2026-11-11 14:03:09 +0800"\ntemplate_engine: "none"\ntags: ["birds"]\n---\nSaw a heron today.\n\nNice.\n');
     expect(post.photos).toEqual([]);
   });
 
   it("writes a link with an optional title, slugged from the title or the domain", () => {
     const titled = buildPost(input({ kind: "link", url: " https://www.example.com/a ", title: 'Say "hi": now', content: "Worth a read." }), now);
     expect(titled.slug).toBe("say-hi-now");
-    expect(titled.markdown).toBe('---\ndate: "2026-11-11 14:03:09 +0800"\ntitle: "Say \\"hi\\": now"\nlink: "https://www.example.com/a"\n---\nWorth a read.\n');
+    expect(titled.markdown).toBe('---\ndate: "2026-11-11 14:03:09 +0800"\ntemplate_engine: "none"\ntitle: "Say \\"hi\\": now"\nlink: "https://www.example.com/a"\n---\nWorth a read.\n');
 
     const bare = buildPost(input({ kind: "link", url: "https://www.example.com/a" }), now);
     expect(bare.slug).toBe("example-com");
-    expect(bare.markdown).toBe('---\ndate: "2026-11-11 14:03:09 +0800"\nlink: "https://www.example.com/a"\n---\n');
+    expect(bare.markdown).toBe('---\ndate: "2026-11-11 14:03:09 +0800"\ntemplate_engine: "none"\nlink: "https://www.example.com/a"\n---\n');
   });
 
   it("writes one photo as a photo post whose body is the caption", () => {
     const post = buildPost(input({ kind: "photos", photos: [{ bytes: jpeg, alt: " A street\nat night ", caption: "Night street." }] }), now);
     expect(post.slug).toBe("night-street");
-    expect(post.markdown).toBe('---\ndate: "2026-11-11 14:03:09 +0800"\nimage: "2026/night-street.jpg"\nalt: "A street at night"\n---\nNight street.\n');
+    expect(post.markdown).toBe('---\ndate: "2026-11-11 14:03:09 +0800"\ntemplate_engine: "none"\nimage: "2026/night-street.jpg"\nalt: "A street at night"\n---\nNight street.\n');
     expect(post.photos).toEqual([{ path: "src/photos/2026/night-street.jpg", bytes: jpeg }]);
   });
 
@@ -66,6 +66,7 @@ describe("buildPost", () => {
     expect(post.markdown).toBe([
       "---",
       'date: "2026-11-11 14:03:09 +0800"',
+      'template_engine: "none"',
       'title: "Herdsman"',
       "photos:",
       '  - image: "2026/herdsman/01.jpg"',
@@ -100,6 +101,20 @@ describe("buildPost", () => {
   it("writes link URLs in normalised form", () => {
     const post = buildPost(input({ kind: "link", url: "https://b\u00fccher.de/caf\u00e9 a" }), now);
     expect(post.markdown).toContain('link: "https://xn--bcher-kva.de/caf%C3%A9%20a"');
+  });
+
+  it("turns off ERB for every kind, so <% %> in a post stays text", () => {
+    const erb = "Try <%= 1 + 1 %> and <%# a comment %>.";
+    for (const i of [
+      input({ content: erb }),
+      input({ kind: "link", url: "https://example.com/", content: erb }),
+      input({ kind: "photos", content: erb, photos: [{ bytes: jpeg, alt: "A", caption: "" }] }),
+      input({ kind: "photos", content: erb, photos: [{ bytes: jpeg, alt: "A", caption: "" }, { bytes: jpeg, alt: "B", caption: "" }] }),
+    ]) {
+      const { markdown } = buildPost(i, now);
+      expect(markdown).toMatch(/^---\ndate: "[^"]+"\ntemplate_engine: "none"\n/);
+      expect(markdown).toContain(erb);
+    }
   });
 
   it("keeps the intro text of a single photo post after its caption", () => {
