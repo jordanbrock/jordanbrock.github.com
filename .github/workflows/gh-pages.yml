@@ -36,6 +36,19 @@ jobs:
           key: photos-${{ hashFiles('src/photos/**') }}
           restore-keys: photos-
 
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: worker/package-lock.json
+
+      - name: Test the posting Worker
+        working-directory: worker
+        env:
+          CI: "true" # a missing or stale cross-check fixture fails instead of being written
+        run: npm ci && npm test
+
       - name: Test
         run: bin/bridgetown test
 

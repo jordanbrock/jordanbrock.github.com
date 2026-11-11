@@ -1,0 +1,37 @@
+/* The posting page, in the site's colours. */
+:root {
+  --paper: #FBF8F3; --ink: #262321; --muted: #6F665C; --card: #F2E9DF; --accent: #A2522F; --rule: #E3D9CC;
+  --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+  color-scheme: light dark;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --paper: #1C1A18; --ink: #ECE6DD; --muted: #958B7F; --card: #2A2522; --accent: #E08A66; --rule: #3A3430; }
+}
+*, *::before, *::after { box-sizing: border-box; }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 400 1rem/1.5 var(--sans); }
+main { max-width: 36rem; margin: 0 auto; padding: 1.5rem 1rem 4rem; }
+h1 { font-size: 1.5rem; margin: 0 0 1rem; }
+[hidden] { display: none !important; }
+
+form, #fields { display: grid; gap: 1rem; }
+#fields { border: 0; padding: 0; margin: 0; min-width: 0; }
+label { display: grid; gap: 0.35rem; font-weight: 600; font-size: 0.9375rem; }
+.hint { font-weight: 400; color: var(--muted); font-size: 0.8125rem; }
+input, textarea { font: inherit; font-weight: 400; width: 100%; padding: 0.6rem 0.7rem; border: 1px solid var(--rule);
+                  border-radius: 8px; background: var(--card); color: var(--ink); }
+input:focus, textarea:focus { outline: 2px solid var(--accent); outline-offset: 1px; }
+button { font: inherit; border: 1px solid var(--rule); border-radius: 8px; padding: 0.5rem 0.9rem; background: var(--card); color: var(--ink); cursor: pointer; }
+button:disabled { opacity: 0.4; cursor: default; }
+
+.tabs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; }
+.tabs [aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.pick input { padding: 0.5rem; }
+
+.photos { list-style: none; padding: 0; margin: 0.5rem 0 0; display: grid; gap: 0.75rem; }
+.photos li { display: grid; grid-template-columns: 5rem 1fr; gap: 0.5rem 0.75rem; padding: 0.75rem; border: 1px solid var(--rule); border-radius: 8px; }
+.photos img { width: 5rem; height: 5rem; object-fit: cover; border-radius: 4px; grid-row: span 3; }
+.photos .tools { display: flex; gap: 0.5rem; }
+
+#submit { background: var(--accent); border-color: var(--accent); color: #fff; font-weight: 600; padding: 0.75rem; }
+#status { margin: 0; min-height: 1.5em; overflow-wrap: anywhere; }
+#status a { color: var(--accent); }

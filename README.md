@@ -31,3 +31,5 @@ The front matter decides the type (or set `type:` explicitly):
 - **Album**: `photos`, a list of `image`, `alt` and optional `caption` (alt falls back to the caption; one of them is required); optional `title`; the body is the intro. The first photo is the cover. Use either `image` or `photos`, not both.
 
 Photos are resized into WebP and JPEG sizes at build time; originals in `src/photos/` are never published. A photo with GPS data fails the build: run `bin/bridgetown photos:strip` first.
+
+To post a note, link, photo or album from a phone or browser, use the posting page at `post.jordanbrock.com`. It commits straight to master. See [worker/README.md](worker/README.md) for how it works and how to set it up.

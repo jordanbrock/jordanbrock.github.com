@@ -47,3 +47,8 @@ yarn-debug.log*
 
 # Local Claude Code config
 /.claude/
+
+# Posting Worker: local secrets and Wrangler state
+/worker/.dev.vars
+/worker/.wrangler/
+/worker/.vitest/

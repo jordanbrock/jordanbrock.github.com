@@ -1,0 +1,5 @@
+# Copy to .dev.vars for `npm run dev`. Never deployed.
+# Skip the Access check, but only for requests to localhost.
+DEV_SKIP_ACCESS=1
+# Return the post that would be committed instead of committing it.
+DRY_RUN=1

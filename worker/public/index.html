@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>New post &middot; Jordan Brock</title>
+  <link rel="stylesheet" href="/app.css">
+  <script type="module" src="/app.js"></script>
+</head>
+<body>
+  <main>
+    <h1>New post</h1>
+    <form id="post" novalidate>
+      <fieldset id="fields">
+        <div class="tabs">
+          <button type="button" data-kind="note" aria-pressed="true">Note</button>
+          <button type="button" data-kind="link" aria-pressed="false">Link</button>
+          <button type="button" data-kind="photos" aria-pressed="false">Photos</button>
+        </div>
+        <input type="hidden" name="kind" value="note">
+
+        <label data-for="link">URL
+          <input name="url" type="url" inputmode="url" autocomplete="off" autocapitalize="none">
+        </label>
+
+        <div data-for="photos">
+          <label class="pick">Choose photos
+            <input id="picker" type="file" accept="image/*" multiple>
+          </label>
+          <ol id="photos" class="photos"></ol>
+        </div>
+
+        <label data-for="title">Title <span class="hint">optional</span>
+          <input name="title" autocomplete="off">
+        </label>
+
+        <label data-content><span id="content-label">Note</span>
+          <textarea name="content" rows="6"></textarea>
+        </label>
+
+        <label>Tags <span class="hint">comma separated, optional</span>
+          <input name="tags" autocomplete="off" autocapitalize="none">
+        </label>
+
+        <button type="submit" id="submit">Post</button>
+      </fieldset>
+      <p id="status" role="status" aria-live="polite"></p>
+    </form>
+  </main>
+</body>
+</html>
