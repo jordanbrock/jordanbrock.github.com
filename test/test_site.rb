@@ -243,10 +243,11 @@ class TestSite < Bridgetown::Test
     end
 
     describe "rendering the link card" do
+      # Replaces the post's own preview, so {} means none whatever the post has.
       def render_card(preview)
         post = first_of("link")
         c = Posts::Link.new(resource: post, mode: :full)
-        c.define_singleton_method(:preview) { preview } if preview
+        c.define_singleton_method(:preview) { preview }
         Bridgetown::Current.site = site
         Nokolexbor::Document.parse(c.render_in(Bridgetown::ERBView.new(post)))
       end
@@ -262,7 +263,7 @@ class TestSite < Bridgetown::Test
       end
 
       it "without a preview shows no image or description, and the domain" do
-        doc = render_card(nil)
+        doc = render_card({})
         expect(doc.query_selector(".link-card__image")).must_be_nil
         expect(doc.query_selector(".link-card__description")).must_be_nil
         expect(doc.query_selector(".meta").text).must_include PostType.link_domain(first_of("link").data.link)
