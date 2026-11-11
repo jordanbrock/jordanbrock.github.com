@@ -1,6 +1,7 @@
 require "minitest/autorun"
 require_relative "../plugins/post_type"
 require_relative "../plugins/photo_processor"
+require_relative "../plugins/post_photos"
 require_relative "../plugins/feed_entry"
 
 class TestFeedEntry < Minitest::Test
@@ -21,7 +22,8 @@ class TestFeedEntry < Minitest::Test
     def data = DataStub.new(**@attrs.transform_keys(&:to_sym).slice(:link, :image, :alt))
   end
 
-  PHOTOS = { "2026/a.jpg" => { widths: [480, 960, 1600], width: 1600, height: 1000, base: "2026/a" } }.freeze
+  PHOTOS = { "2026/a.jpg" => { widths: [480, 960, 1600], width: 1600, height: 1000, base: "2026/a" },
+             "2026/b.jpg" => { widths: [480, 960], width: 960, height: 640, base: "2026/b" } }.freeze
   BASE = "https://jordanbrock.com".freeze
 
   def lead(post) = FeedEntry.lead(post, photos: PHOTOS, base_url: BASE)
@@ -89,5 +91,45 @@ class TestFeedEntry < Minitest::Test
     assert_raises(PhotoProcessor::InvalidError) { PhotoProcessor.lookup!(PHOTOS, " ") }
     assert_raises(PhotoProcessor::MissingError) { PhotoProcessor.lookup!(nil, "2026/a.jpg") }
     assert_equal PHOTOS["2026/a.jpg"], PhotoProcessor.lookup!(PHOTOS, "2026/a.jpg")
+    assert_equal PHOTOS["2026/a.jpg"], PhotoProcessor.lookup!(PHOTOS, " 2026/a.jpg ")
+  end
+
+  def album(photos, title: nil, content: "")
+    attrs = { "photos" => photos }
+    attrs["title"] = title if title
+    Post.new(attrs, content:)
+  end
+
+  def test_album_title_uses_title_then_body_then_date
+    photos = [{ "image" => "2026/a.jpg", "alt" => "A" }]
+    assert_equal "Sanja day", FeedEntry.title(album(photos, title: "Sanja day"))
+    assert_equal "Third day", FeedEntry.title(album(photos, content: "<p>Third day</p>"))
+    assert_equal "Album, 7 Nov", FeedEntry.title(album(photos))
+  end
+
+  def test_album_has_no_lead
+    assert_equal "", lead(album([{ "image" => "2026/a.jpg", "alt" => "A" }]))
+  end
+
+  def test_album_trail_lists_each_photo_with_escaped_alt_and_caption
+    post = album([{ "image" => "2026/a.jpg", "alt" => %(a "q"), "caption" => "Fish & chips" },
+                  { "image" => "2026/b.jpg", "alt" => "B" }])
+    expected = %(<p><img src="https://jordanbrock.com/photos/2026/a-960.jpg" alt="a &quot;q&quot;"></p>) +
+               %(<p>Fish &amp; chips</p>) +
+               %(<p><img src="https://jordanbrock.com/photos/2026/b-960.jpg" alt="B"></p>)
+    assert_equal expected, FeedEntry.trail(post, photos: PHOTOS, base_url: BASE)
+  end
+
+  def test_album_trail_names_a_missing_photo
+    post = album([{ "image" => "2026/gone.jpg", "alt" => "G" }])
+    err = assert_raises(PhotoProcessor::MissingError) { FeedEntry.trail(post, photos: PHOTOS, base_url: BASE) }
+    assert_includes err.message, "2026/gone.jpg"
+    assert_includes err.message, "_posts/2026-11-07-x.md"
+    assert_includes err.message, "photo 1"
+  end
+
+  def test_other_types_have_no_trail
+    assert_equal "", FeedEntry.trail(Post.new({ "image" => "2026/a.jpg" }), photos: PHOTOS, base_url: BASE)
+    assert_equal "", FeedEntry.trail(Post.new({}), photos: PHOTOS, base_url: BASE)
   end
 end

@@ -1,19 +1,28 @@
 require "uri"
 
-# Decides which of the four post types a post is, from its front matter.
+# Decides which post type a post is (see TYPES), from its front matter.
 module PostType
-  TYPES = %w[article note link photo].freeze
+  TYPES = %w[article note link photo album].freeze
 
   def self.for(data)
     data = data.to_h.transform_keys(&:to_s)
+    if present?(data["image"]) && listed?(data["photos"])
+      raise ArgumentError, "Use either image or photos, not both"
+    end
+
     explicit = data["type"].to_s.strip
     unless explicit.empty?
       raise ArgumentError, "Unknown post type: #{explicit}" unless TYPES.include?(explicit)
+
+      if explicit != "album" && listed?(data["photos"])
+        raise ArgumentError, "photos is only for album posts"
+      end
 
       return explicit
     end
 
     return "photo" if present?(data["image"])
+    return "album" if listed?(data["photos"])
     return "link" if present?(data["link"])
     return "article" if present?(data["title"])
 
@@ -57,5 +66,8 @@ module PostType
   end
 
   def self.present?(value) = !value.to_s.strip.empty?
-  private_class_method :present?
+  # A photos: value worth treating as an album: a non-empty list, or any other
+  # non-blank value (which PostPhotos then rejects as "not a list").
+  def self.listed?(value) = value.is_a?(Array) ? !value.empty? : present?(value)
+  private_class_method :present?, :listed?
 end

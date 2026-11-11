@@ -143,11 +143,36 @@ class TestSite < Bridgetown::Test
   end
 
   describe "post types on the home page" do
+    it "album helpers pick the cover, a strip of up to four, and the hidden count" do
+      stub = lambda do |n|
+        photos = (1..n).map { { "image" => "2026/a#{_1}.jpg", "alt" => "A#{_1}" } }
+        Struct.new(:model, :relative_path).new(Struct.new(:attributes).new({ "photos" => photos }), "_posts/x.md")
+      end
+      one = Posts::Album.new(resource: stub.call(1), mode: :summary)
+      expect(one.cover[:index]).must_equal 1
+      expect(one.strip).must_equal []
+      expect(one.more).must_equal 0
+      seven = Posts::Album.new(resource: stub.call(7), mode: :summary)
+      expect(seven.strip.map { _1[:index] }).must_equal [2, 3, 4, 5]
+      expect(seven.more).must_equal 2
+      expect(Posts::Album.new(resource: stub.call(5), mode: :summary).more).must_equal 0
+      two = Posts::Album.new(resource: stub.call(2), mode: :summary)
+      expect(two.strip.size).must_equal 1
+      expect(two.more).must_equal 0
+      expect(Posts::Album.new(resource: stub.call(6), mode: :summary).more).must_equal 1
+      expect(PostPhotos.anchor(seven.strip_target(3))).must_equal "#photo-6"
+      expect(seven.strip_label(3)).must_include "(and 2 more)"
+      expect(seven.strip_label(0)).must_be_nil
+      five = Posts::Album.new(resource: stub.call(5), mode: :summary)
+      expect(PostPhotos.anchor(five.strip_target(3))).must_equal "#photo-5"
+      expect(five.strip_label(3)).must_be_nil
+    end
+
     it "renders each type with its own class" do
       html get "/"
       classes = document.query_selector_all(".stream > *").map { _1["class"] }
       expect(classes).wont_be_empty
-      expect(classes.all? { _1 =~ /\b(article|note|link|photo)\b/ }).must_equal true
+      expect(classes.all? { _1 =~ /\b(article|note|link|photo|album)\b/ }).must_equal true
     end
 
     it "articles in the stream show a summary and keep-reading link" do
@@ -260,6 +285,80 @@ class TestSite < Bridgetown::Test
       expect(files.reject { _1.match?(/-\d+\.(webp|jpg)\z/) || _1.end_with?("/photos/index.html") }).must_be_empty
     end
   end
+
+  describe "albums" do
+    it "the album page has its heading and shows every photo with an anchor, caption and lazy loading after the first" do
+      post = first_of("album")
+      photos = PostPhotos.for(post)
+      title = PostType.title(post)
+      html get PostUrl.for(post)
+      h1 = document.query_selector(".album h1")
+      title.empty? ? expect(h1).must_be_nil : expect(h1.text).must_equal(title)
+      figures = document.query_selector_all(".album > figure")
+      expect(figures.map { _1["id"] }).must_equal photos.map { "photo-#{_1[:index]}" }
+      expect(figures.map { _1.query_selector("img")["alt"] }).must_equal photos.map { _1[:alt] }
+      photos.zip(figures).each do |photo, fig|
+        caption = fig.query_selector("figcaption")
+        photo[:caption] ? expect(caption.text).must_equal(photo[:caption]) : expect(caption).must_be_nil
+      end
+      expect(figures.first.query_selector("img")["loading"]).must_be_nil
+      figures.drop(1).each { expect(_1.query_selector("img")["loading"]).must_equal "lazy" }
+    end
+
+    it "the stream shows the cover and a strip of up to four; the last tile links to the first hidden photo" do
+      post = first_of("album")
+      skip("newest album is not on page 1") unless PostType.posts(site.collections.posts.resources).first(10).include?(post)
+      photos = PostPhotos.for(post)
+      url = PostUrl.for(post)
+      html get "/"
+      album = document.query_selector(".stream > .album")
+      expect(album).wont_be_nil
+      title = PostType.title(post)
+      link = album.query_selector("h2 a")
+      title.empty? ? expect(link).must_be_nil : (expect(link["href"]).must_equal(url); expect(link.text).must_equal(title))
+      expect(album.query_selector(".album__cover")["href"]).must_equal url
+      expect(album.query_selector(".album__cover img")["alt"]).must_equal photos.first[:alt]
+
+      strip = photos[1, 4].to_a
+      hidden = photos.size > 5
+      hrefs = strip.map { "#{url}#photo-#{_1[:index]}" }
+      hrefs[-1] = "#{url}#photo-6" if hidden
+      tiles = album.query_selector_all(".album__strip a")
+      expect(tiles.map { _1["href"] }).must_equal hrefs
+      labels = tiles.map { _1["aria-label"] }
+      expect(labels).must_equal(Array.new(strip.size) { |i| hidden && i == strip.size - 1 ? "#{strip.last[:alt]} (and #{photos.size - 5} more)" : nil })
+      more = album.query_selector(".album__more")
+      hidden ? expect(more.text).must_equal("+#{photos.size - 5}") : expect(more).must_be_nil
+    end
+
+    it "/photos/ links each album photo to its anchor" do
+      post = first_of("album")
+      html get "/photos/"
+      hrefs = document.query_selector_all(".photo-grid a").map { _1["href"] }
+      PostPhotos.for(post).each { expect(hrefs).must_include "#{PostUrl.for(post)}#photo-#{_1[:index]}" }
+    end
+
+    it "the feed entry carries every album photo and caption" do
+      post = first_of("album")
+      skip("album not in the 20 newest") unless PostType.posts(site.collections.posts.resources).first(20).include?(post)
+      entry = REXML::XPath.match(feed_doc, "//entry").find { _1.elements["id"].text == FeedEntry.id(post) }
+      expect(entry).wont_be_nil
+      content = entry.elements["content"].text.to_s
+      PostPhotos.for(post).each do |photo|
+        expect(content).must_include %(alt="#{CGI.escapeHTML(photo[:alt])}")
+        expect(content).must_include "<p>#{CGI.escapeHTML(photo[:caption])}</p>" if photo[:caption]
+      end
+    end
+
+    it "the archive marks albums" do
+      post = first_of("album")
+      html get "/archive.html"
+      link = document.query_selector_all(".archive li a").find { _1["href"] == PostUrl.for(post) }
+      expect(link).wont_be_nil
+      expect(link.parent.query_selector(".type")&.text).must_equal "album"
+    end
+  end
+
   describe "pages" do
     def posts_of(type) = PostType.posts(site.collections.posts.resources, type)
     def output(path) = File.expand_path("../output#{path}#{"index.html" if path.end_with?("/")}", __dir__)
@@ -313,11 +412,11 @@ class TestSite < Bridgetown::Test
       end
     end
 
-    it "photos page shows a lazy grid of every photo post" do
-      photos = posts_of("photo").tap { skip("no photo posts") if _1.empty? }
+    it "photos page shows a lazy grid of every photo and album photo" do
+      tiles = PostPhotos.tiles(site.collections.posts.resources).tap { skip("no photo posts") if _1.empty? }
       html get "/photos/"
       links = document.query_selector_all(".photo-grid a")
-      expect(links.map { _1["href"] }).must_equal photos.map { PostUrl.for(_1) }
+      expect(links.map { _1["href"] }).must_equal tiles.map { |post, photo| "#{PostUrl.for(post)}#{PostPhotos.anchor(photo)}" }
       links.each do |a|
         img = a.query_selector("picture img")
         expect(img["loading"]).must_equal "lazy"

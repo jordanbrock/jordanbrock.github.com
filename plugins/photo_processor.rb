@@ -47,8 +47,8 @@ class PhotoProcessor
     where = post ? " in #{post}" : ""
     raise InvalidError, "Photo post has no image#{where}" if image.to_s.strip.empty?
 
-    registry&.[](image.to_s) or
-      raise MissingError, "No processed photo for #{image}#{where}; is it the image of a photo post?"
+    registry&.[](image.to_s.strip) or
+      raise MissingError, "No processed photo for #{image}#{where}; is it listed in a photo or album post?"
   end
 
   def self.base_for(relative) = relative.sub(/\.[^.\/]+\z/, "")

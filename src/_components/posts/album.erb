@@ -1,0 +1,32 @@
+<article class="album">
+  <div class="col">
+    <%= render PostMeta.new(resource: @resource) %>
+    <% unless title.empty? %>
+      <% if full? %>
+        <h1 class="article__title"><%= title %></h1>
+      <% else %>
+        <h2 class="article__title"><a href="<%= url %>"><%= title %></a></h2>
+      <% end %>
+    <% end %>
+    <% unless @resource.content.to_s.strip.empty? %>
+      <div class="prose"><%= @resource.content %></div>
+    <% end %>
+  </div>
+  <% if full? %>
+    <% photos.each do |photo| %>
+      <figure id="<%= anchor_id(photo) %>">
+        <%= render Picture.new(image: photo[:image], alt: photo[:alt], eager: photo[:index] == 1) %>
+        <% if photo[:caption] %><figcaption><%= photo[:caption] %></figcaption><% end %>
+      </figure>
+    <% end %>
+  <% else %>
+    <a class="album__cover" href="<%= url %>"><%= render Picture.new(image: cover[:image], alt: cover[:alt]) %></a>
+    <% if strip.any? %>
+      <div class="album__strip">
+        <% strip.each_with_index do |photo, i| %>
+          <a href="<%= strip_href(i) %>"<% if strip_label(i) %> aria-label="<%= strip_label(i) %>"<% end %>><%= render Picture.new(image: photo[:image], alt: photo[:alt], sizes: STRIP_SIZES) %><% if last_with_more?(i) %><span class="album__more" aria-hidden="true">+<%= more %></span><% end %></a>
+        <% end %>
+      </div>
+    <% end %>
+  <% end %>
+</article>
