@@ -287,12 +287,14 @@ class TestSite < Bridgetown::Test
   end
 
   describe "albums" do
-    it "the album page has an h1 and shows every photo with an anchor, caption and lazy loading after the first" do
+    it "the album page has its heading and shows every photo with an anchor, caption and lazy loading after the first" do
       post = first_of("album")
       photos = PostPhotos.for(post)
+      title = PostType.title(post)
       html get PostUrl.for(post)
-      expect(document.query_selector(".album h1")).wont_be_nil unless PostType.title(post).empty?
-      figures = document.query_selector_all(".album figure")
+      h1 = document.query_selector(".album h1")
+      title.empty? ? expect(h1).must_be_nil : expect(h1.text).must_equal(title)
+      figures = document.query_selector_all(".album > figure")
       expect(figures.map { _1["id"] }).must_equal photos.map { "photo-#{_1[:index]}" }
       expect(figures.map { _1.query_selector("img")["alt"] }).must_equal photos.map { _1[:alt] }
       photos.zip(figures).each do |photo, fig|
@@ -305,27 +307,26 @@ class TestSite < Bridgetown::Test
 
     it "the stream shows the cover and a strip of up to four; the last tile links to the first hidden photo" do
       post = first_of("album")
+      skip("newest album is not on page 1") unless PostType.posts(site.collections.posts.resources).first(10).include?(post)
       photos = PostPhotos.for(post)
+      url = PostUrl.for(post)
       html get "/"
       album = document.query_selector(".stream > .album")
-      skip("newest album is not on page 1") unless album
+      expect(album).wont_be_nil
       title = PostType.title(post)
       link = album.query_selector("h2 a")
-      title.empty? ? expect(link).must_be_nil : expect(link["href"]).must_equal(PostUrl.for(post))
+      title.empty? ? expect(link).must_be_nil : (expect(link["href"]).must_equal(url); expect(link.text).must_equal(title))
+      expect(album.query_selector(".album__cover")["href"]).must_equal url
       expect(album.query_selector(".album__cover img")["alt"]).must_equal photos.first[:alt]
 
       strip = photos[1, 4].to_a
       hidden = photos.size > 5
-      targets = strip.each_index.map { |i| hidden && i == strip.size - 1 ? photos[5] : strip[i] }
+      hrefs = strip.map { "#{url}#photo-#{_1[:index]}" }
+      hrefs[-1] = "#{url}#photo-6" if hidden
       tiles = album.query_selector_all(".album__strip a")
-      expect(tiles.map { _1["href"] }).must_equal targets.map { "#{PostUrl.for(post)}#photo-#{_1[:index]}" }
-      if hidden
-        expect(tiles.last["href"]).must_equal "#{PostUrl.for(post)}#photo-6"
-        expect(tiles.last["aria-label"]).must_equal "#{strip.last[:alt]} (and #{photos.size - 5} more)"
-        expect(tiles[0...-1].map { _1["aria-label"] }.compact).must_be_empty
-      else
-        expect(tiles.map { _1["aria-label"] }.compact).must_be_empty
-      end
+      expect(tiles.map { _1["href"] }).must_equal hrefs
+      labels = tiles.map { _1["aria-label"] }
+      expect(labels).must_equal(Array.new(strip.size) { |i| hidden && i == strip.size - 1 ? "#{strip.last[:alt]} (and #{photos.size - 5} more)" : nil })
       more = album.query_selector(".album__more")
       hidden ? expect(more.text).must_equal("+#{photos.size - 5}") : expect(more).must_be_nil
     end
@@ -337,19 +338,24 @@ class TestSite < Bridgetown::Test
       PostPhotos.for(post).each { expect(hrefs).must_include "#{PostUrl.for(post)}#photo-#{_1[:index]}" }
     end
 
-    it "the feed entry carries every album photo" do
+    it "the feed entry carries every album photo and caption" do
       post = first_of("album")
+      skip("album not in the 20 newest") unless PostType.posts(site.collections.posts.resources).first(20).include?(post)
       entry = REXML::XPath.match(feed_doc, "//entry").find { _1.elements["id"].text == FeedEntry.id(post) }
-      skip("album not in the 20 newest") unless entry
+      expect(entry).wont_be_nil
       content = entry.elements["content"].text.to_s
-      PostPhotos.for(post).each { expect(content).must_include %(alt="#{CGI.escapeHTML(_1[:alt])}") }
+      PostPhotos.for(post).each do |photo|
+        expect(content).must_include %(alt="#{CGI.escapeHTML(photo[:alt])}")
+        expect(content).must_include "<p>#{CGI.escapeHTML(photo[:caption])}</p>" if photo[:caption]
+      end
     end
 
     it "the archive marks albums" do
       post = first_of("album")
       html get "/archive.html"
       link = document.query_selector_all(".archive li a").find { _1["href"] == PostUrl.for(post) }
-      expect(link.parent.text).must_include "album"
+      expect(link).wont_be_nil
+      expect(link.parent.query_selector(".type")&.text).must_equal "album"
     end
   end
 
