@@ -57,3 +57,90 @@ export function parsePreview(html, pageUrl) {
     image: absoluteImage(first("og:image", "og:image:url", "og:image:secure_url", "twitter:image", "twitter:image:src"), pageUrl),
   };
 }
+
+const HTML_BYTES = 1024 * 1024; // the tags are in <head>; stop reading after this
+const IMAGE_BYTES = 5 * 1024 * 1024;
+const TIMEOUT_MS = 5000;
+// Generic on purpose: never name the site's owner to other sites.
+const HEADERS = { "User-Agent": "Mozilla/5.0 (compatible; LinkPreview/1.0)" };
+
+// Only public http(s) hosts: no localhost or IP literals.
+function target(raw) {
+  let url;
+  try { url = new URL(String(raw ?? "").trim()); } catch { throw new PreviewError("That isn't a valid URL.", 422); }
+  const host = url.hostname.toLowerCase();
+  const literal = /^\d{1,3}(\.\d{1,3}){3}$/.test(host) || host.startsWith("[");
+  if (!["http:", "https:"].includes(url.protocol) || !host || host === "localhost" || host.endsWith(".localhost") || literal) {
+    throw new PreviewError("Previews only work for public http:// or https:// links.", 422);
+  }
+  return url.href;
+}
+
+async function get(url, accept, fetchImpl) {
+  let res;
+  try {
+    res = await fetchImpl(url, { headers: { ...HEADERS, Accept: accept }, redirect: "follow", signal: AbortSignal.timeout(TIMEOUT_MS) });
+  } catch {
+    throw new PreviewError("Couldn't reach that page.", 502);
+  }
+  if (!res.ok) {
+    await res.body?.cancel();
+    throw new PreviewError(`That page answered ${res.status}.`, 502);
+  }
+  return res;
+}
+
+// Up to max bytes of the body. With truncate, stops quietly at max;
+// otherwise a longer body is an error.
+async function read(res, max, truncate) {
+  const chunks = [];
+  let total = 0;
+  const reader = res.body.getReader();
+  for (;;) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    total += value.length;
+    if (total > max) {
+      await reader.cancel();
+      if (!truncate) throw new PreviewError("That image is over 5 MB.", 422);
+      chunks.push(value.subarray(0, value.length - (total - max)));
+      total = max;
+      break;
+    }
+    chunks.push(value);
+  }
+  const bytes = new Uint8Array(total);
+  let at = 0;
+  for (const c of chunks) { bytes.set(c, at); at += c.length; }
+  return bytes;
+}
+
+export async function fetchPreview(raw, fetchImpl = fetch) {
+  const url = target(raw);
+  const res = await get(url, "text/html,application/xhtml+xml", fetchImpl);
+  if (!/html/i.test(res.headers.get("Content-Type") ?? "")) {
+    await res.body?.cancel();
+    return parsePreview("", url);
+  }
+  const html = new TextDecoder().decode(await read(res, HTML_BYTES, true));
+  return parsePreview(html, res.url || url);
+}
+
+function imageType(b) {
+  if (b[0] === 0xff && b[1] === 0xd8 && b[2] === 0xff) return "image/jpeg";
+  if (b[0] === 0x89 && b[1] === 0x50 && b[2] === 0x4e && b[3] === 0x47) return "image/png";
+  if (b[0] === 0x47 && b[1] === 0x49 && b[2] === 0x46 && b[3] === 0x38) return "image/gif";
+  if (b[0] === 0x52 && b[1] === 0x49 && b[2] === 0x46 && b[3] === 0x46 && b[8] === 0x57 && b[9] === 0x45 && b[10] === 0x42 && b[11] === 0x50) return "image/webp";
+  return null;
+}
+
+// The image's bytes and type, sniffed from the bytes (never trusted from the
+// other site's Content-Type, and never SVG, which can carry script).
+export async function fetchPreviewImage(raw, fetchImpl = fetch) {
+  const url = target(raw);
+  const res = await get(url, "image/*", fetchImpl);
+  const bytes = await read(res, IMAGE_BYTES, false);
+  const type = imageType(bytes);
+  if (!type) throw new PreviewError("That isn't an image.", 422);
+  return { bytes, type };
+}
